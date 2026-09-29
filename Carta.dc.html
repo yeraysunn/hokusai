@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Carta y alérgenos · HOKUSAI Sushi Buffet Libre Salou</title>
+<meta name="description" content="Carta completa de HOKUSAI Sushi en Salou: nigiri, rolls, sashimi, ramen, donburi, gyozas, entrantes y postres, con todos los alérgenos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=Noto+Sans+JP:wght@700;900&amp;display=swap">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+html,body{overflow-x:clip}
+body{margin:0;background:#FAF3E3;color:#141414;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1B2A6B}
+a:hover{color:#D7263D}
+:focus-visible{outline:3px solid #FFE600;outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:60;background:#FAF3E3;border-bottom:3px solid #141414">
+  <div style="max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px clamp(14px,3vw,32px)">
+    <a href="Hokusai%20Home.dc.html" style="flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;background:#141414;color:#FFE600;border:3px solid #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:17px;letter-spacing:.05em;text-decoration:none;transition:transform .12s" style-hover="transform:translateX(-3px);color:#FFE600" style-active="transform:scale(.96)"><i class="ph-bold ph-arrow-left"></i>VOLVER</a>
+    <a href="Hokusai%20Home.dc.html" aria-label="Volver a la web de HOKUSAI" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#141414">
+      <span style="width:42px;height:42px;display:grid;place-items:center;background:#D7263D;color:#FAF3E3;border:2px solid #141414;border-radius:6px;transform:rotate(-6deg);font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:15px;line-height:1;writing-mode:vertical-rl">北斎</span>
+      <span style="display:flex;flex-direction:column;line-height:1">
+        <span style="font-family:Anton,sans-serif;font-size:26px;letter-spacing:.04em">HOKUSAI</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.16em">LA CARTA · メニュー</span>
+      </span>
+    </a>
+    <div style="flex:1"></div>
+    <a href="assets/carta-hokusai.pdf" target="_blank" rel="noopener" aria-label="Descargar carta en PDF" style="display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 12px;border:2px solid #141414;border-radius:6px;color:#141414;text-decoration:none;font-weight:700;font-size:14px" style-hover="background:#141414;color:#FFE600"><i class="ph-bold ph-download-simple"></i>PDF</a>
+    <a href="Hokusai%20Home.dc.html#reservar" style="flex:none;display:inline-flex;align-items:center;height:44px;padding:0 16px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:4px 4px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:18px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px) rotate(-2deg);box-shadow:6px 6px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">RESERVAR</a>
+  </div>
+  <nav aria-label="Secciones de la carta" style="max-width:1320px;margin:0 auto;display:flex;gap:8px;overflow-x:auto;padding:0 clamp(14px,3vw,32px) 10px;scrollbar-width:none">
+    <sc-for list="{{ cats }}" as="c" hint-placeholder-count="9">
+      <a href="{{ c.href }}" style="flex:none;display:flex;align-items:center;gap:6px;height:38px;padding:0 12px;border:2px solid #141414;border-radius:6px;background:#FAF3E3;color:#141414;text-decoration:none;font-family:Anton,sans-serif;font-size:16px;letter-spacing:.03em;text-transform:uppercase" style-hover="background:#141414;color:#FFE600"><span style="font-family:'Noto Sans JP';font-weight:900;font-size:12px">{{ c.jp }}</span>{{ c.label }}</a>
+    </sc-for>
+  </nav>
+</header>
+
+<main>
+  <section style="position:relative;overflow:hidden;background:#1B2A6B;color:#FAF3E3;border-bottom:3px solid #141414">
+    <div style="position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 85% 50%,rgba(250,243,227,.09) 0 1.5deg,transparent 1.5deg 8deg)"></div>
+    <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(18px,4vw,40px);display:flex;flex-direction:column;gap:12px">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#F2A33A;letter-spacing:.2em;font-size:15px">メニュー · CARTA COMPLETA</span>
+      <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(56px,10vw,128px);line-height:.9;text-transform:uppercase;text-shadow:5px 5px 0 #141414">La carta</h1>
+      <p style="margin:0;max-width:560px;font-size:18px;line-height:1.55">Todo lo que puedes pedir en el buffet, con sus alérgenos. Si tienes alguna alergia o intolerancia, avisa al camarero.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="leyenda" style="max-width:1320px;margin:0 auto;padding:clamp(28px,4vw,48px) clamp(18px,4vw,40px) 0">
+    <div style="background:#141414;color:#FAF3E3;border:3px solid #141414;box-shadow:6px 6px 0 #D7263D;border-radius:8px;padding:clamp(16px,2.5vw,26px)">
+      <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 20px;margin-bottom:14px">
+        <h2 id="leyenda" style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:28px;text-transform:uppercase">Alérgenos</h2>
+        <p style="margin:0;font-size:14px">Toca un alérgeno para ocultar los platos que lo contienen. Información orientativa: confírmala siempre con el personal.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:8px">
+        <sc-for list="{{ legend }}" as="a" hint-placeholder-count="14">
+          <button onClick="{{ a.onClick }}" aria-pressed="{{ a.on }}" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;border:2px solid {{ a.bd }};border-radius:8px;background:{{ a.bg }};color:#FAF3E3;cursor:pointer;opacity:{{ a.op }};transition:transform .12s" style-hover="transform:translateY(-2px)" style-active="transform:scale(.96)">
+            <img src="{{ a.icon }}" alt="" width="52" height="52" style="width:52px;height:52px;object-fit:contain;background:#FAF3E3;border-radius:50%;padding:4px">
+            <span style="font-weight:700;font-size:14px;text-decoration:{{ a.td }}">{{ a.es }}</span>
+            <span style="font-size:11px;line-height:1.3;text-align:center">{{ a.ca }} · {{ a.en }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <sc-if value="{{ hasExcl }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:14px;font-size:14px">
+          <span>Ocultando platos con: <strong style="color:#FFE600">{{ exclText }}</strong></span>
+          <button onClick="{{ clearExcl }}" style="height:36px;padding:0 12px;border:2px solid #FAF3E3;border-radius:6px;background:transparent;color:#FAF3E3;font:700 13px 'DM Sans',sans-serif;cursor:pointer">Quitar filtros</button>
+        </div>
+      </sc-if>
+    </div>
+  </section>
+
+  <div style="max-width:1320px;margin:0 auto;padding:0 clamp(18px,4vw,40px) clamp(48px,6vw,80px)">
+    <sc-for list="{{ sections }}" as="s" hint-placeholder-count="3">
+      <section id="{{ s.id }}" style="scroll-margin-top:130px;padding-top:clamp(40px,5vw,64px);display:flex;flex-direction:column;gap:18px">
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 22px;border-bottom:3px solid #141414;padding-bottom:12px">
+          <span aria-hidden="true" style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(36px,5vw,56px);line-height:1;color:#D7263D">{{ s.jp }}</span>
+          <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(34px,5vw,56px);line-height:.95;text-transform:uppercase">{{ s.label }}</h2>
+          <p style="margin:0 0 4px;flex:1 1 280px;max-width:520px;font-size:15px;line-height:1.5">{{ s.note }}</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:16px">
+          <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="8">
+            <article style="background:#FAF3E3;border:2.5px solid #141414;box-shadow:4px 4px 0 #141414;padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .15s,box-shadow .15s" style-hover="transform:translate(-2px,-2px);box-shadow:7px 7px 0 #D7263D">
+              <sc-if value="{{ it.hasImg }}" hint-placeholder-val="{{ false }}"><div style="margin:-14px -16px 8px;aspect-ratio:1/1;overflow:hidden;border-bottom:2.5px solid #141414;background:#141414"><img src="{{ it.img }}" alt="{{ it.n }}" loading="lazy" width="720" height="720" style="display:block;width:100%;height:100%;object-fit:cover"></div></sc-if>
+              <div style="display:flex;align-items:baseline;gap:10px">
+                <span style="font-family:Anton,sans-serif;font-size:15px;color:#D7263D">{{ it.num }}</span>
+                <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:21px;line-height:1.1;text-transform:uppercase">{{ it.n }}</h3>
+              </div>
+              <p style="margin:0;font-size:15px;line-height:1.45">{{ it.d }}</p>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:auto;padding-top:6px">
+                <sc-for list="{{ it.tags }}" as="t" hint-placeholder-count="3">
+                  <sc-if value="{{ t.isIcon }}" hint-placeholder-val="{{ true }}"><img src="{{ t.icon }}" alt="{{ t.t }}" title="{{ t.t }}" width="32" height="32" loading="lazy" style="display:block;width:32px;height:32px;object-fit:contain"></sc-if>
+                  <sc-if value="{{ t.isText }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex;align-items:center;height:26px;padding:0 8px;border:1.5px solid #141414;border-radius:999px;font-size:12px;font-weight:700">{{ t.t }}</span></sc-if>
+                </sc-for>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+        <sc-if value="{{ s.empty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:18px;border:2.5px dashed #141414;border-radius:8px;font-weight:700">Ningún plato de esta sección tiene confirmado que esté libre de los alérgenos marcados. Pregunta en sala.</p>
+        </sc-if>
+      </section>
+    </sc-for>
+    <div style="margin-top:48px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border:3px solid #141414;border-radius:8px;background:#F2A33A">
+      <p style="margin:0;font-weight:700;max-width:620px">Si eres alérgico a algún alimento, avisa al camarero. Gracias · Si sou al·lèrgic, aviseu el cambrer · If you have any allergy, tell the waiter.</p>
+      <a href="Hokusai%20Home.dc.html#reservar" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.05em;text-decoration:none" style-hover="transform:translate(-2px,-2px) rotate(-2deg);color:#FAF3E3" style-active="transform:translate(3px,3px)"><i class="ph-bold ph-calendar-check"></i>RESERVAR MESA</a>
+    </div>
+  </div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const TR = { G: ['Glúten', 'Gluten'], M: ['Marisc', 'Seafood'], H: ['Ous', 'Eggs'], P: ['Peix', 'Fish'], F: ['Fruits de pela', 'Nuts'], A: ['Api', 'Celery'], Mo: ['Mostassa', 'Mustard'], S: ['Sèsam', 'Sesame'], C: ['Cacauets', 'Peanuts'], So: ['Soja', 'Soybean'], L: ['Lactis', 'Dairy'], Su: ['Sulfits', 'Sulphites'], Ml: ['Mol·luscs', 'Molluscs'], Pi: ['Picant', 'Spicy'] };
+const ORDER = ['G', 'M', 'H', 'P', 'F', 'A', 'Mo', 'S', 'C', 'So', 'L', 'Su', 'Ml', 'Pi'];
+const SEQ = ['frios', 'calientes', 'gyoza', 'nigiri', 'rolls', 'sashimi', 'ramen', 'arroz', 'postre'];
+
+class Component extends DCLogic {
+  state = { d: null, excl: [] };
+  componentDidMount() { import('./carta-data.js').then(d => this.setState({ d })); }
+  toggle(k) { this.setState(s => ({ excl: s.excl.includes(k) ? s.excl.filter(x => x !== k) : [...s.excl, k] })); }
+  renderVals() {
+    const { d, excl } = this.state;
+    if (!d) return { cats: [], legend: [], sections: [], hasExcl: false };
+    const cats = d.CATS;
+    const ok = it => it[3] == null ? excl.length === 0 : !it[3].split(' ').some(c => excl.includes(c));
+    return {
+      cats: cats.map(c => ({ ...c, href: '#' + c.id })),
+      legend: ORDER.map(k => { const on = excl.includes(k); return { k, on, es: d.AL[k], ca: TR[k][0], en: TR[k][1], icon: 'assets/alergenos/' + k + '.png',
+        bg: on ? '#D7263D' : 'transparent', bd: on ? '#FAF3E3' : '#3a3a3a', op: 1, td: on ? 'line-through' : 'none', onClick: () => this.toggle(k) }; }),
+      hasExcl: excl.length > 0, exclText: excl.map(k => d.AL[k]).join(', '), clearExcl: () => this.setState({ excl: [] }),
+      sections: cats.map(c => { const items = d.MENU[c.id].filter(ok).map(it => ({ num: it[0], n: it[1], d: it[2], hasImg: !!(d.IMG && d.IMG[it[0]]), img: d.IMG && d.IMG[it[0]] ? 'assets/platos/' + d.IMG[it[0]] + '.jpg' : '',
+        tags: it[3] == null ? [{ t: 'Alérgenos: consultar en sala', isIcon: false, isText: true }] : it[3] ? it[3].split(' ').map(k => ({ t: d.AL[k], icon: 'assets/alergenos/' + k + '.png', isIcon: true, isText: false })) : [{ t: 'Sin alérgenos declarados', isIcon: false, isText: true }] }));
+        return { ...c, items, empty: items.length === 0 }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

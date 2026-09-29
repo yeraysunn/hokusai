@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>HOKUSAI Sushi · Buffet Libre en Salou | Restaurante japonés temático anime</title>
+<meta name="description" content="Sushi buffet libre en Salou (Tarragona). Restaurante japonés con temática anime: nigiris, makis, ramen, woks y postres sin límite. Reserva tu mesa online o por WhatsApp.">
+<link rel="alternate" hreflang="es" href="https://hokusaisushi.es/">
+<link rel="alternate" hreflang="ca" href="https://hokusaisushi.es/ca/">
+<link rel="alternate" hreflang="en" href="https://hokusaisushi.es/en/">
+<link rel="alternate" hreflang="fr" href="https://hokusaisushi.es/fr/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=Noto+Sans+JP:wght@700;900&amp;display=swap">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<script src="./image-slot.js"></script>
+<script type="application/ld+json">
+{ "@context": "https://schema.org", "@type": "Restaurant", "name": "HOKUSAI Sushi · Buffet Libre", "servesCuisine": ["Japonesa", "Sushi", "Buffet libre"], "priceRange": "€€", "acceptsReservations": "True", "telephone": "+34 622 01 59 96", "hasMenu": "https://hokusaisushi.es/carta", "url": "https://hokusaisushi.es/",
+  "address": { "@type": "PostalAddress", "streetAddress": "Carrer del Carrilet, 9", "addressLocality": "Salou", "addressRegion": "Tarragona", "postalCode": "43840", "addressCountry": "ES" },
+  "openingHours": ["Mo-Su 12:30-16:30", "Mo-Su 19:30-23:30"] }
+</script>
+<style>
+html,body{overflow-x:clip}
+body{margin:0;background:#FAF3E3;color:#141414;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1B2A6B}
+a:hover{color:#D7263D}
+:focus-visible{outline:3px solid #FFE600;outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+<style>@keyframes hk-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media (prefers-reduced-motion:reduce){[style*="hk-marquee"]{animation:none!important}}</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:60;background:#FAF3E3;border-bottom:3px solid #141414">
+  <div style="max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:20px;padding:10px clamp(14px,3vw,32px)">
+    <a href="#inicio" aria-label="HOKUSAI Sushi, inicio" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#141414">
+      <span style="width:42px;height:42px;display:grid;place-items:center;background:#D7263D;color:#FAF3E3;border:2px solid #141414;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:15px;line-height:1;writing-mode:vertical-rl">北斎</span>
+      <span style="display:flex;flex-direction:column;line-height:1">
+        <span style="font-family:Anton,sans-serif;font-size:26px;letter-spacing:.04em">HOKUSAI</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.16em">SUSHI · BUFFET LIBRE</span>
+      </span>
+    </a>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Principal" style="display:flex;gap:22px;margin-left:12px;font-weight:700;font-size:15px">
+        <a href="#buffet" style="color:#141414;text-decoration:none">Buffet</a>
+        <a href="#precios" style="color:#141414;text-decoration:none">Precios</a>
+                <a href="#experiencia" style="color:#141414;text-decoration:none">Galería</a>
+        <a href="#opiniones" style="color:#141414;text-decoration:none">Opiniones</a>
+        <a href="#grupos" style="color:#141414;text-decoration:none">Grupos</a>
+        <a href="#ubicacion" style="color:#141414;text-decoration:none">Ubicación</a>
+      </nav>
+    </sc-if>
+    <div style="flex:1"></div>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <div role="group" aria-label="Idioma" style="flex:none;display:flex;border:2px solid #141414;border-radius:6px;overflow:hidden">
+        <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+          <button onClick="{{ l.onClick }}" aria-pressed="{{ l.on }}" style="min-width:40px;height:36px;border:0;border-right:2px solid #141414;background:{{ l.bg }};color:{{ l.fg }};font:700 13px 'DM Sans',sans-serif;cursor:pointer">{{ l.l }}</button>
+        </sc-for>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+      <div style="position:relative">
+        <button onClick="{{ toggleLang }}" aria-label="Cambiar idioma" style="height:44px;padding:0 10px;display:flex;align-items:center;gap:4px;border:2px solid #141414;border-radius:6px;background:#FAF3E3;font:700 14px 'DM Sans',sans-serif;color:#141414"><i class="ph-bold ph-globe-simple"></i>{{ lang }}</button>
+        <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;right:0;top:50px;display:flex;flex-direction:column;background:#FAF3E3;border:3px solid #141414;box-shadow:4px 4px 0 #141414;border-radius:6px;overflow:hidden">
+            <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+              <button onClick="{{ l.onClick }}" style="width:120px;height:44px;border:0;border-bottom:2px solid #141414;background:{{ l.bg }};color:{{ l.fg }};font:700 14px 'DM Sans',sans-serif;text-align:left;padding:0 14px">{{ l.name }}</button>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}"><a href="Carta.dc.html" style="flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;background:transparent;color:#141414;border:3px solid #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:18px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,background .12s" style-hover="transform:translate(-2px,-2px);background:rgba(20,20,20,.06);color:#141414" style-active="transform:translate(2px,2px)">CARTA</a></sc-if>
+    <a href="Reservar.dc.html" style="flex:none;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:4px 4px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:18px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:6px 6px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">RESERVAR</a>
+  </div>
+  <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <nav aria-label="Secciones" style="display:flex;gap:8px;overflow-x:auto;padding:0 14px 10px;scrollbar-width:none">
+      <a href="#buffet" style="flex:none;display:flex;align-items:center;height:36px;padding:0 14px;border:2px solid #141414;border-radius:999px;color:#141414;text-decoration:none;font-weight:700;font-size:14px">Buffet</a>
+      <a href="#precios" style="flex:none;display:flex;align-items:center;height:36px;padding:0 14px;border:2px solid #141414;border-radius:999px;color:#141414;text-decoration:none;font-weight:700;font-size:14px">Precios</a>
+      <a href="#experiencia" style="flex:none;display:flex;align-items:center;height:36px;padding:0 14px;border:2px solid #141414;border-radius:999px;color:#141414;text-decoration:none;font-weight:700;font-size:14px">Galería</a>
+      <a href="#opiniones" style="flex:none;display:flex;align-items:center;height:36px;padding:0 14px;border:2px solid #141414;border-radius:999px;color:#141414;text-decoration:none;font-weight:700;font-size:14px">Opiniones</a>
+      <a href="#grupos" style="flex:none;display:flex;align-items:center;height:36px;padding:0 14px;border:2px solid #141414;border-radius:999px;color:#141414;text-decoration:none;font-weight:700;font-size:14px">Grupos</a>
+      <a href="#ubicacion" style="flex:none;display:flex;align-items:center;height:36px;padding:0 14px;border:2px solid #141414;border-radius:999px;color:#141414;text-decoration:none;font-weight:700;font-size:14px">Ubicación</a>
+    </nav>
+  </sc-if>
+</header>
+
+<main>
+<!-- HERO · mezcla (por defecto) -->
+<sc-if value="{{ heroMix }}" hint-placeholder-val="{{ true }}">
+<section id="inicio" style="position:relative;overflow:hidden;background:#1B2A6B;color:#FAF3E3;border-bottom:3px solid #141414;scroll-margin-top:120px">
+  <div style="position:absolute;inset:0;opacity:.55"><image-slot id="hero-foto" shape="rect" src="assets/local-noren.jpg" placeholder="Foto real del interior: noren, neones, murales"></image-slot></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(27,42,107,.97) 0%,rgba(27,42,107,.86) 48%,rgba(27,42,107,.25) 100%)"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 78% 38%,rgba(250,243,227,.10) 0 1.6deg,transparent 1.6deg 8deg)"></div>
+  <sc-if value="{{ isWide }}" hint-placeholder-val="{{ true }}"><img data-sfx="" src="assets/personaje-carta.png" alt="" aria-hidden="true" style="position:absolute;right:clamp(0px,4vw,80px);bottom:58px;height:min(80%,560px);max-width:34vw;width:auto;object-fit:contain;object-position:bottom right;pointer-events:none;filter:drop-shadow(8px 8px 0 #141414)"></sc-if>
+  <div data-sfx="" aria-hidden="true" style="position:absolute;right:clamp(12px,6vw,90px);top:clamp(16px,5vw,60px);font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(64px,11vw,170px);color:#FFE600;-webkit-text-stroke:3px #141414;text-shadow:6px 6px 0 #141414;pointer-events:none">ドン!</div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(40px,8vw,104px) clamp(18px,4vw,40px) clamp(110px,12vw,150px);pointer-events:none">
+    <div data-reveal="" style="max-width:760px;display:flex;flex-direction:column;gap:22px;pointer-events:auto">
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span style="background:#F2A33A;color:#141414;border:2px solid #141414;padding:5px 10px;font-weight:700;font-size:13px;letter-spacing:.08em">食べ放題 · BUFFET LIBRE</span>
+        <span style="background:#FAF3E3;color:#141414;border:2px solid #141414;padding:5px 10px;font-weight:700;font-size:13px;letter-spacing:.08em">SALOU · COSTA DAURADA</span>
+      </div>
+      <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(62px,13vw,168px);line-height:.88;letter-spacing:.01em;text-transform:uppercase;text-shadow:5px 5px 0 #141414">¡Sushi sin <span style="color:#F2A33A">límites!</span></h1>
+      <p style="margin:0;max-width:540px;font-size:clamp(17px,2vw,20px);line-height:1.5;text-wrap:pretty">Buffet libre de cocina japonesa en un local lleno de anime: murales, figuras a tamaño real y neones. Pide lo que quieras, tantas veces como quieras.</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+        <div style="width:124px;height:124px;flex:none;display:grid;place-items:center;background:#FFE600;color:#141414;clip-path:polygon(100% 50%,86.7% 59.8%,93.3% 75%,76.9% 76.9%,75% 93.3%,59.8% 86.7%,50% 100%,40.2% 86.7%,25% 93.3%,23.1% 76.9%,6.7% 75%,13.3% 59.8%,0 50%,13.3% 40.2%,6.7% 25%,23.1% 23.1%,25% 6.7%,40.2% 13.3%,50% 0,59.8% 13.3%,75% 6.7%,76.9% 23.1%,93.3% 25%,86.7% 40.2%);">
+          <span style="text-align:center;line-height:1"><span style="display:block;font-weight:700;font-size:12px;letter-spacing:.1em">DESDE</span><span style="font-family:Anton,sans-serif;font-size:30px">16,95€</span></span>
+        </div>
+        <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 24px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:22px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-calendar-check"></i>RESERVAR MESA</a>
+        <a href="Carta.dc.html" style="display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 22px;background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:22px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">VER CARTA</a>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px 20px;font-weight:700;font-size:14px">
+        <span style="display:flex;align-items:center;gap:6px"><i class="ph-bold ph-infinity" style="color:#F2A33A"></i>Rondas ilimitadas</span>
+        <span style="display:flex;align-items:center;gap:6px"><i class="ph-bold ph-baby" style="color:#F2A33A"></i>Precio niños</span>
+        <span style="display:flex;align-items:center;gap:6px"><i class="ph-bold ph-star" style="color:#F2A33A"></i>4,5 en Google</span>
+      </div>
+    </div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:64px;border-top:3px solid #141414;background:radial-gradient(circle at 50% 100%,#FAF3E3 0 4px,#1B2A6B 4px 8px,#FAF3E3 8px 11px,#1B2A6B 11px 15px,#FAF3E3 15px 18px,#1B2A6B 18px 22px,#FAF3E3 22px 25px,#1B2A6B 25px 30px,transparent 30px) 0 0/60px 30px,radial-gradient(circle at 50% 100%,#FAF3E3 0 4px,#1B2A6B 4px 8px,#FAF3E3 8px 11px,#1B2A6B 11px 15px,#FAF3E3 15px 18px,#1B2A6B 18px 22px,#FAF3E3 22px 25px,#1B2A6B 25px 30px,transparent 30px) 30px 15px/60px 30px,#1B2A6B"></div>
+</section>
+</sc-if>
+
+<!-- HERO · variante manga pop -->
+<sc-if value="{{ heroManga }}" hint-placeholder-val="{{ false }}">
+<section id="inicio" style="position:relative;overflow:hidden;background:#F2A33A;color:#141414;border-bottom:3px solid #141414;scroll-margin-top:120px">
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(rgba(20,20,20,.22) 1.6px,transparent 2px) 0 0/12px 12px"></div>
+  <div style="position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 72% 45%,rgba(250,243,227,.55) 0 1.4deg,transparent 1.4deg 7deg)"></div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(28px,6vw,72px) clamp(18px,4vw,40px) clamp(40px,6vw,80px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(28px,4vw,56px);align-items:center">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+      <div style="align-self:flex-start;position:relative;background:#FAF3E3;border:3px solid #141414;border-radius:28px;padding:10px 18px;font-weight:700;font-size:16px;box-shadow:4px 4px 0 #141414">¡Come todo lo que quieras! <span style="font-family:'Noto Sans JP';font-weight:900">いただきます!</span>
+        <span style="position:absolute;left:34px;bottom:-14px;width:22px;height:22px;background:#FAF3E3;border-right:3px solid #141414;border-bottom:3px solid #141414;skew(10deg,10deg)"></span>
+      </div>
+      <h1 style="margin:10px 0 0;display:flex;flex-direction:column;align-items:flex-start;gap:8px;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(60px,11vw,150px);line-height:.9;text-transform:uppercase">
+        <span style="background:#141414;color:#FAF3E3;padding:4px 16px 8px;box-shadow:6px 6px 0 #D7263D">¡Sushi</span>
+        <span style="background:#FAF3E3;padding:4px 16px 8px;border:3px solid #141414;box-shadow:6px 6px 0 #141414">sin</span>
+        <span style="background:#D7263D;color:#FAF3E3;padding:4px 16px 8px;border:3px solid #141414;box-shadow:6px 6px 0 #141414">límites!</span>
+      </h1>
+      <p style="margin:8px 0 0;max-width:500px;font-size:clamp(17px,2vw,20px);line-height:1.5;font-weight:500">Buffet libre japonés con murales anime, figuras a tamaño real y neones. Salou, a dos calles de la playa.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px">
+        <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 24px;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:22px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-calendar-check"></i>RESERVAR MESA</a>
+        <a href="Carta.dc.html" style="display:inline-flex;align-items:center;min-height:56px;padding:0 22px;background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:22px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">VER CARTA</a>
+      </div>
+    </div>
+    <div style="position:relative;min-height:clamp(320px,42vw,540px)">
+      <div data-reveal="" style="position:absolute;inset:0 6% 8% 0;border:4px solid #141414;box-shadow:10px 10px 0 #141414;background:#1B2A6B;overflow:hidden"><image-slot id="hero-manga-foto" shape="rect" src="assets/local-figura.jpg" placeholder="Foto del local (figuras / neones)"></image-slot></div>
+      <div data-sfx="" aria-hidden="true" style="position:absolute;left:-8px;top:-18px;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(54px,8vw,110px);color:#D7263D;-webkit-text-stroke:3px #141414;text-shadow:5px 5px 0 #FAF3E3;pointer-events:none">スシ!!</div>
+      <div data-sfx="" style="position:absolute;right:0;bottom:0;width:150px;height:150px;display:grid;place-items:center;background:#FFE600;border:0;clip-path:polygon(100% 50%,86.7% 59.8%,93.3% 75%,76.9% 76.9%,75% 93.3%,59.8% 86.7%,50% 100%,40.2% 86.7%,25% 93.3%,23.1% 76.9%,6.7% 75%,13.3% 59.8%,0 50%,13.3% 40.2%,6.7% 25%,23.1% 23.1%,25% 6.7%,40.2% 13.3%,50% 0,59.8% 13.3%,75% 6.7%,76.9% 23.1%,93.3% 25%,86.7% 40.2%);">
+        <span style="text-align:center;line-height:1"><span style="display:block;font-weight:700;font-size:13px;letter-spacing:.1em">DESDE</span><span style="font-family:Anton,sans-serif;font-size:36px">16,95€</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<!-- HERO · variante ukiyo-e elegante -->
+<sc-if value="{{ heroUkiyo }}" hint-placeholder-val="{{ false }}">
+<section id="inicio" style="position:relative;overflow:hidden;background:#FAF3E3;color:#1B2A6B;border-bottom:3px solid #1B2A6B;scroll-margin-top:120px">
+  <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 20% 30%,rgba(242,163,58,.10),transparent 40%),radial-gradient(circle at 85% 70%,rgba(27,42,107,.07),transparent 45%),repeating-linear-gradient(0deg,rgba(20,20,20,.025) 0 1px,transparent 1px 4px)"></div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(36px,7vw,96px) clamp(18px,4vw,40px) clamp(120px,12vw,160px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:clamp(32px,5vw,72px);align-items:center">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;align-items:center;gap:12px;font-weight:700;font-size:13px;letter-spacing:.22em"><span style="width:40px;height:2px;background:#D7263D"></span>BUFFET LIBRE JAPONÉS · SALOU</div>
+      <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(56px,9vw,124px);line-height:.92;text-transform:uppercase;letter-spacing:.01em">Sushi<br>sin límites</h1>
+      <p style="margin:0;max-width:480px;font-size:clamp(17px,1.8vw,19px);line-height:1.6;color:#141414;text-wrap:pretty">Un homenaje al maestro del grabado japonés, servido en rondas infinitas. Cocina japonesa, murales de manga y la luz de los neones.</p>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:22px">
+        <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;gap:10px;min-height:54px;padding:0 26px;background:#1B2A6B;color:#FAF3E3;border:2px solid #1B2A6B;border-radius:2px;font-weight:700;font-size:16px;letter-spacing:.12em;text-decoration:none;transition:transform .15s,box-shadow .15s" style-hover="transform:translateY(-2px);box-shadow:4px 4px 0 #D7263D;color:#FAF3E3" style-active="transform:translateY(1px);box-shadow:none">RESERVAR MESA</a>
+        <a href="Carta.dc.html" style="display:inline-flex;align-items:center;gap:8px;min-height:54px;color:#1B2A6B;font-weight:700;font-size:16px;letter-spacing:.12em;text-decoration:none;border-bottom:2px solid #D7263D" style-hover="color:#D7263D">VER CARTA <i class="ph-bold ph-arrow-right"></i></a>
+        <span style="display:flex;align-items:baseline;gap:8px;color:#141414"><span style="font-size:13px;font-weight:700;letter-spacing:.14em">DESDE</span><span style="font-family:Anton,sans-serif;font-size:34px;color:#D7263D">16,95€</span></span>
+      </div>
+    </div>
+    <div style="position:relative;display:flex;justify-content:flex-end;gap:18px">
+      <div data-reveal="" style="position:relative;width:min(100%,440px);aspect-ratio:3/4;background:#F2E6CC;padding:14px;border:2px solid #1B2A6B;box-shadow:0 24px 40px -20px rgba(20,20,20,.45)">
+        <div style="width:100%;height:100%;border:1px solid #1B2A6B;background:#1B2A6B"><image-slot id="hero-ukiyo-foto" shape="rect" src="assets/local-mural.jpg" placeholder="Foto del local en vertical (noren / mural)"></image-slot></div>
+        <div data-sfx="" style="position:absolute;left:-26px;bottom:34px;width:76px;height:76px;display:grid;place-items:center;background:#D7263D;color:#FAF3E3;border-radius:8px;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:24px;line-height:1;writing-mode:vertical-rl;box-shadow:inset 0 0 0 3px #D7263D,inset 0 0 0 5px #FAF3E3">北斎</div>
+      </div>
+      <div aria-hidden="true" style="writing-mode:vertical-rl;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(28px,3.4vw,44px);letter-spacing:.3em;color:#1B2A6B">寿司食べ放題</div>
+    </div>
+  </div>
+  <div aria-hidden="true" style="position:absolute;left:0;right:0;bottom:0;height:96px;background:radial-gradient(circle at 50% 100%,#1B2A6B 0 5px,#FAF3E3 5px 10px,#1B2A6B 10px 14px,#FAF3E3 14px 19px,#1B2A6B 19px 23px,#FAF3E3 23px 28px,#1B2A6B 28px 32px,#FAF3E3 32px 40px,transparent 40px) 0 0/80px 40px,radial-gradient(circle at 50% 100%,#1B2A6B 0 5px,#FAF3E3 5px 10px,#1B2A6B 10px 14px,#FAF3E3 14px 19px,#1B2A6B 19px 23px,#FAF3E3 23px 28px,#1B2A6B 28px 32px,#FAF3E3 32px 40px,transparent 40px) 40px 20px/80px 40px,#FAF3E3"></div>
+</section>
+</sc-if>
+
+<!-- CÓMO FUNCIONA -->
+<section id="buffet" style="scroll-margin-top:120px;background:#FAF3E3;background-image:radial-gradient(rgba(20,20,20,.07) 1px,transparent 1.4px);background-size:9px 9px">
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(18px,4vw,40px)">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:6px;margin-bottom:clamp(28px,4vw,48px)">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#D7263D;letter-spacing:.2em;font-size:15px">システム · CÓMO FUNCIONA</span>
+      <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase">Cuatro viñetas<br>y a comer</h2>
+    </div>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:18px">
+      <li data-reveal="" style="position:relative;background:#FAF3E3;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:22px 20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <span style="width:44px;height:44px;display:grid;place-items:center;background:#1B2A6B;color:#FAF3E3;border:2px solid #141414;font-family:Anton,sans-serif;font-size:24px">1</span>
+        <i class="ph-bold ph-chair" style="font-size:44px;color:#1B2A6B"></i>
+        <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:32px;text-transform:uppercase">Siéntate</h3>
+        <p style="margin:0;line-height:1.5">Te damos mesa y te contamos cómo va el buffet en un minuto.</p>
+        <span data-sfx="" aria-hidden="true" style="position:absolute;right:14px;top:10px;font-family:'Noto Sans JP';font-weight:900;font-size:26px;color:#D7263D;">ドスン</span>
+      </li>
+      <li data-reveal="" style="position:relative;background:#F2A33A;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:22px 20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <span style="width:44px;height:44px;display:grid;place-items:center;background:#141414;color:#FAF3E3;border:2px solid #141414;font-family:Anton,sans-serif;font-size:24px">2</span>
+        <i class="ph-bold ph-hand-pointing" style="font-size:44px;color:#141414"></i>
+        <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:32px;text-transform:uppercase">Pide</h3>
+        <p style="margin:0;line-height:1.5">Elige de la carta por rondas: nigiris, makis, woks, ramen… todo se prepara al momento.</p>
+      </li>
+      <li data-reveal="" style="position:relative;background:#FAF3E3;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:22px 20px 24px;display:flex;flex-direction:column;gap:10px;background-image:repeating-conic-gradient(from 0deg at 100% 0%,rgba(20,20,20,.06) 0 1.5deg,transparent 1.5deg 6deg)">
+        <span style="width:44px;height:44px;display:grid;place-items:center;background:#D7263D;color:#FAF3E3;border:2px solid #141414;font-family:Anton,sans-serif;font-size:24px">3</span>
+        <i class="ph-bold ph-arrows-clockwise" style="font-size:44px;color:#D7263D"></i>
+        <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:32px;text-transform:uppercase">Repite</h3>
+        <p style="margin:0;line-height:1.5">¿Te has quedado con ganas? Otra ronda. Y otra. Sin límite.</p>
+        <span data-sfx="" aria-hidden="true" style="position:absolute;right:14px;top:10px;font-family:'Noto Sans JP';font-weight:900;font-size:26px;color:#1B2A6B;">モット!</span>
+      </li>
+      <li data-reveal="" style="position:relative;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:22px 20px 24px;display:flex;flex-direction:column;gap:10px;">
+        <span style="width:44px;height:44px;display:grid;place-items:center;background:#FFE600;color:#141414;border:2px solid #141414;font-family:Anton,sans-serif;font-size:24px">4</span>
+        <i class="ph-bold ph-camera" style="font-size:44px;color:#F2A33A"></i>
+        <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:32px;text-transform:uppercase">Disfruta</h3>
+        <p style="margin:0;line-height:1.5">Postre, fotos con las figuras y los neones. Aquí la sobremesa también cuenta.</p>
+      </li>
+    </ol>
+    <div style="margin-top:28px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:24px">
+    <div data-reveal="" style="flex:1 1 520px;max-width:860px;background:#FAF3E3;border:3px solid #141414;border-radius:8px;padding:20px 22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px 28px">
+      <h3 style="grid-column:1/-1;margin:0;display:flex;align-items:center;gap:10px;font-family:Anton,sans-serif;font-weight:400;font-size:24px;text-transform:uppercase"><i class="ph-bold ph-scroll" style="color:#D7263D"></i>Normas de la casa</h3>
+      <p style="margin:0;display:flex;gap:8px;line-height:1.45"><i class="ph-bold ph-check" style="color:#D7263D;margin-top:3px"></i>Precio por persona. Bebidas aparte.</p>
+      <p style="margin:0;display:flex;gap:8px;line-height:1.45"><i class="ph-bold ph-check" style="color:#D7263D;margin-top:3px"></i>Servicio rápido: cada ronda llega a tu mesa en un momento.</p>
+      <p style="margin:0;display:flex;gap:8px;line-height:1.45"><i class="ph-bold ph-check" style="color:#D7263D;margin-top:3px"></i>Pide con cabeza: la comida que sobra se cobra aparte.</p>
+      <p style="margin:0;display:flex;gap:8px;line-height:1.45"><i class="ph-bold ph-check" style="color:#D7263D;margin-top:3px"></i>Toda la mesa comparte la misma modalidad de buffet.</p>
+    </div>
+    <div data-sfx="" style="position:relative;flex:none;width:clamp(150px,18vw,210px);aspect-ratio:4/5;">
+      <img src="assets/mascota.png" alt="" loading="lazy" style="display:block;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply">
+      <span aria-hidden="true" style="position:absolute;left:-18px;top:-12px;pointer-events:none;background:#FAF3E3;border:2.5px solid #141414;border-radius:18px;padding:4px 10px;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:16px;">ヨロシク!</span>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRECIOS -->
+<section id="precios" style="scroll-margin-top:120px;position:relative;background:#1B2A6B;color:#FAF3E3;border-top:3px solid #141414;border-bottom:3px solid #141414">
+  <div aria-hidden="true" style="position:relative">
+    <div style="height:10px;background:#141414"></div>
+    <div style="display:flex;gap:6px;padding:0 6px">
+      <sc-for list="{{ norenA }}" as="n" hint-placeholder-count="6">
+        <div style="flex:1;height:64px;background:{{ n.bg }};color:{{ n.fg }};border:3px solid #141414;border-top:0;border-radius:0 0 10px 10px;display:grid;place-items:center;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:26px">{{ n.k }}</div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="position:absolute;inset:74px 0 0;pointer-events:none;background:radial-gradient(rgba(250,243,227,.08) 1.4px,transparent 1.8px) 0 0/12px 12px"></div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(44px,7vw,96px) clamp(18px,4vw,40px)">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:6px;margin-bottom:clamp(28px,4vw,48px)">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#F2A33A;letter-spacing:.2em;font-size:15px">ネダン · PRECIOS</span>
+      <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase">Un precio.<br>Rondas infinitas.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:200px 22px;padding-top:0">
+      <article data-reveal="" style="background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:8px 8px 0 #F2A33A;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:12px"><i class="ph-bold ph-sun" style="font-size:38px;color:#D7263D"></i>
+          <div><h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(30px,3.4vw,40px);line-height:1;text-transform:uppercase">Mediodía</h3><p style="margin:4px 0 0;font-weight:500">Lunes a viernes · 12:30–16:30</p></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;border:3px solid #141414">
+          <div style="padding:16px;border-right:3px solid #141414"><p style="margin:0;font-family:Anton,sans-serif;font-size:clamp(44px,5vw,60px);line-height:1">16,95€</p><p style="margin:6px 0 0;font-weight:700;font-size:13px;letter-spacing:.1em">ADULTO</p></div>
+          <div style="padding:16px;background:#F2A33A"><p style="margin:0;font-family:Anton,sans-serif;font-size:clamp(44px,5vw,60px);line-height:1">11,95€</p><p style="margin:6px 0 0;font-weight:700;font-size:13px;letter-spacing:.1em">NIÑO DE 3 A 8 AÑOS</p></div>
+        </div>
+      </article>
+      <article data-reveal="" style="position:relative;background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:8px 8px 0 #D7263D;padding:clamp(20px,3vw,30px);display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;gap:12px"><i class="ph-bold ph-moon-stars" style="font-size:38px;color:#1B2A6B"></i>
+          <div><h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(30px,3.4vw,40px);line-height:1;text-transform:uppercase">Noche y fin de semana</h3><p style="margin:4px 0 0;font-weight:500">Todas las noches · sábado y domingo todo el día</p></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;border:3px solid #141414">
+          <div style="padding:16px;border-right:3px solid #141414"><p style="margin:0;font-family:Anton,sans-serif;font-size:clamp(44px,5vw,60px);line-height:1">22,95€</p><p style="margin:6px 0 0;font-weight:700;font-size:13px;letter-spacing:.1em">ADULTO</p></div>
+          <div style="padding:16px;background:#F2A33A"><p style="margin:0;font-family:Anton,sans-serif;font-size:clamp(44px,5vw,60px);line-height:1">13,95€</p><p style="margin:6px 0 0;font-weight:700;font-size:13px;letter-spacing:.1em">NIÑO DE 3 A 8 AÑOS</p></div>
+        </div>
+        <div aria-hidden="true" style="position:absolute;right:clamp(70px,14%,140px);bottom:calc(100% + 3px);width:clamp(130px,14vw,180px);pointer-events:none">
+          <img src="assets/personaje-noche.png" alt="" loading="lazy" style="display:block;width:100%;height:auto;filter:drop-shadow(4px 0 0 #141414)">
+        </div>
+        <span data-sfx="" aria-hidden="true" style="position:absolute;right:14px;top:-18px;background:#D7263D;color:#FAF3E3;border:2px solid #141414;padding:4px 10px;font-family:'Noto Sans JP';font-weight:900;font-size:16px;">ヨル</span>
+      </article>
+    </div>
+    <p style="margin:22px 0 0;font-size:14px;color:#FAF3E3">Precio por persona, IVA incluido. Bebidas aparte.</p>
+  </div>
+</section>
+
+<!-- CARTA -->
+<section id="carta" style="scroll-margin-top:120px;background:#FAF3E3">
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(18px,4vw,40px)">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#D7263D;letter-spacing:.2em;font-size:15px">メニュー · LA CARTA</span>
+        <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase">Todo esto,<br>sin límite</h2>
+      </div>
+    </div>
+    <div data-reveal="" style="margin:0 calc(-1 * clamp(18px,4vw,40px));overflow:hidden;padding:6px 0 14px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)">
+      <div style="display:flex;gap:18px;width:max-content;padding-right:18px;animation:hk-marquee 70s linear infinite" style-hover="animation-play-state:paused">
+        <sc-for list="{{ reel }}" as="r" hint-placeholder-count="8">
+          <figure style="flex:none;margin:0;width:clamp(200px,22vw,280px);background:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414">
+            <div style="aspect-ratio:1/1;overflow:hidden;background:#141414;border-bottom:3px solid #141414"><img src="{{ r.img }}" alt="{{ r.n }}" loading="lazy" width="720" height="720" style="display:block;width:100%;height:100%;object-fit:cover"></div>
+            <figcaption style="padding:10px 14px 12px;font-family:Anton,sans-serif;font-size:19px;line-height:1.1;text-transform:uppercase">{{ r.n }}</figcaption>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+    <div data-reveal="" style="display:flex;justify-content:center;margin-top:clamp(28px,4vw,48px)">
+      <a href="Carta.dc.html" style="display:inline-flex;align-items:center;gap:14px;min-height:76px;padding:0 clamp(28px,4vw,48px);background:#D7263D;color:#FAF3E3;border:4px solid #141414;box-shadow:7px 7px 0 #141414;border-radius:8px;font-family:Anton,sans-serif;font-size:clamp(26px,3.4vw,40px);letter-spacing:.05em;text-decoration:none;text-transform:uppercase;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-3px,-3px);box-shadow:10px 10px 0 #141414;color:#FAF3E3" style-active="transform:translate(4px,4px);box-shadow:2px 2px 0 #141414"><i class="ph-bold ph-file-text"></i>Ver carta completa<i class="ph-bold ph-arrow-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia" style="scroll-margin-top:120px;background:#141414;color:#FAF3E3;border-top:3px solid #141414">
+  <div aria-hidden="true">
+    <div style="height:10px;background:#141414;border-bottom:2px solid #3a3a3a"></div>
+    <div style="display:flex;gap:6px;padding:0 6px">
+      <sc-for list="{{ norenB }}" as="n" hint-placeholder-count="6">
+        <div style="flex:1;height:64px;background:{{ n.bg }};color:{{ n.fg }};border:3px solid #141414;border-top:0;border-radius:0 0 10px 10px;display:grid;place-items:center;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:26px">{{ n.k }}</div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,7vw,96px) clamp(18px,4vw,40px)">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:clamp(24px,4vw,40px)">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#FFE600;letter-spacing:.2em;font-size:15px">セカイ · LA EXPERIENCIA</span>
+        <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase">Cenar dentro<br>de un <span style="color:#FFE600;text-shadow:0 0 18px rgba(255,230,0,.55)">manga</span></h2>
+      </div>
+      <p style="margin:0;max-width:380px;line-height:1.55">Noren a la entrada, murales pintados a mano, figuras a tamaño real y neones por todo el local. Trae el móvil cargado.</p>
+    </div>
+    <div data-reveal="" style="background:#FAF3E3;padding:clamp(8px,1.2vw,14px);border-radius:4px">
+      <div style="display:grid;grid-template-columns:repeat({{ gcols }},minmax(0,1fr));grid-auto-rows:{{ rowH }};grid-auto-flow:dense;gap:clamp(8px,1.2vw,14px)">
+        <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="6">
+          <figure style="--ht:0;margin:0;position:relative;grid-column:{{ t.gc }};grid-row:{{ t.gr }};border:4px solid #141414;background:#1B2A6B;overflow:hidden;transition:transform .15s,box-shadow .15s" style-hover="--ht:1;transform:scale(1.025);box-shadow:8px 8px 0 #D7263D;z-index:2">
+            <sc-if value="{{ t.isVideo }}" hint-placeholder-val="{{ false }}"><video data-auto="" src="{{ t.src }}" ref="{{ muteRef }}" onPlay="{{ forceMute }}" onVolumeChange="{{ forceMute }}" autoplay="" muted="" loop="" playsinline="" preload="metadata" aria-label="{{ t.cap }}" style="display:block;width:100%;height:100%;object-fit:cover"></video></sc-if>
+            <sc-if value="{{ t.isImg }}" hint-placeholder-val="{{ true }}"><img src="{{ t.src }}" alt="{{ t.alt }}" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover;object-position:{{ t.pos }}"></sc-if>
+            <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:var(--ht);transition:opacity .2s;background:radial-gradient(rgba(20,20,20,.6) 1.8px,transparent 2.3px) 0 0/7px 7px"></div>
+            <figcaption style="position:absolute;left:8px;bottom:8px;pointer-events:none;background:#FAF3E3;color:#141414;border:2px solid #141414;padding:3px 9px;font-weight:700;font-size:13px">{{ t.cap }}</figcaption>
+            <span aria-hidden="true" style="position:absolute;right:10px;top:6px;pointer-events:none;font-family:'Noto Sans JP';font-weight:900;font-size:22px;color:#FFE600;-webkit-text-stroke:1.5px #141414;opacity:var(--ht);transition:opacity .2s">{{ t.sfx }}</span>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEÑAS -->
+<section id="opiniones" style="scroll-margin-top:120px;position:relative;overflow:hidden;background:#F2A33A;border-top:3px solid #141414;border-bottom:3px solid #141414">
+  <div style="position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 50% 120%,rgba(250,243,227,.35) 0 1.2deg,transparent 1.2deg 6deg)"></div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(18px,4vw,40px)">
+    <div data-reveal="" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:clamp(28px,4vw,48px)">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#141414;letter-spacing:.2em;font-size:15px">コエ · OPINIONES</span>
+        <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase">Lo que dicen<br>en Google</h2>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:stretch;gap:14px">
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=HOKUSAI%20Sushi%20Carrer%20del%20Carrilet%209%20Salou" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:14px;background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;padding:12px 18px;text-decoration:none" style-hover="color:#141414;">
+        <span style="font-family:Anton,sans-serif;font-size:44px;line-height:1">4,5</span>
+        <span style="display:flex;flex-direction:column;gap:2px"><span style="color:#D7263D;letter-spacing:2px">★★★★½</span><span style="font-size:13px;font-weight:700">1,1 mil reseñas · Ver en Google</span></span>
+      </a>
+      <a href="{{ reviewHref }}" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;padding:12px 20px;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><span style="color:#FFE600;letter-spacing:2px">★★★★★</span>DÉJANOS TU RESEÑA</a>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr));gap:34px 22px">
+      <figure data-reveal="" style="margin:0;display:flex;flex-direction:column;gap:18px">
+        <blockquote style="position:relative;margin:0;background:#FAF3E3;border:3px solid #141414;border-radius:24px;padding:20px 22px;box-shadow:5px 5px 0 #141414;line-height:1.5">
+          <span style="display:block;color:#D7263D;letter-spacing:2px;margin-bottom:6px">★★★★★</span>“El sushi, recién hecho y sin esperas. Los niños alucinaron con las figuras y repetimos postre tres veces.”
+          <span style="position:absolute;left:36px;bottom:-15px;width:24px;height:24px;background:#FAF3E3;border-right:3px solid #141414;border-bottom:3px solid #141414;"></span>
+        </blockquote>
+        <figcaption style="padding-left:18px;font-weight:700">Laura M. · Familia, Reus</figcaption>
+      </figure>
+      <figure data-reveal="" style="margin:0;display:flex;flex-direction:column;gap:18px">
+        <blockquote style="position:relative;margin:0;background:#FAF3E3;border:3px solid #141414;border-radius:24px;padding:20px 22px;box-shadow:5px 5px 0 #141414;line-height:1.5">
+          <span style="display:block;color:#D7263D;letter-spacing:2px;margin-bottom:6px">★★★★★</span>“Best all-you-can-eat sushi on the Costa Daurada. The anime murals are amazing — great value.”
+          <span style="position:absolute;left:36px;bottom:-15px;width:24px;height:24px;background:#FAF3E3;border-right:3px solid #141414;border-bottom:3px solid #141414;"></span>
+        </blockquote>
+        <figcaption style="padding-left:18px;font-weight:700">James P. · Turista, UK</figcaption>
+      </figure>
+      <figure data-reveal="" style="margin:0;display:flex;flex-direction:column;gap:18px">
+        <blockquote style="position:relative;margin:0;background:#FAF3E3;border:3px solid #141414;border-radius:24px;padding:20px 22px;box-shadow:5px 5px 0 #141414;line-height:1.5">
+          <span style="display:block;color:#D7263D;letter-spacing:2px;margin-bottom:6px">★★★★★</span>“Vam venir 12 per un aniversari. Ens van posar junts, bon servei i el ramen, boníssim.”
+          <span style="position:absolute;left:36px;bottom:-15px;width:24px;height:24px;background:#FAF3E3;border-right:3px solid #141414;border-bottom:3px solid #141414;"></span>
+        </blockquote>
+        <figcaption style="padding-left:18px;font-weight:700">Marc R. · Grupo, Tarragona</figcaption>
+      </figure>
+      <figure data-reveal="" style="margin:0;display:flex;flex-direction:column;gap:18px">
+        <blockquote style="position:relative;margin:0;background:#FAF3E3;border:3px solid #141414;border-radius:24px;padding:20px 22px;box-shadow:5px 5px 0 #141414;line-height:1.5">
+          <span style="display:block;color:#D7263D;letter-spacing:2px;margin-bottom:6px">★★★★☆</span>“Décor incroyable, on se croirait dans un manga. Le buffet est très complet, pensez à réserver l'été.”
+          <span style="position:absolute;left:36px;bottom:-15px;width:24px;height:24px;background:#FAF3E3;border-right:3px solid #141414;border-bottom:3px solid #141414;"></span>
+        </blockquote>
+        <figcaption style="padding-left:18px;font-weight:700">Camille D. · Turista, Francia</figcaption>
+      </figure>
+    </div>
+      </div>
+</section>
+
+<!-- GRUPOS -->
+<section id="grupos" style="scroll-margin-top:120px;background:#D7263D;color:#FAF3E3;border-bottom:3px solid #141414">
+  <div aria-hidden="true">
+    <div style="height:10px;background:#141414"></div>
+    <div style="display:flex;gap:6px;padding:0 6px">
+      <sc-for list="{{ norenC }}" as="n" hint-placeholder-count="6">
+        <div style="flex:1;height:64px;background:{{ n.bg }};color:{{ n.fg }};border:3px solid #141414;border-top:0;border-radius:0 0 10px 10px;display:grid;place-items:center;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:26px">{{ n.k }}</div>
+      </sc-for>
+    </div>
+  </div>
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(44px,7vw,96px) clamp(18px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(28px,5vw,64px);align-items:center">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:18px">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#FFE600;letter-spacing:.2em;font-size:15px">パーティー · GRUPOS Y CUMPLES</span>
+      <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase;text-shadow:4px 4px 0 #141414">¿Cumple?<br>¡Aquí se celebra!</h2>
+      <p style="margin:0;max-width:520px;font-size:18px;line-height:1.55">Trae a tus amigos, a la familia o al equipo entero. Cumpleaños, cenas de empresa, despedidas o el grupo del cosplay: juntamos mesas y os sentamos a todos juntos.</p>
+      <ul style="list-style:none;margin:0;padding:0;display:grid;gap:10px;font-weight:500">
+        <li style="display:flex;gap:10px"><i class="ph-bold ph-users-three" style="font-size:22px;color:#FFE600"></i>Juntamos mesas para que estéis todos juntos</li>
+        <li style="display:flex;gap:10px"><i class="ph-bold ph-confetti" style="font-size:22px;color:#FFE600"></i>Cuantos más, mejor: sin límite de personas</li>
+        <li style="display:flex;gap:10px"><i class="ph-bold ph-baby" style="font-size:22px;color:#FFE600"></i>Precio especial para niños</li>
+        <li style="display:flex;gap:10px"><i class="ph-bold ph-camera" style="font-size:22px;color:#FFE600"></i>Fotos de grupo con las figuras y los neones</li>
+      </ul>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:6px">
+        <a href="{{ waGroups }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 22px;background:#25D366;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:21px;letter-spacing:.04em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-whatsapp-logo" style="font-size:24px"></i>PEDIR PRESUPUESTO</a>
+        <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;min-height:56px;padding:0 22px;background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:21px;letter-spacing:.04em;text-decoration:none" style-hover="color:#141414;transform:translate(-2px,-2px)">RESERVAR ONLINE</a>
+      </div>
+    </div>
+    <div data-reveal="" style="position:relative;aspect-ratio:5/4;border:4px solid #141414;box-shadow:10px 10px 0 #141414;background:#1B2A6B">
+      <image-slot id="grupos-foto" shape="rect" src="assets/local-yummy.jpg" placeholder="Foto de un grupo / mesa larga en el local"></image-slot>
+      <span data-sfx="" aria-hidden="true" style="position:absolute;right:-10px;top:-26px;background:#FFE600;color:#141414;border:3px solid #141414;padding:6px 14px;font-family:'Noto Sans JP';font-weight:900;font-size:26px;pointer-events:none">カンパイ!</span>
+    </div>
+  </div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion" style="scroll-margin-top:120px;background:#FAF3E3">
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(18px,4vw,40px)">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:6px;margin-bottom:clamp(28px,4vw,48px)">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#D7263D;letter-spacing:.2em;font-size:15px">アクセス · UBICACIÓN Y HORARIO</span>
+      <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase">Te esperamos<br>en Salou</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:22px">
+      <div data-reveal="" style="min-height:360px;border:3px solid #141414;box-shadow:6px 6px 0 #1B2A6B;background:#1B2A6B">
+        <iframe title="Mapa de HOKUSAI Sushi en Salou" loading="lazy" src="https://maps.google.com/maps?q=HOKUSAI%20Sushi%2C%20Carrer%20del%20Carrilet%209%2C%2043840%20Salou&amp;output=embed" style="display:block;width:100%;height:100%;min-height:354px;border:0"></iframe>
+      </div>
+      <div data-reveal="" style="display:flex;flex-direction:column;gap:18px;background:#FAF3E3;border:3px solid #141414;box-shadow:6px 6px 0 #141414;padding:24px">
+        <div style="display:flex;gap:12px"><i class="ph-bold ph-map-pin" style="font-size:26px;color:#D7263D"></i><div><p style="margin:0;font-weight:700;font-size:18px">Carrer del Carrilet, 9</p><p style="margin:2px 0 0">43840 Salou, Tarragona</p></div></div>
+        <div style="display:flex;gap:12px"><i class="ph-bold ph-clock" style="font-size:26px;color:#D7263D"></i>
+          <div style="flex:1;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:15px">
+            <span style="font-weight:700">Todos los días</span><span>12:30–16:30 · 19:30–23:30</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px"><i class="ph-bold ph-car" style="font-size:26px;color:#D7263D"></i><p style="margin:0;line-height:1.5"><strong>En coche:</strong> zona azul en las calles de alrededor (Via Roma, Via Augusta, C. Barcelona). Puedes pagar desde el móvil con la app Aparcar de Salou.</p></div>
+        <div style="display:flex;gap:12px"><i class="ph-bold ph-person-simple-walk" style="font-size:26px;color:#D7263D"></i><p style="margin:0;line-height:1.5"><strong>A pie:</strong> junto a la plaza del Carrilet (la de la locomotora), a unos minutos del paseo marítimo y el Club Nàutic.</p></div>
+        <div style="display:flex;gap:12px"><i class="ph-bold ph-bus" style="font-size:26px;color:#D7263D"></i><p style="margin:0;line-height:1.5"><strong>En bus:</strong> paradas Ciutat de Reus – Via Roma (2 min a pie) y Barcelona – Via Augusta (3 min). <strong>En tren:</strong> estación Salou–PortAventura, a unos 2 km (taxi o bus).</p></div>
+        <a href="https://www.google.com/maps/dir/?api=1&amp;destination=HOKUSAI%20Sushi%2C%20Carrer%20del%20Carrilet%209%2C%2043840%20Salou" target="_blank" rel="noopener" style="align-self:flex-start;margin-top:auto;display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 22px;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-navigation-arrow"></i>CÓMO LLEGAR</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hanaki" style="scroll-margin-top:120px;position:relative;overflow:hidden;background:#141414;color:#FAF3E3;border-top:3px solid #141414">
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,104px) clamp(18px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(28px,5vw,64px);align-items:center">
+    <div data-reveal="" style="display:grid;grid-template-columns:3fr 2fr;grid-template-rows:1fr 1fr;gap:12px;aspect-ratio:5/4">
+      <figure style="margin:0;grid-row:1/3;border:3px solid #FAF3E3;box-shadow:8px 8px 0 #D7263D;overflow:hidden;background:#1B2A6B"><img src="assets/hanaki-fachada.jpg" alt="Fachada del restaurante HANAKI en Salou" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover"></figure>
+      <figure style="margin:0;border:3px solid #FAF3E3;overflow:hidden;background:#1B2A6B"><img src="assets/hanaki-sala.jpg" alt="Sala de HANAKI con jardín colgante" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover"></figure>
+      <figure style="margin:0;border:3px solid #FAF3E3;overflow:hidden;background:#1B2A6B"><img src="assets/hanaki-mesa.jpg" alt="Nigiris, makis y tempura en una mesa de HANAKI" loading="lazy" decoding="async" style="display:block;width:100%;height:100%;object-fit:cover"></figure>
+    </div>
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#D7263D;letter-spacing:.2em;font-size:15px">姉妹店 · NUESTRO OTRO LOCAL</span>
+      <h2 style="margin:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 18px;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(52px,8vw,100px);line-height:.9;text-transform:uppercase">Hanaki <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:.5em;color:#D7263D">花木</span></h2>
+      <p style="margin:0;font-size:clamp(19px,2vw,22px);font-weight:500">Pequeños placeres, grandes momentos.</p>
+      <p style="margin:0;max-width:480px;font-size:17px;line-height:1.55">Restaurante japonés, sushi bar y take away en el centro de Salou. Mismo equipo, otro ambiente: más tranquilo, con jardín colgante y luz cálida.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px 24px;padding:16px 0;border-top:2px solid #3a3a3a;border-bottom:2px solid #3a3a3a;font-size:15px;line-height:1.5">
+        <span style="display:flex;gap:10px"><i class="ph-bold ph-map-pin" style="font-size:20px;color:#D7263D"></i>Carrer Major, 6<br>43840 Salou</span>
+        <span style="display:flex;gap:10px"><i class="ph-bold ph-clock" style="font-size:20px;color:#D7263D"></i>Todos los días<br>12:30–16:30 · 19:30–23:30</span>
+        <a href="tel:+34613261135" style="display:flex;gap:10px;color:#FAF3E3;text-decoration:none" style-hover="color:#F2A33A"><i class="ph-bold ph-phone" style="font-size:20px;color:#D7263D"></i>613 261 135</a>
+        <a href="https://www.instagram.com/hanakisalou/" target="_blank" rel="noopener" style="display:flex;gap:10px;color:#FAF3E3;text-decoration:none" style-hover="color:#F2A33A"><i class="ph-bold ph-instagram-logo" style="font-size:20px;color:#D7263D"></i>@hanakisalou</a>
+      </div>
+      <a href="https://hanakisalou.com" target="_blank" rel="noopener" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 24px;background:#D7263D;color:#FAF3E3;border:3px solid #FAF3E3;box-shadow:5px 5px 0 #FAF3E3;border-radius:6px;font-family:Anton,sans-serif;font-size:21px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #FAF3E3;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #FAF3E3">VISITAR HANAKISALOU.COM <i class="ph-bold ph-arrow-up-right"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- RESERVA -->
+<section id="reservar" style="scroll-margin-top:120px;position:relative;overflow:hidden;background:#1B2A6B;color:#FAF3E3;border-top:3px solid #141414">
+  <div style="position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 0% 50%,rgba(250,243,227,.07) 0 1.4deg,transparent 1.4deg 7deg)"></div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(56px,8vw,112px) clamp(18px,4vw,40px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:clamp(28px,5vw,64px);align-items:start">
+    <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#F2A33A;letter-spacing:.2em;font-size:15px">ヨヤク · RESERVA</span>
+      <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase;text-shadow:4px 4px 0 #141414">Reserva<br>tu mesa</h2>
+      <p style="margin:0;max-width:440px;font-size:18px;line-height:1.55">En verano y fines de semana se llena. Rellena el formulario y te abrimos WhatsApp con el mensaje listo para enviar.</p>
+      <a href="{{ waHref }}" target="_blank" rel="noopener" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 22px;background:#25D366;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:21px;letter-spacing:.04em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-whatsapp-logo" style="font-size:24px"></i>RESERVAR POR WHATSAPP</a>
+      <p style="margin:0;font-size:15px">O llámanos: <a href="tel:+34622015996" style="color:#F2A33A;font-weight:700">622 01 59 96</a></p>
+    </div>
+    <div data-reveal="" style="background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:8px 8px 0 #F2A33A;padding:clamp(20px,3vw,32px)">
+      <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
+        <form onSubmit="{{ onSubmit }}" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px">
+          <label style="grid-column:1/-1;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Nombre
+            <input required="" value="{{ f.name }}" onChange="{{ onName }}" autocomplete="name" placeholder="Tu nombre" style="height:50px;padding:0 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Fecha
+            <input required="" type="date" value="{{ f.date }}" onChange="{{ onDate }}" style="height:50px;padding:0 12px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Hora
+            <select required="" value="{{ f.time }}" onChange="{{ onTime }}" style="height:50px;padding:0 10px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+              <option value="">Elige</option>
+              <sc-for list="{{ times }}" as="t" hint-placeholder-count="6"><option value="{{ t }}">{{ t }}</option></sc-for>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Personas
+            <select value="{{ f.people }}" onChange="{{ onPeople }}" style="height:50px;padding:0 10px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+              <sc-for list="{{ peopleOpts }}" as="p" hint-placeholder-count="6"><option value="{{ p }}">{{ p }}</option></sc-for>
+            </select>
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Teléfono
+            <input required="" type="tel" value="{{ f.phone }}" onChange="{{ onPhone }}" autocomplete="tel" placeholder="+34 …" style="height:50px;padding:0 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+          </label>
+          <button type="submit" style="grid-column:1/-1;margin-top:6px;min-height:58px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:24px;letter-spacing:.06em;cursor:pointer;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">SOLICITAR RESERVA</button>
+          <p style="grid-column:1/-1;margin:0;font-size:13px;line-height:1.45">Al enviar aceptas la <a href="#">política de privacidad</a>.</p>
+        </form>
+      </sc-if>
+      <sc-if value="{{ sent }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:10px 0">
+          <span style="font-family:'Noto Sans JP';font-weight:900;font-size:44px;color:#D7263D">ヤッタ!</span>
+          <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:36px;text-transform:uppercase">¡Casi listo!</h3>
+          <p style="margin:0;line-height:1.5">Te hemos abierto WhatsApp con tu reserva escrita. Solo falta darle a enviar.</p>
+          <button onClick="{{ reset }}" style="min-height:48px;padding:0 18px;background:#FAF3E3;border:3px solid #141414;border-radius:6px;font:700 15px 'DM Sans',sans-serif;cursor:pointer">Hacer otra reserva</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer style="background:#141414;color:#FAF3E3;padding:clamp(40px,6vw,72px) clamp(18px,4vw,40px) 96px">
+  <div style="max-width:1320px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:32px">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:10px">
+        <span style="width:42px;height:42px;display:grid;place-items:center;background:#D7263D;color:#FAF3E3;border-radius:6px;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:15px;line-height:1;writing-mode:vertical-rl">北斎</span>
+        <span style="font-family:Anton,sans-serif;font-size:28px;letter-spacing:.04em">HOKUSAI</span>
+      </div>
+      <p style="margin:0;line-height:1.5;max-width:280px">Sushi buffet libre en Salou. Restaurante japonés con temática anime en la Costa Daurada.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:Anton,sans-serif;font-size:18px;letter-spacing:.06em;color:#F2A33A">SÍGUENOS</span>
+      <div style="display:flex;gap:10px">
+        <a href="https://www.instagram.com/hokusai__sushi/" target="_blank" rel="noopener" aria-label="Instagram" style="width:44px;height:44px;display:grid;place-items:center;border:2px solid #FAF3E3;border-radius:6px;color:#FAF3E3;font-size:22px" style-hover="background:#F2A33A;color:#141414;border-color:#F2A33A"><i class="ph-bold ph-instagram-logo"></i></a>
+        <a href="https://www.tiktok.com/@hokusai.ramen" target="_blank" rel="noopener" aria-label="TikTok" style="width:44px;height:44px;display:grid;place-items:center;border:2px solid #FAF3E3;border-radius:6px;color:#FAF3E3;font-size:22px" style-hover="background:#F2A33A;color:#141414;border-color:#F2A33A"><i class="ph-bold ph-tiktok-logo"></i></a>
+        <a href="https://www.facebook.com/p/Hokusai-Ramen-61579993186293/?locale=es_ES" target="_blank" rel="noopener" aria-label="Facebook" style="width:44px;height:44px;display:grid;place-items:center;border:2px solid #FAF3E3;border-radius:6px;color:#FAF3E3;font-size:22px" style-hover="background:#F2A33A;color:#141414;border-color:#F2A33A"><i class="ph-bold ph-facebook-logo"></i></a>
+        <a href="https://www.google.com/search?q=Hokusai+Sushi+Buffet+Libre+SALOU" target="_blank" rel="noopener" aria-label="Google" style="width:44px;height:44px;display:grid;place-items:center;border:2px solid #FAF3E3;border-radius:6px;color:#FAF3E3;font-size:22px" style-hover="background:#F2A33A;color:#141414;border-color:#F2A33A"><i class="ph-bold ph-google-logo"></i></a>
+      </div>
+    </div>
+    <nav aria-label="Información legal" style="display:flex;flex-direction:column;gap:8px">
+      <span style="font-family:Anton,sans-serif;font-size:18px;letter-spacing:.06em;color:#F2A33A">INFO</span>
+      <a href="assets/carta-hokusai.pdf" target="_blank" rel="noopener" style="color:#FAF3E3">Carta de alérgenos</a>
+      <a href="#" style="color:#FAF3E3">Aviso legal</a>
+      <a href="#" style="color:#FAF3E3">Política de privacidad</a>
+      <a href="#" style="color:#FAF3E3">Política de cookies</a>
+    </nav>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:Anton,sans-serif;font-size:18px;letter-spacing:.06em;color:#F2A33A">IDIOMA</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+          <button onClick="{{ l.onClick }}" style="min-width:48px;height:44px;border:2px solid #FAF3E3;border-radius:6px;background:{{ l.fbg }};color:{{ l.ffg }};font:700 14px 'DM Sans',sans-serif;cursor:pointer">{{ l.l }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  <p style="max-width:1320px;margin:40px auto 0;font-size:13px;color:#FAF3E3;opacity:.85">© 2026 HOKUSAI Sushi · Buffet Libre · Salou, Tarragona. Ilustraciones y grafismo originales.</p>
+</footer>
+
+<div aria-label="Acciones rápidas" style="position:fixed;left:50%;bottom:16px;z-index:70;display:flex;gap:10px;padding:8px;background:rgba(250,243,227,.72);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border:3px solid #141414;border-radius:10px;box-shadow:5px 5px 0 #141414;transform:translate(-50%,{{ barY }});opacity:{{ barOp }};pointer-events:{{ barPe }};transition:transform .3s cubic-bezier(.2,.8,.2,1),opacity .2s">
+  <a href="Carta.dc.html" style="display:inline-flex;align-items:center;gap:8px;height:50px;padding:0 18px;background:transparent;color:#141414;border:3px solid #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:19px;letter-spacing:.05em;text-decoration:none;white-space:nowrap" style-hover="background:rgba(20,20,20,.08);color:#141414" style-active="transform:scale(.96)"><i class="ph-bold ph-file-text"></i>CARTA</a>
+  <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;gap:8px;height:50px;padding:0 20px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:19px;letter-spacing:.05em;text-decoration:none;white-space:nowrap;transition:transform .12s" style-hover="color:#FAF3E3" style-active="transform:scale(.96)"><i class="ph-bold ph-calendar-check"></i>RESERVAR</a>
+</div>
+<sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+  <a href="{{ waHref }}" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" style="position:fixed;right:16px;bottom:96px;z-index:70;width:62px;height:62px;display:grid;place-items:center;background:#25D366;color:#141414;border:3px solid #141414;border-radius:50%;box-shadow:4px 4px 0 #141414;font-size:32px;text-decoration:none" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-whatsapp-logo"></i></a>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;hero&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mix&quot;,&quot;manga&quot;,&quot;ukiyoe&quot;],&quot;default&quot;:&quot;mix&quot;,&quot;tsType&quot;:&quot;'mix'|'manga'|'ukiyoe'&quot;}}">
+const AL = { G: 'Gluten', M: 'Marisco', H: 'Huevo', P: 'Pescado', F: 'Frutos secos', A: 'Apio', Mo: 'Mostaza', S: 'Sésamo', C: 'Cacahuetes', So: 'Soja', L: 'Lácteos', Su: 'Sulfitos', Ml: 'Moluscos', Pi: 'Picante' };
+const FILTERS = ['G', 'M', 'P', 'L', 'H', 'F', 'S', 'So', 'Ml', 'Mo', 'Pi'];
+const CATS = [
+  { id: 'nigiri', label: 'Nigiri', jp: '握り', ph: 'Foto: nigiris', note: 'Dos piezas por ración. Prueba los flameados con soplete.' },
+  { id: 'rolls', label: 'Makis, rolls y poke', jp: '巻き', ph: 'Foto: uramakis / sushi mixto', note: 'Hosomakis de 8 piezas, uramakis de la casa, sushi mixto y poke.' },
+  { id: 'sashimi', label: 'Sashimi y tataki', jp: '刺身', ph: 'Foto: sashimi', note: 'Cinco láminas por ración, cortadas al momento.' },
+  { id: 'ramen', label: 'Ramen', jp: 'ラーメン', ph: 'Foto: ramen', note: 'Fideos sin gluten disponibles (con suplemento) o cámbialos por udon. Extras: chashu, huevo, bambú o más fideos.' },
+  { id: 'arroz', label: 'Arroces y fideos', jp: '丼', ph: 'Foto: donburi / yakisoba', note: 'Donburis sobre arroz blanco y salteados al wok.' },
+  { id: 'gyoza', label: 'Gyozas y bao', jp: '餃子', ph: 'Foto: gyozas / bao buns', note: 'Gyozas de 6 piezas y bao buns a la plancha.' },
+  { id: 'calientes', label: 'Entrantes calientes', jp: '前菜', ph: 'Foto: tempuras / dim sum', note: 'Tempuras, dim sum, brochetas y fritos para compartir.' },
+  { id: 'frios', label: 'Entrantes fríos', jp: '冷菜', ph: 'Foto: edamame / ensaladas', note: 'Para abrir boca mientras llega la primera ronda.' },
+  { id: 'postre', label: 'Postres', jp: 'デザート', ph: 'Foto: mochis / pasteles', note: 'Mochis, bolas heladas y pasteles.' }
+];
+const RAMEN = 'con chashu, bambú, huevo, naruto y maíz.';
+const MENU = {
+  frios: [['01','Edamame','Vainas de soja hervidas con sal y salsa kimchi.','So'],['02','Wakame','Ensalada de algas con sésamo.','So Su S'],['03','Kimchi','Col china encurtida con salsa picante.','Su Pi'],['04','Hokusai salad','Ensalada mixta con salsa ukiyo.','S Su'],['05','Cherry con jugo de ciruela','Tomates cherry encurtidos, mozzarella y ciruela.','Su'],['06','Langostino salad','Lechuga, tomate, langostino, aguacate y salsa de la casa.','S M'],['07','Carpaccio de ternera','8-10 piezas, con salsa.','S So']],
+  calientes: [['08','Takoyaki','4 croquetas de pulpo con mayonesa y láminas de bonito.','So Mo P H M G'],['09','Ebi tempura','3 gambas rebozadas.','M G'],['10','Tempura de verduras','Verduras en tempura.','G'],['11','Rollitos vegetales','6 piezas.','G'],['12','Pato hoisin','Pato frito con salsa de mariscos.','G M'],['13','Pollo fried','Pechuga rebozada con salsa tonkatsu.','So S G'],['14','Tori no karaage','Bolas de pollo frito al estilo japonés.','So Su S G'],['15','Hakao','4 empanadillas al vapor rellenas de gamba.','M'],['16','Siumai','4 piezas de gamba, cerdo y verduras.','G M'],['17','Xiaolongbao','3 panecillos de cerdo y verduras a la plancha.','G'],['18','Brocheta de pollo','2 piezas.','G'],['19','Brocheta de gambas','2 piezas.','M'],['20','Rollitos de pollo','3 piezas.','G'],['21','Patatas de boniato','','G'],['22','Tornado de patata','2 piezas.','G So'],['24','Alitas de pollo','','Ml Mo A G'],['25','Gamba sésamo','','G S M'],['26','Palomitas de gamba','Gambas rebozadas.','G M'],['27','Ternera caramelizada','','G S So']],
+  gyoza: [['28','Gyozas de pollo','6 piezas.','Su S G'],['29','Gyozas vegetales','6 piezas.','Su S G'],['30','Bao bun de chashu','Cerdo, lechuga y mayonesa japonesa.','G M H L S So'],['31','Bao bun de pato','Pato crujiente, lechuga y salsa hoisin.','G M H L S So'],['32','Bao bun de pollo','Pollo frito crujiente, lechuga y salsa tonkatsu.','G M H L S So']],
+  ramen: [['33','Yuzu shoyu ramen frío','Caldo original frío ' + RAMEN,'So G H P'],['34','Tonkotsu ramen','Caldo original ' + RAMEN,'So P H G'],['35','Miso ramen','Caldo de miso ' + RAMEN,'So P H G'],['36','Shoyu ramen','Caldo de shoyu ' + RAMEN,'So P H G'],['37','Chicken ramen','Caldo de miso con pollo frito, bambú, huevo, naruto y maíz.','So P H G'],['38','Ahiru ramen','Caldo de shoyu con pato crujiente, bambú, huevo, naruto y maíz.','So P H G'],['39','Gyu shio ramen','Caldo de miso con ternera, bambú, huevo, naruto y maíz.','So P H G'],['40','Ebi ten ramen','Caldo de miso con tempura de gambas, bambú, huevo y maíz.','P H G So M'],['41','Tantan ramen','Caldo picante con carne picada, bambú, huevo, naruto y maíz.','P H G So Mo Pi'],['42','Curry chicken ramen','Caldo de curry con pollo frito, bambú, huevo, naruto y maíz.','So P H G'],['43','Yuzu shoyu ramen','Caldo de yuzu ' + RAMEN,'So P H G'],['44','Yasai veggie ramen','Caldo vegetal con bambú, zanahoria, maíz, brotes de soja y tofu frito.','G So S'],['45','Kimchi ramen','Caldo vegetal picante con kimchi, bambú, brotes de soja y maíz.','So G S Mo Pi']],
+  arroz: [['46','Gyu donburi','Arroz blanco con ternera salteada, huevo frito, cherry y cebolla.','H So G'],['47','Curry chicken donburi','Arroz blanco con pollo rebozado y salsa curry.','So G'],['48','Katsu donburi','Arroz blanco con pollo rebozado, huevo y salsa katsu.','So H G'],['49','Unagi donburi','Arroz blanco con anguila y su salsa.','So P G'],['50','Yakimeshi con pollo','Arroz frito con pollo, huevo y verduras.','So S H G'],['51','Yakisoba con pollo','Fideos de trigo salteados con pollo, huevo y verduras.','So S H G'],['52','Yakiudon con pollo','Fideos salteados con pollo, huevo y verduras.','So S H G'],['53','Yakimeshi con mariscos','Arroz frito con mariscos, huevo y verduras.','G So H S M Ml'],['54','Yakisoba con mariscos','Fideos de trigo con mariscos, huevo y verduras.','G So H S M Ml'],['55','Yakiudon con mariscos','Fideos salteados con mariscos, huevo y verduras.','G So H S M Ml'],['56','Spicy beef donburi','Arroz blanco con ternera estofada, salsa picante y verduras.','G So H S Pi'],['57','Shiitake chicken donburi','Arroz blanco con pollo, shiitake y verduras.','G So H S'],['58','Kung-pao donburi','Arroz blanco con pollo kung-pao y verduras.','G So H S']],
+  nigiri: [['63','Nigiri de sake','Salmón.','P'],['64','Nigiri de maguro','Atún.','P'],['65','Nigiri de battafissu','Pez mantequilla.','P'],['79','Sake flameado','Salmón flameado.','G P S Mo'],['80','Maguro flameado','Atún flameado.','G P S'],['81','Battafissu flameado','Pez mantequilla flameado.','G P S'],['66','Nigiri de unagi','Anguila.','G P S']],
+  sashimi: [['67','Sashimi de salmón','5 piezas.','P'],['68','Sashimi de atún','5 piezas.','P'],['69','Sashimi de pez mantequilla','5 piezas.','P'],['70','Tataki de salmón','5 piezas.','P So S'],['71','Tataki de atún','5 piezas.','P So S']],
+  rolls: [['59','Hosomaki de salmón','8 piezas.','P'],['60','Hosomaki de atún','8 piezas.','P'],['61','Hosomaki de aguacate','8 piezas.',''],['62','Hosomaki de pepino','8 piezas.',''],['72','Hot ebi California dragon roll','Langostino en tempura y aguacate con tobiko; surimi, pepino, mayonesa, queso y teriyaki.','G M Mo S L'],['73','Sake avocado roll','Salmón y aguacate en sésamo, con salmón picado y cebollino.','P S'],['74','Maguro avocado roll','Atún y aguacate en sésamo, con atún picado y cebollino.','P S'],['75','Tokubetsu California Hokusai roll','Surimi, aguacate, pepino, cebolla crujiente y salsa ukiyo, con teriyaki, sésamo y tobiko.','G M Mo S L'],['76','Sushi mixto','12 piezas: salmón, atún, pez mantequilla, surimi, anguila y aguacate.','G M H P S So L'],['77','Poke de salmón','Arroz de sushi, salmón, maíz, zanahoria, pepino, cherry y wakame.','P S So'],['78','Poke de atún','Arroz de sushi, atún, maíz, zanahoria, pepino, cherry y wakame.','P S So']],
+  postre: [['','Mochi cheesecake','Mousse de queso con corazón de frambuesa y arándanos.','L'],['','Mochi fresa','Mousse de fresa.','L'],['','Mochi té verde','Mousse de té matcha.','L'],['','Mochi Oreo','Mousse de galleta Oreo.','L G'],['','Mochi tiramisú','Mascarpone con corazón de melindro al café.','L G H'],['','Mochi Nutella','Mousse de Nutella con almendra caramelizada.','L F'],['','Mochi mango','Mousse de mango con trocitos de fruta.','L'],['','Mochi maracuyá','Mousse de mango y maracuyá.','L'],['','Mochi sésamo','Mousse de sésamo.','L G S'],['','Bola de helado','Fresa, chocolate o vainilla.','H L'],['','Trufas','Té verde, sake o chocolate.','L'],['','Dorayaki','Fresa o chocolate.','G H L'],['','Pastel Oreo','Mousse de Oreo sobre bizcocho de cacao.','L H F'],['','Pastel tiramisú','Bizcocho de cacao con licor de café.','L F G'],['','Bola de drac','Esfera de mango con mousse y baño de naranja.','L'],['','Pastel yuzu','Mousse de yuzu con physalis y chocolate negro.','L H G'],['','Bola té matcha','Esfera de matcha con chocolate blanco.','L G'],['','Bola Kinder','Esfera de avellana con chocolate blanco.','L F'],['','Pastel Ferrero','Mousse de chocolate con corazón crujiente.','L H G F'],['','La Frambuesa','Chocolate blanco y frambuesa con interior de limón.','L H'],['','Tarta Oreo','Nata y Oreo con cobertura de chocolate negro.','L F'],['','Coquito','Mousse de coco con chocolate negro y fruta de la pasión.','L H'],['','Carrot cake','Zanahoria, especias y nueces con crema de mantequilla.','L H F'],['','Coulant de té matcha','Bizcocho de matcha y almendra con chocolate blanco.','L H F'],['','Pastel nube','Mousse de fresa sobre bizcocho blanco.','L G F']]
+};
+const TILES = [
+  { src: 'assets/local-noren.jpg', alt: 'Sala de HOKUSAI con banderines noren y neón azul', cap: 'Noren y neones', sfx: 'ピカッ', pos: 'center', dc: '1 / 4', dr: '1 / 4', mc: '1 / 3', mr: 'span 2' },
+  { src: 'assets/video-local.mp4', video: true, cap: 'Así se vive HOKUSAI', sfx: 'ワイワイ', dc: '4 / 7', dr: '1 / 3', mc: '1 / 3', mr: 'span 2' },
+  { src: 'assets/local-yummy.jpg', alt: 'Rincón con murales anime, neón YUMMY y cerezos', cap: 'Murales y cerezos', sfx: 'ババーン', pos: 'center', dc: '4 / 6', dr: '3 / 6', mc: '1 / 3', mr: 'span 2' },
+  { src: 'assets/local-figura.jpg', alt: 'Figura a tamaño real junto a la barra', cap: 'Figuras a tamaño real', sfx: 'ゴゴゴ', pos: 'center 20%', dc: '6 / 7', dr: '3 / 6', mc: '1 / 2', mr: 'span 3' },
+  { src: 'assets/video-ramen.mp4', video: true, cap: 'Ramen recién hecho', sfx: 'ジュワ', dc: '3 / 4', dr: '4 / 6', mc: '2 / 3', mr: 'span 3' },
+  { src: 'assets/local-mural.jpg', alt: 'Mesa junto a un mural anime y farolillos de papel', cap: 'Farolillos y murales', sfx: 'ヒラリ', pos: 'center', dc: '1 / 3', dr: '4 / 6', mc: '1 / 3', mr: 'span 2' }
+];
+const LANGS = [['ES', 'Español'], ['CA', 'Català'], ['EN', 'English'], ['FR', 'Français']];
+const WA = '34622015996';
+const GOOGLE_PLACE_ID = ''; // pega aquí el Place ID de Google para abrir directamente la ventana de reseña
+const REVIEW_URL = GOOGLE_PLACE_ID ? 'https://search.google.com/local/writereview?placeid=' + GOOGLE_PLACE_ID : 'https://www.google.com/maps/search/?api=1&query=HOKUSAI%20Sushi%20Carrer%20del%20Carrilet%209%20Salou';
+const noren = (ks, a, b) => ks.map((k, i) => ({ k, bg: i % 2 ? b[0] : a[0], fg: i % 2 ? b[1] : a[1] }));
+
+class Component extends DCLogic {
+  state = { w: window.innerWidth, cat: 'nigiri', excl: [], lang: (() => { try { return localStorage.getItem('hokusai-lang') || 'ES'; } catch (e) { return 'ES'; } })(), langOpen: false, sent: false, f: { name: '', date: '', time: '', people: '2', phone: '' } };
+  componentDidMount() {
+    import('./carta-data.js').then(d => this.setState({ cd: d }));
+    this.onR = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onR);
+    this.onS = () => { const s = window.scrollY > 480; if (s !== this.state.scrolled) this.setState({ scrolled: s }); };
+    window.addEventListener('scroll', this.onS, { passive: true }); this.onS();
+    setTimeout(() => { this.reveal(); this.setupVideos(); }, 80);
+    import('./i18n.js').then(m => { this.i18n = m.watchLang(() => this.state.lang); }).catch(e => console.warn('i18n', e && e.message));
+  }
+  componentDidUpdate(pp, ps) { if (ps.lang !== this.state.lang) { try { localStorage.setItem('hokusai-lang', this.state.lang); } catch (e) {} this.i18n && this.i18n.refresh(); } }
+  componentWillUnmount() { this.i18n && this.i18n.stop(); window.removeEventListener('resize', this.onR); window.removeEventListener('scroll', this.onS); this.io && this.io.disconnect(); this.vio && this.vio.disconnect(); }
+  setupVideos() {
+    const vids = [...document.querySelectorAll('video[data-auto]')];
+    if (!vids.length && !this.vTry) { this.vTry = 1; return setTimeout(() => this.setupVideos(), 600); }
+    vids.forEach(v => { v.muted = true; v.loop = true; v.playsInline = true; v.addEventListener('ended', () => { v.currentTime = 0; v.play().catch(() => {}); }); });
+    if (!('IntersectionObserver' in window)) { vids.forEach(v => v.play().catch(() => {})); return; }
+    this.vio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause(); }), { threshold: 0.25 });
+    vids.forEach(v => this.vio.observe(v));
+  }
+  toggleExcl(k) { this.setState(s => ({ excl: s.excl.includes(k) ? s.excl.filter(x => x !== k) : [...s.excl, k] })); }
+  reveal() {
+    const all = [...document.querySelectorAll('[data-reveal],[data-sfx]')];
+    all.forEach(el => { el.style.transform = 'none'; el.style.transformOrigin = ''; el.style.rotate = ''; });
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    this.io && this.io.disconnect();
+    const els = all.filter(el => !el.__done);
+    els.forEach(el => { el.style.transition = 'none'; el.style.opacity = '0'; el.style.translate = el.hasAttribute('data-sfx') ? '0 12px' : '0 24px'; });
+    this.io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      el.style.transition = 'opacity .6s ease, translate .7s cubic-bezier(.2,.8,.2,1)';
+      el.style.opacity = ''; el.style.translate = '';
+      setTimeout(() => { el.style.transition = ''; }, 800);
+      el.__done = true; this.io.unobserve(el);
+    }), { threshold: 0.12 });
+    els.forEach(el => this.io.observe(el));
+  }
+  upd(k, v) { this.setState(s => ({ f: { ...s.f, [k]: v } })); }
+  renderVals() {
+    const m = this.state.w < 1080;
+    const q = new URLSearchParams(location.search).get('hero');
+    const hero = q || this.props.hero || 'mix';
+    const { f, cat, lang, excl } = this.state;
+    const cd = this.state.cd;
+    const C = cd ? cd.CATS : CATS, M = cd ? cd.MENU : MENU, IM = (cd && cd.IMG) || {};
+    const ok = it => !(it[3] || '').split(' ').some(c => excl.includes(c));
+    const pic = n => IM[n] ? 'assets/platos/' + IM[n] + '.jpg' : '';
+    const dLong = f.date ? new Date(f.date + 'T12:00').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
+    const waText = f.name || f.date ? `¡Hola HOKUSAI! Quiero reservar mesa:\n\n📅 ${dLong || '[día]'}\n🕐 ${f.time || '[hora]'}\n👥 ${f.people} personas\n👤 ${f.name}\n📞 ${f.phone}\n\n¡Gracias!` : 'Hola, quiero reservar mesa en HOKUSAI Sushi.';
+    const times = [];
+    [[750, 930], [1170, 1350]].forEach(([a, b]) => { for (let t = a; t <= b; t += 15) times.push(String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0')); });
+    return {
+      barY: this.state.scrolled ? '0' : '140%', barOp: this.state.scrolled ? 1 : 0, barPe: this.state.scrolled ? 'auto' : 'none',
+      reviewHref: REVIEW_URL,
+      isMobile: m, isDesktop: !m, isWide: this.state.w >= 1180,
+      heroMix: hero === 'mix', heroManga: hero === 'manga', heroUkiyo: hero === 'ukiyoe',
+      lang, langOpen: this.state.langOpen,
+      toggleLang: () => this.setState(s => ({ langOpen: !s.langOpen })),
+      langs: LANGS.map(([l, name]) => ({ l, name, on: l === lang,
+        bg: l === lang ? '#141414' : '#FAF3E3', fg: l === lang ? '#FFE600' : '#141414',
+        fbg: l === lang ? '#FAF3E3' : '#141414', ffg: l === lang ? '#141414' : '#FAF3E3',
+        onClick: () => this.setState({ lang: l, langOpen: false }, () => { try { localStorage.setItem('hokusai-lang', l); } catch (e) {} this.i18n && this.i18n.refresh(); }) })),
+      norenA: noren(['寿', '司', '食', 'べ', '放', '題'], ['#D7263D', '#FAF3E3'], ['#FAF3E3', '#1B2A6B']),
+      norenB: noren(['北', '斎', '漫', '画', '夜', '光'], ['#1B2A6B', '#FFE600'], ['#D7263D', '#FAF3E3']),
+      norenC: noren(['祝', '誕', '生', '日', '乾', '杯'], ['#FAF3E3', '#D7263D'], ['#1B2A6B', '#FAF3E3']),
+      allerFilters: FILTERS.map(k => { const on = excl.includes(k); return { k, on, label: AL[k], icon: 'assets/alergenos/' + k + '.png', onClick: () => this.toggleExcl(k),
+        bg: on ? '#D7263D' : '#FAF3E3', fg: on ? '#FAF3E3' : '#141414', td: on ? 'line-through' : 'none' }; }),
+      muteRef: v => { if (v) { v.muted = true; v.defaultMuted = true; v.volume = 0; v.setAttribute('muted', ''); } },
+      forceMute: e => { const v = e.target; if (!v.muted || v.volume) { v.muted = true; v.volume = 0; } },
+      reel: (() => { if (!cd) return []; const byNum = {}; Object.values(M).flat().forEach(it => { if (it[0]) byNum[it[0]] = it; });
+        const r = ['161', '232', '27', '286', '237', '34', '267', '311', '203', '294', '240', '26', '224', '322', '251', '172', '297', '33']
+          .filter(n => byNum[n] && pic(n)).map(n => { const it = byNum[n]; const d = it[2] && /^(Con|Cubierto)/.test(it[2]) === false ? '' : ''; return { n: /^(Salmón|Atún|Gamba|Pez|Anguila|Tempura|Pollo|Surimi|Vegetal|Queso|Wakame|Kimchi|Cubierto)/.test(it[1]) ? (c => c + ' ' + it[1].toLowerCase())(({ nigiri: 'Nigiri', uramaki: 'Uramaki', gunkan: 'Gunkan', temaki: 'Temaki', tartar: 'Tártar', sashimi: 'Sashimi', tataki: 'Tataki' })[Object.keys(M).find(k => M[k].includes(it))] || '') : it[1], img: pic(n) }; });
+        return [...r, ...r]; })(),
+      hasExcl: excl.length > 0, clearExcl: () => this.setState({ excl: [] }),
+      cats: C.map(c => { const on = c.id === cat; return { ...c, on, onClick: () => this.setState({ cat: c.id }), count: M[c.id].filter(ok).length,
+        bg: on ? '#141414' : '#FAF3E3', fg: on ? '#FFE600' : '#141414', sh: on ? '4px 4px 0 #D7263D' : '3px 3px 0 #141414' }; }),
+      menu: C.map(c => { const items = M[c.id].filter(ok).map(it => ({ num: it[0], n: it[1], d: it[2], img: pic(it[0]), hasImg: !!pic(it[0]),
+          tags: it[3] == null ? [{ t: 'Alérgenos: consultar en sala', isIcon: false, isText: true }] : it[3] ? it[3].split(' ').map(k => ({ t: AL[k], icon: 'assets/alergenos/' + k + '.png', isIcon: true, isText: false })) : [{ t: 'Sin alérgenos declarados', isIcon: false, isText: true }] }));
+        const cover = (M[c.id].map(it => pic(it[0])).find(Boolean)) || '';
+        return { ...c, ph: c.ph || 'Foto: ' + c.label, cover, hasCover: !!cover, noCover: !cover, slot: 'carta-cat-' + c.id, display: c.id === cat ? 'flex' : 'none', items, empty: items.length === 0 }; }),
+      gcols: m ? 2 : 6, rowH: m ? '130px' : '150px',
+      tiles: TILES.map(t => ({ ...t, isVideo: !!t.video, isImg: !t.video, gc: m ? t.mc : t.dc, gr: m ? t.mr : t.dr })),
+      f, times, peopleOpts: ['1','2','3','4','5','6','7','8','9','10','+10'],
+      onName: e => this.upd('name', e.target.value), onDate: e => this.upd('date', e.target.value),
+      onTime: e => this.upd('time', e.target.value), onPeople: e => this.upd('people', e.target.value),
+      onPhone: e => this.upd('phone', e.target.value),
+      onSubmit: e => { e.preventDefault(); window.open(`https://wa.me/${WA}?text=${encodeURIComponent(waText)}`, '_blank'); this.setState({ sent: true }); },
+      reset: () => this.setState({ sent: false }),
+      sent: this.state.sent, notSent: !this.state.sent,
+      waHref: `https://wa.me/${WA}?text=${encodeURIComponent(waText)}`,
+      waGroups: `https://wa.me/${WA}?text=${encodeURIComponent('Hola, queremos celebrar un evento/grupo en HOKUSAI Sushi.')}`
+    };
+  }
+}
+</script>
+</body>
+</html>

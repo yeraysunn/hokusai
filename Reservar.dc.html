@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Reservar mesa · HOKUSAI Sushi Buffet Libre Salou</title>
+<meta name="description" content="Reserva tu mesa en HOKUSAI Sushi, buffet libre japonés en Salou. Elige día, hora y personas y confirma por WhatsApp en un toque.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=Noto+Sans+JP:wght@700;900&amp;display=swap">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+html,body{overflow-x:clip}
+body{margin:0;background:#FAF3E3;color:#141414;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1B2A6B}
+a:hover{color:#D7263D}
+:focus-visible{outline:3px solid #FFE600;outline-offset:2px}
+</style>
+</helmet>
+
+<header style="position:sticky;top:0;z-index:60;background:#FAF3E3;border-bottom:3px solid #141414">
+  <div style="max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px clamp(14px,3vw,32px)">
+    <a href="Hokusai%20Home.dc.html" style="flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;background:#141414;color:#FFE600;border:3px solid #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:17px;letter-spacing:.05em;text-decoration:none;transition:transform .12s" style-hover="transform:translateX(-3px);color:#FFE600" style-active="transform:scale(.96)"><i class="ph-bold ph-arrow-left"></i>VOLVER</a>
+    <a href="Hokusai%20Home.dc.html" aria-label="Volver a la web de HOKUSAI" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#141414">
+      <span style="width:42px;height:42px;display:grid;place-items:center;background:#D7263D;color:#FAF3E3;border:2px solid #141414;border-radius:6px;transform:rotate(-6deg);font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:15px;line-height:1;writing-mode:vertical-rl">北斎</span>
+      <span style="display:flex;flex-direction:column;line-height:1">
+        <span style="font-family:Anton,sans-serif;font-size:26px;letter-spacing:.04em">HOKUSAI</span>
+        <span style="font-size:10px;font-weight:700;letter-spacing:.16em">RESERVAS · ヨヤク</span>
+      </span>
+    </a>
+    <div style="flex:1"></div>
+    <a href="Carta.dc.html" style="display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 12px;border:2px solid #141414;border-radius:6px;color:#141414;text-decoration:none;font-weight:700;font-size:14px" style-hover="background:#141414;color:#FFE600"><i class="ph-bold ph-file-text"></i>Carta</a>
+    <a href="tel:+34622015996" aria-label="Llamar al restaurante" style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border:2px solid #141414;border-radius:6px;color:#141414;font-size:20px" style-hover="background:#141414;color:#FFE600"><i class="ph-bold ph-phone"></i></a>
+  </div>
+</header>
+
+<main>
+  <section style="position:relative;overflow:hidden;background:#1B2A6B;color:#FAF3E3;border-bottom:3px solid #141414">
+    <div style="position:absolute;inset:0;pointer-events:none;background:repeating-conic-gradient(from 0deg at 88% 50%,rgba(250,243,227,.09) 0 1.5deg,transparent 1.5deg 8deg)"></div>
+    <img src="assets/personaje-reserva.png" alt="" aria-hidden="true" style="position:absolute;right:clamp(0px,4vw,80px);bottom:0;height:calc(100% - 16px);max-height:340px;max-width:40vw;width:auto;object-fit:contain;object-position:bottom right;pointer-events:none;filter:drop-shadow(6px 6px 0 #141414)">
+    <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(32px,5vw,64px) clamp(18px,4vw,40px);padding-right:clamp(40px,42vw,560px);display:flex;flex-direction:column;gap:10px">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#F2A33A;letter-spacing:.2em;font-size:15px">ヨヤク · RESERVA</span>
+      <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(52px,9vw,112px);line-height:.9;text-transform:uppercase;text-shadow:5px 5px 0 #141414">Reserva tu mesa</h1>
+      <p style="margin:0;max-width:560px;font-size:18px;line-height:1.55">Tres pasos y listo. Al final te abrimos WhatsApp con el mensaje ya escrito: solo tienes que darle a enviar.</p>
+    </div>
+  </section>
+
+  <div style="max-width:1320px;margin:0 auto;padding:clamp(28px,4vw,56px) clamp(18px,4vw,40px) clamp(80px,8vw,112px);display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:clamp(28px,4vw,56px);align-items:start">
+    <div style="display:flex;flex-direction:column;gap:clamp(36px,4vw,52px);min-width:0">
+
+      <section aria-labelledby="p1" style="display:flex;flex-direction:column;gap:16px">
+        <h2 id="p1" style="margin:0;display:flex;align-items:baseline;gap:14px;padding-bottom:10px;border-bottom:3px solid #141414;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(32px,4vw,44px);text-transform:uppercase"><span style="color:#D7263D;font-size:.6em">01</span>¿Cuántos sois?</h2>
+        <sc-for list="{{ people }}" as="p" hint-placeholder-count="3">
+          <div style="display:flex;align-items:center;gap:14px;padding:12px 14px;background:#FFFBF2;border:2.5px solid #141414;border-radius:8px">
+            <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+              <span style="font-weight:700;font-size:17px">{{ p.label }}</span>
+              <span style="font-size:13px">{{ p.sub }}</span>
+            </div>
+            <button onClick="{{ p.dec }}" disabled="{{ p.decOff }}" aria-label="{{ p.decLabel }}" style="width:44px;height:44px;display:grid;place-items:center;border:2.5px solid #141414;border-radius:6px;background:#FAF3E3;color:#141414;font-size:20px;cursor:pointer;opacity:{{ p.decOp }};transition:transform .12s" style-active="transform:scale(.92)"><i class="ph-bold ph-minus"></i></button>
+            <span aria-live="polite" style="min-width:36px;text-align:center;font-family:Anton,sans-serif;font-size:30px">{{ p.n }}</span>
+            <button onClick="{{ p.inc }}" aria-label="{{ p.incLabel }}" style="width:44px;height:44px;display:grid;place-items:center;border:2.5px solid #141414;border-radius:6px;background:#141414;color:#FFE600;font-size:20px;cursor:pointer;box-shadow:3px 3px 0 #D7263D;transition:transform .12s" style-active="transform:scale(.92)"><i class="ph-bold ph-plus"></i></button>
+          </div>
+        </sc-for>
+        <p style="margin:0;font-size:14px;display:flex;gap:8px;align-items:center"><i class="ph-bold ph-users-three" style="color:#D7263D"></i>¿Venís muchos? Sin problema: juntamos mesas.</p>
+      </section>
+
+      <section aria-labelledby="p2" style="display:flex;flex-direction:column;gap:16px">
+        <h2 id="p2" style="margin:0;display:flex;align-items:baseline;gap:14px;padding-bottom:10px;border-bottom:3px solid #141414;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(32px,4vw,44px);text-transform:uppercase"><span style="color:#D7263D;font-size:.6em">02</span>¿Qué día?</h2>
+        <div style="max-width:520px;background:#FFFBF2;border:2.5px solid #141414;border-radius:8px;box-shadow:5px 5px 0 #141414;padding:16px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <button onClick="{{ prevMonth }}" disabled="{{ prevOff }}" aria-label="Mes anterior" style="width:44px;height:44px;display:grid;place-items:center;border:2px solid #141414;border-radius:6px;background:#FAF3E3;font-size:18px;cursor:pointer;opacity:{{ prevOp }}"><i class="ph-bold ph-caret-left"></i></button>
+            <span style="font-family:Anton,sans-serif;font-size:24px;text-transform:uppercase;letter-spacing:.03em">{{ monthLabel }}</span>
+            <button onClick="{{ nextMonth }}" aria-label="Mes siguiente" style="width:44px;height:44px;display:grid;place-items:center;border:2px solid #141414;border-radius:6px;background:#FAF3E3;font-size:18px;cursor:pointer"><i class="ph-bold ph-caret-right"></i></button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center">
+            <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+              <span style="padding:6px 0;font-weight:700;font-size:13px">{{ w }}</span>
+            </sc-for>
+            <sc-for list="{{ days }}" as="d" hint-placeholder-count="35">
+              <button onClick="{{ d.onClick }}" disabled="{{ d.off }}" aria-label="{{ d.aria }}" aria-pressed="{{ d.sel }}" style="height:44px;border:2px solid {{ d.bd }};border-radius:6px;background:{{ d.bg }};color:{{ d.fg }};font:700 16px 'DM Sans',sans-serif;cursor:pointer;visibility:{{ d.vis }};opacity:{{ d.op }};transition:transform .12s" style-hover="transform:translateY(-1px)" style-active="transform:scale(.92)">{{ d.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <p style="margin:0;font-size:14px;display:flex;gap:8px;align-items:center"><i class="ph-bold ph-calendar-check" style="color:#D7263D"></i>Abierto todos los días · 12:30–16:30 y 19:30–23:30</p>
+      </section>
+
+      <section aria-labelledby="p3" style="display:flex;flex-direction:column;gap:16px">
+        <h2 id="p3" style="margin:0;display:flex;align-items:baseline;gap:14px;padding-bottom:10px;border-bottom:3px solid #141414;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(32px,4vw,44px);text-transform:uppercase"><span style="color:#D7263D;font-size:.6em">03</span>¿A qué hora?</h2>
+        <sc-if value="{{ noDate }}" hint-placeholder-val="{{ true }}">
+          <p style="margin:0;padding:14px 16px;border:2.5px dashed #141414;border-radius:8px;font-weight:700">Elige primero un día.</p>
+        </sc-if>
+        <sc-if value="{{ hasDate }}" hint-placeholder-val="{{ false }}">
+          <sc-for list="{{ turns }}" as="tu" hint-placeholder-count="2">
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <span style="display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px;letter-spacing:.14em"><i class="{{ tu.icon }}" style="color:#D7263D;font-size:18px"></i>{{ tu.label }} <span style="font-weight:500;letter-spacing:0">· {{ tu.price }}</span></span>
+              <div style="display:flex;flex-wrap:wrap;gap:8px">
+                <sc-for list="{{ tu.slots }}" as="s" hint-placeholder-count="12">
+                  <button onClick="{{ s.onClick }}" disabled="{{ s.off }}" aria-pressed="{{ s.sel }}" style="min-width:78px;height:46px;padding:0 12px;border:2.5px solid #141414;border-radius:999px;background:{{ s.bg }};color:{{ s.fg }};box-shadow:{{ s.sh }};font:700 16px 'DM Sans',sans-serif;cursor:pointer;opacity:{{ s.op }};text-decoration:{{ s.td }};transition:transform .12s" style-hover="transform:translateY(-2px) rotate(-2deg)" style-active="transform:scale(.94)">{{ s.t }}</button>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </sc-if>
+      </section>
+
+      <section aria-labelledby="p4" style="display:flex;flex-direction:column;gap:16px">
+        <h2 id="p4" style="margin:0;display:flex;align-items:baseline;gap:14px;padding-bottom:10px;border-bottom:3px solid #141414;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(32px,4vw,44px);text-transform:uppercase"><span style="color:#D7263D;font-size:.6em">04</span>Tus datos</h2>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:14px">
+          <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Nombre
+            <input value="{{ name }}" onChange="{{ onName }}" autocomplete="name" placeholder="Tu nombre" style="height:50px;padding:0 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Teléfono
+            <input type="tel" value="{{ phone }}" onChange="{{ onPhone }}" autocomplete="tel" placeholder="+34 …" style="height:50px;padding:0 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+          </label>
+          <label style="grid-column:1/-1;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Comentarios <span style="font-weight:500">(opcional: alergias, trona, cumpleaños…)</span>
+            <textarea value="{{ notes }}" onChange="{{ onNotes }}" rows="3" placeholder="Ej.: uno de nosotros es celíaco" style="padding:12px 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;resize:vertical;min-width:0"></textarea>
+          </label>
+        </div>
+      </section>
+    </div>
+
+    <aside aria-label="Resumen de la reserva" style="position:sticky;top:96px;background:#FAF3E3;border:3px solid #141414;box-shadow:8px 8px 0 #1B2A6B;border-radius:8px;padding:clamp(20px,2.5vw,28px);display:flex;flex-direction:column;gap:4px">
+      <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#D7263D;letter-spacing:.2em;font-size:14px">ヨヤク · TU RESERVA</span>
+      <sc-for list="{{ summary }}" as="r" hint-placeholder-count="4">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:2px solid #141414">
+          <span style="font-size:15px">{{ r.k }}</span>
+          <span style="text-align:right;font-weight:700;font-size:16px;color:{{ r.c }}">{{ r.v }}</span>
+        </div>
+      </sc-for>
+      <div style="height:18px"></div>
+      <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
+        <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:0 18px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:24px;letter-spacing:.06em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px) rotate(-1deg);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">SOLICITAR RESERVA</a>
+        <p style="margin:10px 0 0;font-size:13px;line-height:1.45;text-align:center">Se abrirá WhatsApp con tu mensaje listo. Solo dale a <strong>enviar</strong>.</p>
+      </sc-if>
+      <sc-if value="{{ notReady }}" hint-placeholder-val="{{ true }}">
+        <span aria-disabled="true" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:0 18px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:24px;letter-spacing:.06em;opacity:.55;cursor:not-allowed">SOLICITAR RESERVA</span>
+        <p style="margin:10px 0 0;font-size:14px;font-weight:700;text-align:center">{{ missing }}</p>
+      </sc-if>
+    </aside>
+  </div>
+</main>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const WA = '34622015996';
+const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const slots = (h, m, endH, endM) => { const out = []; let t = h * 60 + m; while (t <= endH * 60 + endM) { out.push(String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0')); t += 15; } return out; };
+const LUNCH = slots(12, 30, 15, 30), DINNER = slots(19, 30, 22, 30);
+const P_LUNCH = [16.95, 11.95], P_NIGHT = [22.95, 13.95];
+const eur = n => n.toFixed(2).replace('.', ',') + ' €';
+const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+
+class Component extends DCLogic {
+  state = { ad: 2, ni: 0, be: 0, mo: 0, date: null, time: null, turn: null, name: '', phone: '', notes: '' };
+  renderVals() {
+    const s = this.state;
+    const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const base = new Date(today.getFullYear(), today.getMonth() + s.mo, 1);
+    const y = base.getFullYear(), mth = base.getMonth();
+    const lead = (base.getDay() + 6) % 7, dim = new Date(y, mth + 1, 0).getDate();
+    const days = [];
+    for (let i = 0; i < lead; i++) days.push({ label: '', off: true, vis: 'hidden', bg: 'transparent', fg: '#141414', bd: 'transparent', op: 1 });
+    for (let d = 1; d <= dim; d++) {
+      const dt = new Date(y, mth, d); const past = dt < today; const isT = +dt === +today; const sel = s.date && +dt === +s.date;
+      days.push({ label: d, off: past, sel: !!sel, vis: 'visible', aria: dt.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }),
+        bg: sel ? '#141414' : isT ? '#F2A33A' : '#FAF3E3', fg: sel ? '#FFE600' : '#141414', bd: past ? 'transparent' : '#141414', op: past ? 0.35 : 1,
+        onClick: () => this.setState({ date: dt, time: null, turn: null }) });
+    }
+    const weekend = s.date && (s.date.getDay() === 0 || s.date.getDay() === 6);
+    const isToday = s.date && +s.date === +today;
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    const mk = (list, turn) => list.map(t => { const [h, m] = t.split(':').map(Number); const off = isToday && h * 60 + m <= nowMin + 30; const sel = s.time === t;
+      return { t, off, sel, bg: sel ? '#141414' : '#FAF3E3', fg: sel ? '#FFE600' : '#141414', sh: sel ? '3px 3px 0 #D7263D' : 'none', op: off ? 0.35 : 1, td: off ? 'line-through' : 'none',
+        onClick: () => this.setState({ time: t, turn }) }; });
+    const lunchP = weekend ? P_NIGHT : P_LUNCH;
+    const turns = [
+      { label: 'MEDIODÍA', icon: 'ph-bold ph-sun', price: `adulto ${eur(lunchP[0])} · niño ${eur(lunchP[1])}`, slots: mk(LUNCH, 'lunch') },
+      { label: 'NOCHE', icon: 'ph-bold ph-moon-stars', price: `adulto ${eur(P_NIGHT[0])} · niño ${eur(P_NIGHT[1])}`, slots: mk(DINNER, 'night') }
+    ];
+    const pr = s.turn === 'night' || weekend ? P_NIGHT : P_LUNCH;
+    const peopleTxt = [s.ad && plural(s.ad, 'adulto', 'adultos'), s.ni && plural(s.ni, 'niño (3-8)', 'niños (3-8)'), s.be && plural(s.be, 'bebé (<3)', 'bebés (<3)')].filter(Boolean).join(' + ') || '—';
+    const dayTxt = s.date ? s.date.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) : null;
+    const dayCap = dayTxt ? dayTxt[0].toUpperCase() + dayTxt.slice(1) : null;
+    const total = s.date && s.time ? eur(s.ad * pr[0] + s.ni * pr[1]) : '—';
+    const miss = [];
+    if (!s.ad && !s.ni) miss.push('personas'); if (!s.date) miss.push('día'); if (!s.time) miss.push('hora');
+    if (!s.name.trim()) miss.push('nombre'); if (s.phone.replace(/\D/g, '').length < 9) miss.push('teléfono');
+    const msg = `¡Hola HOKUSAI! Quiero reservar mesa:\n\n📅 ${dayCap}\n🕐 ${s.time}\n👥 ${peopleTxt}\n👤 ${s.name.trim()}\n📞 ${s.phone.trim()}` + (s.notes.trim() ? `\n📝 ${s.notes.trim()}` : '') + '\n\n¡Gracias!';
+    const person = (key, label, sub, max) => ({ label, sub, n: s[key],
+      inc: () => this.setState(st => ({ [key]: Math.min(max, st[key] + 1) })), dec: () => this.setState(st => ({ [key]: Math.max(0, st[key] - 1) })),
+      decOff: s[key] === 0, decOp: s[key] === 0 ? 0.35 : 1, decLabel: 'Quitar ' + label.toLowerCase(), incLabel: 'Añadir ' + label.toLowerCase() });
+    return {
+      people: [person('ad', 'Adultos', 'Desde 9 años', 999), person('ni', 'Niños', 'De 3 a 8 años', 999), person('be', 'Bebés', 'Menores de 3 años', 999)],
+      weekdays: ['L', 'M', 'X', 'J', 'V', 'S', 'D'], days, monthLabel: MONTHS[mth] + ' ' + y,
+      prevMonth: () => this.setState(st => ({ mo: Math.max(0, st.mo - 1) })), nextMonth: () => this.setState(st => ({ mo: Math.min(5, st.mo + 1) })),
+      prevOff: s.mo === 0, prevOp: s.mo === 0 ? 0.35 : 1,
+      noDate: !s.date, hasDate: !!s.date, turns,
+      name: s.name, phone: s.phone, notes: s.notes,
+      onName: e => this.setState({ name: e.target.value }), onPhone: e => this.setState({ phone: e.target.value }), onNotes: e => this.setState({ notes: e.target.value }),
+      summary: [
+        { k: 'Personas', v: peopleTxt, c: '#141414' },
+        { k: 'Día', v: dayCap || 'Sin elegir', c: dayCap ? '#141414' : '#6b6356' },
+        { k: 'Hora', v: s.time || 'Sin elegir', c: s.time ? '#141414' : '#6b6356' },
+        { k: 'A nombre de', v: s.name.trim() || 'Sin indicar', c: s.name.trim() ? '#141414' : '#6b6356' }
+      ],
+      total, totalNote: s.date && s.time ? `${s.turn === 'night' || weekend ? 'Tarifa noche y fin de semana' : 'Tarifa mediodía'}. IVA incluido, bebidas aparte. Se paga en el local.` : 'Elige día y hora para ver el precio.',
+      ready: miss.length === 0, notReady: miss.length > 0, missing: 'Falta: ' + miss.join(', '),
+      waHref: `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`
+    };
+  }
+}
+</script>
+</body>
+</html>
