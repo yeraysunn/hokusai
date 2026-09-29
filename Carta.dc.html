@@ -95,6 +95,7 @@ a:hover{color:#D7263D}
               <div style="display:flex;align-items:baseline;gap:10px">
                 <span style="font-family:Anton,sans-serif;font-size:15px;color:#D7263D">{{ it.num }}</span>
                 <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:21px;line-height:1.1;text-transform:uppercase">{{ it.n }}</h3>
+                <sc-if value="{{ it.hasPrice }}" hint-placeholder-val="{{ false }}"><span style="margin-left:auto;flex:none;font-family:Anton,sans-serif;font-size:20px;color:#D7263D">{{ it.price }}</span></sc-if>
               </div>
               <p style="margin:0;font-size:15px;line-height:1.45">{{ it.d }}</p>
               <div style="display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-top:auto;padding-top:6px">
@@ -111,6 +112,53 @@ a:hover{color:#D7263D}
         </sc-if>
       </section>
     </sc-for>
+    <section id="bebidas" style="scroll-margin-top:130px;padding-top:clamp(40px,5vw,64px);display:flex;flex-direction:column;gap:22px">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 22px;border-bottom:3px solid #141414;padding-bottom:12px">
+        <span aria-hidden="true" style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:clamp(36px,5vw,56px);line-height:1;color:#D7263D">飲み物</span>
+        <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(34px,5vw,56px);line-height:.95;text-transform:uppercase">Bebidas</h2>
+        <p style="margin:0 0 4px;flex:1 1 280px;max-width:520px;font-size:15px;line-height:1.5">Las bebidas no entran en el buffet. Precios por unidad, IVA incluido.</p>
+      </div>
+      <sc-for list="{{ shelves }}" as="sh" hint-placeholder-count="3">
+        <div style="position:relative;background-color:#1B2A6B;background-image:radial-gradient(circle at 50% 100%,transparent 13px,rgba(250,243,227,.09) 14px 16px,transparent 17px 21px,rgba(250,243,227,.06) 22px 24px,transparent 25px);background-size:52px 26px;color:#FAF3E3;border:3px solid #141414;box-shadow:6px 6px 0 #141414;border-radius:8px;padding:clamp(16px,2.5vw,24px)">
+          <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:14px">
+            <span aria-hidden="true" style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:22px;color:#F2A33A">{{ sh.jp }}</span>
+            <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(24px,3vw,32px);text-transform:uppercase;letter-spacing:.02em">{{ sh.label }}</h3>
+            <span style="margin-left:auto;font-size:13px;font-weight:700;color:#FFE600">{{ sh.tag }}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:12px">
+            <sc-for list="{{ sh.items }}" as="b" hint-placeholder-count="6">
+              <div style="background:#FAF3E3;color:#141414;border:2.5px solid #141414;border-radius:6px;padding:12px 8px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:transform .15s" style-hover="transform:translateY(-4px) rotate(-2deg)">
+                <div style="height:124px;width:100%;display:flex;align-items:flex-end;justify-content:center"><img src="{{ b.img }}" alt="{{ b.n }}" loading="lazy" style="display:block;max-height:124px;max-width:100%;object-fit:contain;filter:drop-shadow(3px 3px 0 rgba(20,20,20,.18))"></div>
+                <span style="font-size:13px;font-weight:700;line-height:1.25;text-wrap:balance">{{ b.n }}</span>
+                <span style="font-family:Anton,sans-serif;font-size:18px;color:#D7263D">{{ b.p }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <h3 style="margin:16px 0 0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(28px,4vw,40px);text-transform:uppercase">Más bebidas <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:.6em;color:#D7263D">もっと</span></h3>
+      <div style="columns:300px;column-gap:16px">
+        <sc-for list="{{ lists }}" as="g" hint-placeholder-count="8">
+          <div style="break-inside:avoid;margin-bottom:16px;background:#FAF3E3;border:2.5px solid #141414;box-shadow:4px 4px 0 #141414;border-radius:6px;padding:14px 16px 16px;display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">
+              <i class="{{ g.icon }}" style="font-size:24px;color:#1B2A6B"></i>
+              <h4 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:21px;text-transform:uppercase">{{ g.label }}</h4>
+              <span aria-hidden="true" style="margin-left:auto;font-family:'Noto Sans JP',sans-serif;font-weight:900;font-size:14px;color:#D7263D">{{ g.jp }}</span>
+            </div>
+            <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="4">
+              <div style="display:flex;flex-direction:column">
+                <div style="display:flex;align-items:baseline;gap:8px;font-size:15px">
+                  <span style="line-height:1.3">{{ r.n }}</span>
+                  <span aria-hidden="true" style="flex:1 1 20px;min-width:20px;border-bottom:2px dotted rgba(20,20,20,.35)"></span>
+                  <span style="flex:none;font-family:Anton,sans-serif;font-size:16px;color:#D7263D">{{ r.p }}</span>
+                </div>
+                <sc-if value="{{ r.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#5a5347">{{ r.note }}</span></sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </section>
     <div style="margin-top:48px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border:3px solid #141414;border-radius:8px;background:#F2A33A">
       <p style="margin:0;font-weight:700;max-width:620px">Si eres alérgico a algún alimento, avisa al camarero. Gracias · Si sou al·lèrgic, aviseu el cambrer · If you have any allergy, tell the waiter.</p>
       <a href="Hokusai%20Home.dc.html#reservar" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.05em;text-decoration:none" style-hover="transform:translate(-2px,-2px) rotate(-2deg);color:#FAF3E3" style-active="transform:translate(3px,3px)"><i class="ph-bold ph-calendar-check"></i>RESERVAR MESA</a>
@@ -121,6 +169,34 @@ a:hover{color:#D7263D}
 <script type="text/x-dc" data-dc-script>
 const TR = { G: ['Glúten', 'Gluten'], M: ['Marisc', 'Seafood'], H: ['Ous', 'Eggs'], P: ['Peix', 'Fish'], F: ['Fruits de pela', 'Nuts'], A: ['Api', 'Celery'], Mo: ['Mostassa', 'Mustard'], S: ['Sèsam', 'Sesame'], C: ['Cacauets', 'Peanuts'], So: ['Soja', 'Soybean'], L: ['Lactis', 'Dairy'], Su: ['Sulfits', 'Sulphites'], Ml: ['Mol·luscs', 'Molluscs'], Pi: ['Picant', 'Spicy'] };
 const ORDER = ['G', 'M', 'H', 'P', 'F', 'A', 'Mo', 'S', 'C', 'So', 'L', 'Su', 'Ml', 'Pi'];
+const E = v => v.toFixed(2).replace('.', ',') + ' €';
+const BI = n => 'assets/bebidas/' + n + '.png';
+const SHELVES = [
+  { jp: '清涼', label: 'Refrescos', tag: '', items: [['Agua', 2.65, 'agua'], ['Agua con gas · Vichy Catalán', 2.8, 'vichy'], ['Coca-Cola', 3, 'coca'], ['Coca-Cola Zero', 3, 'zero'], ['Fanta Naranja / Limón', 3, 'fanta'], ['Nestea Limón', 3, 'nestea'], ['Aquarius Limón', 3, 'aquarius'], ['Aquarius Naranja', 3, 'aquariusn'], ['Sprite', 3, 'sprite'], ['Tónica', 3, 'tonica']] },
+  { jp: 'お茶', label: 'Tés y refrescos asiáticos', tag: '', items: [['Oicha Té Verde', 3.5, 'oichaverde'], ['Oicha Té Rojo', 3.5, 'oicharojo'], ['Oicha Té Jazmín', 3.5, 'oichajazmin'], ['Wang Laoji', 3.5, 'wanglaoji'], ['Leche Wangzai', 3.5, 'wangzai'], ['Leche de Coco', 3.5, 'coco']] },
+  { jp: 'ラムネ', label: 'Ramune', tag: 'La de la canica', items: [['Original', 3.95, 'r_original'], ['Fresa', 3.95, 'r_fresa'], ['Melón', 3.95, 'r_melon'], ['Sandía', 3.95, 'r_fresa'], ['Naranja', 3.95, 'r_naranja'], ['Lychee', 3.95, 'r_lychee']] }
+];
+const MIX = 'Anís, Baileys, Ron, Brandy o Whisky';
+const LISTS = [
+  { jp: 'ジュース', label: 'Zumos', icon: 'ph-bold ph-orange-slice', rows: [['Naranja', 2.8], ['Piña', 2.8], ['Melocotón', 2.8], ['Manzana', 2.8]] },
+  { jp: '生ビール', label: 'Cerveza de barril', icon: 'ph-bold ph-beer-stein', rows: [['Copa de cerveza', 2.9], ['Copa con limón', 3], ['Jarra de cerveza', 4.95], ['Jarra con limón', 4.95]] },
+  { jp: 'ビール', label: 'Cervezas especiales', icon: 'ph-bold ph-beer-bottle', rows: [['Cerveza japonesa', 3.5], ['Cerveza doble malta', 3.15], ['Cerveza sin alcohol', 3.15]] },
+  { jp: '酒', label: 'Sake', icon: 'ph-bold ph-wine', rows: [['Chupito de sake', 3.5], ['Jarra de sake', 9.5], ['Botella de sake 300 ml', 13.95], ['Botella de sake 720 ml', 38]] },
+  { jp: '白', label: 'Vinos blancos', icon: 'ph-bold ph-wine', rows: [['Poesia Blanco', 14], ['Verdejo', 15.5], ['Blanc Pescador', 21.9], ['Albariño Lagar do Frade', 33.9]] },
+  { jp: 'ロゼ', label: 'Vinos rosados', icon: 'ph-bold ph-wine', rows: [['Poesia Rosado', 14], ['Lambrusco', 15.9], ['Cresta Rosa', 18.5], ['Gran Feudo', 22.9]] },
+  { jp: '赤', label: 'Vinos tintos', icon: 'ph-bold ph-wine', rows: [['Poesia Tinto', 14], ['Don Barbe Negre', 15.9], ['Abid Negre', 19.9], ['Vega Nazcan Roble', 30.9]] },
+  { jp: '泡', label: 'Cava', icon: 'ph-bold ph-champagne', rows: [['Rigol', 18], ['Sant Manel Brut Nature', 22]] },
+  { jp: 'ウイスキー', label: 'Whisky', icon: 'ph-bold ph-brandy', rows: [['JB / Cutty Sark', 7.5], ['Red Label / Ballantine’s', 8], ['Black Label / Jack Daniel’s', 10], ['Chivas 12 / Cardhu 12', 13]] },
+  { jp: 'ラム', label: 'Ron', icon: 'ph-bold ph-anchor', rows: [['Negrita', 7.5], ['Cacique / Brugal / Barceló / Bacardi', 8]] },
+  { jp: 'ジン', label: 'Ginebra', icon: 'ph-bold ph-plant', rows: [['Larios', 7.5], ['Bombay / Beefeater / Puerto de Indias Fresa', 8], ['Hendrick’s', 15]] },
+  { jp: 'ウォッカ', label: 'Vodka', icon: 'ph-bold ph-cube', rows: [['Smirnoff', 8], ['Absolut', 9]] },
+  { jp: 'ブランデー', label: 'Brandy / Coñac', icon: 'ph-bold ph-brandy', rows: [['Soberano / Terry', 7.5], ['Veterano / Magno', 8]] },
+  { jp: 'リキュール', label: 'Licores', icon: 'ph-bold ph-flower', rows: [['Malibu / Baileys / Licor 43 / Jägermeister', 8]] },
+  { jp: 'コーヒー', label: 'Cafés', icon: 'ph-bold ph-coffee', rows: [['Café solo', 2], ['Café largo / corto / americano', 2.15], ['Cortado', 2.25], ['Café con leche', 2.35], ['Café bombón', 2.85], ['Trifásico', 3.55, MIX], ['Carajillo', 3.55, MIX]] },
+  { jp: '茶', label: 'Tés e infusiones', icon: 'ph-bold ph-tea-bag', rows: [['Té rojo', 2.75], ['Té verde', 2.75], ['Menta poleo / Manzanilla', 2.75], ['Té japonés', 2.95]] }
+];
+const SHELF_V = SHELVES.map(s => ({ ...s, items: s.items.map(([n, p, i]) => ({ n, p: E(p), img: BI(i) })) }));
+const LIST_V = LISTS.map(g => ({ ...g, rows: g.rows.map(([n, p, note]) => ({ n, p: E(p), note: note || '', hasNote: !!note })) }));
 const SEQ = ['frios', 'calientes', 'gyoza', 'nigiri', 'rolls', 'sashimi', 'ramen', 'arroz', 'postre'];
 
 class Component extends DCLogic {
@@ -129,15 +205,16 @@ class Component extends DCLogic {
   toggle(k) { this.setState(s => ({ excl: s.excl.includes(k) ? s.excl.filter(x => x !== k) : [...s.excl, k] })); }
   renderVals() {
     const { d, excl } = this.state;
-    if (!d) return { cats: [], legend: [], sections: [], hasExcl: false };
+    if (!d) return { cats: [], legend: [], sections: [], hasExcl: false, shelves: SHELF_V, lists: LIST_V };
     const cats = d.CATS;
     const ok = it => it[3] == null ? excl.length === 0 : !it[3].split(' ').some(c => excl.includes(c));
     return {
-      cats: cats.map(c => ({ ...c, href: '#' + c.id })),
+      shelves: SHELF_V, lists: LIST_V,
+      cats: [...cats.map(c => ({ ...c, href: '#' + c.id })), { id: 'bebidas', jp: '飲', label: 'Bebidas', href: '#bebidas' }],
       legend: ORDER.map(k => { const on = excl.includes(k); return { k, on, es: d.AL[k], ca: TR[k][0], en: TR[k][1], icon: 'assets/alergenos/' + k + '.png',
         bg: on ? '#D7263D' : 'transparent', bd: on ? '#FAF3E3' : '#3a3a3a', op: 1, td: on ? 'line-through' : 'none', onClick: () => this.toggle(k) }; }),
       hasExcl: excl.length > 0, exclText: excl.map(k => d.AL[k]).join(', '), clearExcl: () => this.setState({ excl: [] }),
-      sections: cats.map(c => { const items = d.MENU[c.id].filter(ok).map(it => ({ num: it[0], n: it[1], d: it[2], hasImg: !!(d.IMG && d.IMG[it[0]]), img: d.IMG && d.IMG[it[0]] ? 'assets/platos/' + d.IMG[it[0]] + '.jpg' : '',
+      sections: cats.map(c => { const items = d.MENU[c.id].filter(ok).map(it => ({ num: it[0], n: it[1], d: it[2], hasImg: !!((d.IMG && d.IMG[it[0]]) || (d.PIMG && d.PIMG[it[1]])), img: d.IMG && d.IMG[it[0]] ? 'assets/platos/' + d.IMG[it[0]] + '.jpg' : (d.PIMG && d.PIMG[it[1]]) || '', price: it[4] || '', hasPrice: !!it[4],
         tags: it[3] == null ? [{ t: 'Alérgenos: consultar en sala', isIcon: false, isText: true }] : it[3] ? it[3].split(' ').map(k => ({ t: d.AL[k], icon: 'assets/alergenos/' + k + '.png', isIcon: true, isText: false })) : [{ t: 'Sin alérgenos declarados', isIcon: false, isText: true }] }));
         return { ...c, items, empty: items.length === 0 }; })
     };
