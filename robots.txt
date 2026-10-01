@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /scraps/
+Disallow: /uploads/
+Disallow: /_ds/
+Disallow: /Hokusai%20Presentacion.dc.html
+
+Sitemap: https://hokusaisushi.es/sitemap.xml

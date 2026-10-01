@@ -10,12 +10,31 @@
 <helmet>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
+<script src="./site.js"></script>
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://hokusaisushi.es/carta">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HOKUSAI Sushi">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Carta y alérgenos · HOKUSAI Sushi Salou">
+<meta property="og:description" content="Nigiri, rolls, sashimi, ramen, donburi, gyozas y postres del buffet libre HOKUSAI en Salou, con los 14 alérgenos.">
+<meta property="og:url" content="https://hokusaisushi.es/carta">
+<meta property="og:image" content="https://hokusaisushi.es/assets/local-noren.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Carta y alérgenos · HOKUSAI Sushi Salou">
+<meta name="twitter:description" content="Nigiri, rolls, sashimi, ramen, donburi, gyozas y postres del buffet libre HOKUSAI en Salou, con los 14 alérgenos.">
+<meta name="twitter:image" content="https://hokusaisushi.es/assets/local-noren.jpg">
+<meta name="theme-color" content="#FAF3E3">
+<meta name="format-detection" content="telephone=no">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Menu","@id":"https://hokusaisushi.es/carta#menu","name":"Carta HOKUSAI Sushi","url":"https://hokusaisushi.es/carta","inLanguage":"es","provider":{"@id":"https://hokusaisushi.es/#restaurant"},"hasMenuSection":[{"@type":"MenuSection","name":"Nigiri"},{"@type":"MenuSection","name":"Makis, rolls y poke"},{"@type":"MenuSection","name":"Sashimi y tataki"},{"@type":"MenuSection","name":"Ramen"},{"@type":"MenuSection","name":"Arroces y fideos"},{"@type":"MenuSection","name":"Gyozas y bao"},{"@type":"MenuSection","name":"Entrantes calientes"},{"@type":"MenuSection","name":"Entrantes fríos"},{"@type":"MenuSection","name":"Postres"}]}
+</script>
 <title>Carta y alérgenos · HOKUSAI Sushi Buffet Libre Salou</title>
 <meta name="description" content="Carta completa de HOKUSAI Sushi en Salou: nigiri, rolls, sashimi, ramen, donburi, gyozas, entrantes y postres, con todos los alérgenos.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=Noto+Sans+JP:wght@700;900&amp;display=swap">
-<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css">
 <style>
 html,body{overflow-x:clip}
 body{margin:0;background:#FAF3E3;color:#141414;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -39,7 +58,7 @@ a:hover{color:#D7263D}
     </a>
     <div style="flex:1"></div>
     <a href="assets/carta-hokusai.pdf" target="_blank" rel="noopener" aria-label="Descargar carta en PDF" style="display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 12px;border:2px solid #141414;border-radius:6px;color:#141414;text-decoration:none;font-weight:700;font-size:14px" style-hover="background:#141414;color:#FFE600"><i class="ph-bold ph-download-simple"></i>PDF</a>
-    <a href="Hokusai%20Home.dc.html#reservar" style="flex:none;display:inline-flex;align-items:center;height:44px;padding:0 16px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:4px 4px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:18px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px) rotate(-2deg);box-shadow:6px 6px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">RESERVAR</a>
+    <a href="Reservar.dc.html" style="flex:none;display:inline-flex;align-items:center;height:44px;padding:0 16px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:4px 4px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:18px;letter-spacing:.05em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px) rotate(-2deg);box-shadow:6px 6px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">RESERVAR</a>
   </div>
   <nav aria-label="Secciones de la carta" style="max-width:1320px;margin:0 auto;display:flex;gap:8px;overflow-x:auto;padding:0 clamp(14px,3vw,32px) 10px;scrollbar-width:none">
     <sc-for list="{{ cats }}" as="c" hint-placeholder-count="9">
@@ -163,10 +182,21 @@ a:hover{color:#D7263D}
     </section>
     <div style="margin-top:48px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:20px 22px;border:3px solid #141414;border-radius:8px;background:#F2A33A">
       <p style="margin:0;font-weight:700;max-width:620px">Si eres alérgico a algún alimento, avisa al camarero. Gracias · Si sou al·lèrgic, aviseu el cambrer · If you have any allergy, tell the waiter.</p>
-      <a href="Hokusai%20Home.dc.html#reservar" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.05em;text-decoration:none" style-hover="transform:translate(-2px,-2px) rotate(-2deg);color:#FAF3E3" style-active="transform:translate(3px,3px)"><i class="ph-bold ph-calendar-check"></i>RESERVAR MESA</a>
+      <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 20px;background:#1B2A6B;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:20px;letter-spacing:.05em;text-decoration:none" style-hover="transform:translate(-2px,-2px) rotate(-2deg);color:#FAF3E3" style-active="transform:translate(3px,3px)"><i class="ph-bold ph-calendar-check"></i>RESERVAR MESA</a>
     </div>
   </div>
 </main>
+<footer style="background:#141414;color:#FAF3E3;padding:28px clamp(18px,4vw,40px)">
+  <div style="max-width:1320px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;font-size:14px">
+    <span>© 2026 HOKUSAI Sushi · Carrer del Carrilet, 9 · Salou</span>
+    <nav aria-label="Legal" style="display:flex;flex-wrap:wrap;gap:8px 20px">
+      <a href="Legal.dc.html#aviso-legal" style="color:#FAF3E3">Aviso legal</a>
+      <a href="Legal.dc.html#privacidad" style="color:#FAF3E3">Privacidad</a>
+      <a href="Legal.dc.html#cookies" style="color:#FAF3E3">Cookies</a>
+      <a href="Legal.dc.html#terminos" style="color:#FAF3E3">Términos y condiciones</a>
+    </nav>
+  </div>
+</footer>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
 const TR = { G: ['Glúten', 'Gluten'], M: ['Marisc', 'Seafood'], H: ['Ous', 'Eggs'], P: ['Peix', 'Fish'], F: ['Fruits de pela', 'Nuts'], A: ['Api', 'Celery'], Mo: ['Mostassa', 'Mustard'], S: ['Sèsam', 'Sesame'], C: ['Cacauets', 'Peanuts'], So: ['Soja', 'Soybean'], L: ['Lactis', 'Dairy'], Su: ['Sulfits', 'Sulphites'], Ml: ['Mol·luscs', 'Molluscs'], Pi: ['Picant', 'Spicy'] };
