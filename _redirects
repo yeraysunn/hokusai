@@ -1,0 +1,7 @@
+# Cloudflare Pages · equivalente a las URLs limpias de .htaccess
+/carta      /Carta.dc     200
+/carta/     /Carta.dc     200
+/reservar   /Reservar.dc  200
+/reservar/  /Reservar.dc  200
+/legal      /Legal.dc     200
+/legal/     /Legal.dc     200
