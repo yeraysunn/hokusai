@@ -34,8 +34,9 @@
     p.innerHTML = 'Usamos almacenamiento técnico para recordar tu idioma. Con tu permiso cargamos el mapa de Google, que puede instalar cookies propias. <a href="Legal.dc.html#cookies" style="color:#1B2A6B;font-weight:700">Más información</a>';
     var row = document.createElement('div');
     row.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px';
+    // Rechazar y aceptar con el mismo peso visual (requisito AEPD: rechazar tan fácil como aceptar)
+    row.appendChild(btn('Rechazar todas', true, function () { set('necessary'); }));
     row.appendChild(btn('Aceptar todas', true, function () { set('all'); }));
-    row.appendChild(btn('Solo necesarias', false, function () { set('necessary'); }));
     el.appendChild(t); el.appendChild(p); el.appendChild(row);
     document.body.appendChild(el);
   }
