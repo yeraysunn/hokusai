@@ -108,7 +108,7 @@ a:hover{color:#D7263D}
             </sc-for>
           </div>
         </div>
-        <p style="margin:0;font-size:14px;display:flex;gap:8px;align-items:center"><i class="ph-bold ph-calendar-check" style="color:#D7263D"></i>Abierto todos los días · 12:30–16:30 y 19:30–23:30</p>
+        <p style="margin:0;font-size:14px;display:flex;gap:8px;align-items:center"><i class="ph-bold ph-calendar-check" style="color:#D7263D"></i>Abierto de miércoles a lunes (martes cerrado) · 12:30–16:30 y 19:30–23:30</p>
       </section>
 
       <section aria-labelledby="p3" style="display:flex;flex-direction:column;gap:16px">
@@ -198,7 +198,7 @@ class Component extends DCLogic {
     const days = [];
     for (let i = 0; i < lead; i++) days.push({ label: '', off: true, vis: 'hidden', bg: 'transparent', fg: '#141414', bd: 'transparent', op: 1 });
     for (let d = 1; d <= dim; d++) {
-      const dt = new Date(y, mth, d); const past = dt < today; const isT = +dt === +today; const sel = s.date && +dt === +s.date;
+      const dt = new Date(y, mth, d); const past = dt < today || dt.getDay() === 2; const isT = +dt === +today; const sel = s.date && +dt === +s.date;
       days.push({ label: d, off: past, sel: !!sel, vis: 'visible', aria: dt.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }),
         bg: sel ? '#141414' : isT ? '#F2A33A' : '#FAF3E3', fg: sel ? '#FFE600' : '#141414', bd: past ? 'transparent' : '#141414', op: past ? 0.35 : 1,
         onClick: () => this.setState({ date: dt, time: null, turn: null }) });
