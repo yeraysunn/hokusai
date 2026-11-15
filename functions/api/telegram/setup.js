@@ -1,5 +1,5 @@
 // GET /api/telegram/setup?key=TELEGRAM_WEBHOOK_SECRET → conecta el bot a esta web (una sola vez)
-import { json, tg } from '../../_lib.js';
+import { json, tg, mail, plantillaMail, esc, fechaLarga, personasTxt } from '../../_lib.js';
 
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
@@ -25,6 +25,21 @@ export async function onRequestGet({ request, env }) {
     const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${rk}`, 'content-type': 'application/json' },
       body: JSON.stringify({ from: env.MAIL_FROM, to: ['delivered@resend.dev'], subject: 'Prueba Hokusai', html: '<p>Prueba</p>' }) });
     resend.prueba = { status: r.status, respuesta: (await r.text()).slice(0, 300) };
+  }
+  // TEMPORAL: email de disculpa (rechazo por error) a una reserva concreta
+  const dis = parseInt(url.searchParams.get('disculpa'));
+  if (dis) {
+    const r = await env.DB.prepare('SELECT * FROM reservas WHERE id=?').bind(dis).first();
+    if (r && r.email && r.estado === 'confirmada') {
+      const site = env.SITE_URL || 'https://hokusaisalou.com';
+      const ok = await mail(env, r.email, 'Perdona el error: tu mesa está confirmada · HOKUSAI', plantillaMail('¡Sí hay mesa! ✅',
+        `<p style="margin:0 0 14px;font-size:16px">¡Hola ${esc(r.nombre)}! Perdona, antes te llegó <b>por error</b> un email diciendo que no había mesa.</p>` +
+        `<p style="margin:0 0 14px;font-size:16px">Tu reserva está <b>confirmada</b>:</p>` +
+        `<p style="font-size:16px;line-height:1.6;margin:0">📅 <b>${fechaLarga(r.fecha)}</b><br>🕐 <b>${r.hora}</b><br>👥 ${personasTxt(r)}</p>` +
+        `<p style="margin:16px 0 0;font-size:16px">¡Os esperamos en HOKUSAI! 🍣</p>`,
+        { href: `${site}/reserva/?t=${r.token}`, txt: 'VER MI RESERVA' }));
+      resend.disculpa = { enviado: ok };
+    } else resend.disculpa = { enviado: false, motivo: 'no confirmada o sin email' };
   }
   return json({ webhook: hook, comandos: cmds, clave: diag, resend });
 }
