@@ -15,7 +15,7 @@
     el.textContent = msg; el.classList.add('on'); clearTimeout(t); t = setTimeout(function () { el.classList.remove('on'); }, 2400);
   };
   A.header = function (actual) {
-    var tabs = [['reservas', 'Reservas', 'ヨヤク'], ['fidelidad', 'Tarjetas', 'ポイント'], ['estadisticas', 'Estadísticas', 'トウケイ']];
+    var tabs = [['reservas', 'Reservas', 'ヨヤク'], ['fidelidad', 'Tarjetas', 'ポイント'], ['carta', 'Carta', 'メニュー'], ['estadisticas', 'Estadísticas', 'トウケイ']];
     var h = '<header class="top"><span class="hanko">北斎</span><a class="brand" href="/admin/"><b>HOKUSAI</b><small>管理 · PANEL</small></a><span class="sp"></span><button class="out" type="button" id="salir">SALIR</button></header>' +
       '<nav class="tabs" aria-label="Secciones">' + tabs.map(function (x) { return '<a href="/admin/' + x[0] + '/"' + (x[0] === actual ? ' aria-current="page"' : '') + '>' + x[1] + ' <span>' + x[2] + '</span></a>'; }).join('') + '</nav>';
     document.body.insertAdjacentHTML('afterbegin', h);

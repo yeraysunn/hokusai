@@ -111,7 +111,8 @@ a:hover{color:#D7263D}
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,270px),1fr));gap:16px">
           <sc-for list="{{ s.items }}" as="it" hint-placeholder-count="8">
-            <article style="background:#FAF3E3;border:2.5px solid #141414;box-shadow:4px 4px 0 #141414;padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .15s,box-shadow .15s" style-hover="transform:translate(-2px,-2px);box-shadow:7px 7px 0 #D7263D">
+            <article style="position:relative;opacity:{{ it.op }};background:#FAF3E3;border:2.5px solid #141414;box-shadow:4px 4px 0 #141414;padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;transition:transform .15s,box-shadow .15s" style-hover="transform:translate(-2px,-2px);box-shadow:7px 7px 0 #D7263D">
+              <sc-if value="{{ it.agotado }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:10px;left:10px;z-index:2;padding:6px 10px;background:#D7263D;color:#FAF3E3;border:2.5px solid #141414;font-family:Anton,sans-serif;font-size:16px;letter-spacing:.05em;transform:rotate(-4deg);box-shadow:3px 3px 0 #141414">AGOTADO HOY · 売切</span></sc-if>
               <sc-if value="{{ it.hasImg }}" hint-placeholder-val="{{ false }}"><div style="margin:-14px -16px 8px;aspect-ratio:1/1;overflow:hidden;border-bottom:2.5px solid #141414;background:#141414"><img src="{{ it.img }}" alt="{{ it.n }}" loading="lazy" width="720" height="720" style="display:block;width:100%;height:100%;object-fit:cover"></div></sc-if>
               <div style="display:flex;align-items:baseline;gap:10px">
                 <span style="font-family:Anton,sans-serif;font-size:15px;color:#D7263D">{{ it.num }}</span>
@@ -203,40 +204,24 @@ const TR = { G: ['Glúten', 'Gluten'], M: ['Marisc', 'Seafood'], H: ['Ous', 'Egg
 const ORDER = ['G', 'M', 'H', 'P', 'F', 'A', 'Mo', 'S', 'C', 'So', 'L', 'Su', 'Ml', 'Pi'];
 const E = v => v.toFixed(2).replace('.', ',') + ' €';
 const BI = n => 'assets/bebidas/' + n + '.png';
-const SHELVES = [
-  { jp: '清涼', label: 'Refrescos', tag: '', items: [['Agua', 2.65, 'agua'], ['Agua con gas · Vichy Catalán', 2.8, 'vichy'], ['Coca-Cola', 3, 'coca'], ['Coca-Cola Zero', 3, 'zero'], ['Fanta Naranja / Limón', 3, 'fanta'], ['Nestea Limón', 3, 'nestea'], ['Aquarius Limón', 3, 'aquarius'], ['Aquarius Naranja', 3, 'aquariusn'], ['Sprite', 3, 'sprite'], ['Tónica', 3, 'tonica']] },
-  { jp: 'お茶', label: 'Tés y refrescos asiáticos', tag: '', items: [['Oicha Té Verde', 3.5, 'oichaverde'], ['Oicha Té Rojo', 3.5, 'oicharojo'], ['Oicha Té Jazmín', 3.5, 'oichajazmin'], ['Wang Laoji', 3.5, 'wanglaoji'], ['Leche Wangzai', 3.5, 'wangzai'], ['Leche de Coco', 3.5, 'coco']] },
-  { jp: 'ラムネ', label: 'Ramune', tag: 'La de la canica', items: [['Original', 3.95, 'r_original'], ['Fresa', 3.95, 'r_fresa'], ['Melón', 3.95, 'r_melon'], ['Sandía', 3.95, 'r_fresa'], ['Naranja', 3.95, 'r_naranja'], ['Lychee', 3.95, 'r_lychee']] }
-];
-const MIX = 'Anís, Baileys, Ron, Brandy o Whisky';
-const LISTS = [
-  { jp: 'ジュース', label: 'Zumos', icon: 'ph-bold ph-orange-slice', rows: [['Naranja', 2.8], ['Piña', 2.8], ['Melocotón', 2.8], ['Manzana', 2.8]] },
-  { jp: '生ビール', label: 'Cerveza de barril', icon: 'ph-bold ph-beer-stein', rows: [['Copa de cerveza', 2.9], ['Copa con limón', 3], ['Jarra de cerveza', 4.95], ['Jarra con limón', 4.95]] },
-  { jp: 'ビール', label: 'Cervezas especiales', icon: 'ph-bold ph-beer-bottle', rows: [['Cerveza japonesa', 3.5], ['Cerveza doble malta', 3.15], ['Cerveza sin alcohol', 3.15]] },
-  { jp: '酒', label: 'Sake', icon: 'ph-bold ph-wine', rows: [['Chupito de sake', 3.5], ['Jarra de sake', 9.5], ['Botella de sake 300 ml', 13.95], ['Botella de sake 720 ml', 38]] },
-  { jp: '白', label: 'Vinos blancos', icon: 'ph-bold ph-wine', rows: [['Poesia Blanco', 14], ['Verdejo', 15.5], ['Blanc Pescador', 21.9], ['Albariño Lagar do Frade', 33.9]] },
-  { jp: 'ロゼ', label: 'Vinos rosados', icon: 'ph-bold ph-wine', rows: [['Poesia Rosado', 14], ['Lambrusco', 15.9], ['Cresta Rosa', 18.5], ['Gran Feudo', 22.9]] },
-  { jp: '赤', label: 'Vinos tintos', icon: 'ph-bold ph-wine', rows: [['Poesia Tinto', 14], ['Don Barbe Negre', 15.9], ['Abid Negre', 19.9], ['Vega Nazcan Roble', 30.9]] },
-  { jp: '泡', label: 'Cava', icon: 'ph-bold ph-champagne', rows: [['Rigol', 18], ['Sant Manel Brut Nature', 22]] },
-  { jp: 'ウイスキー', label: 'Whisky', icon: 'ph-bold ph-brandy', rows: [['JB / Cutty Sark', 7.5], ['Red Label / Ballantine’s', 8], ['Black Label / Jack Daniel’s', 10], ['Chivas 12 / Cardhu 12', 13]] },
-  { jp: 'ラム', label: 'Ron', icon: 'ph-bold ph-anchor', rows: [['Negrita', 7.5], ['Cacique / Brugal / Barceló / Bacardi', 8]] },
-  { jp: 'ジン', label: 'Ginebra', icon: 'ph-bold ph-plant', rows: [['Larios', 7.5], ['Bombay / Beefeater / Puerto de Indias Fresa', 8], ['Hendrick’s', 15]] },
-  { jp: 'ウォッカ', label: 'Vodka', icon: 'ph-bold ph-cube', rows: [['Smirnoff', 8], ['Absolut', 9]] },
-  { jp: 'ブランデー', label: 'Brandy / Coñac', icon: 'ph-bold ph-brandy', rows: [['Soberano / Terry', 7.5], ['Veterano / Magno', 8]] },
-  { jp: 'リキュール', label: 'Licores', icon: 'ph-bold ph-flower', rows: [['Malibu / Baileys / Licor 43 / Jägermeister', 8]] },
-  { jp: 'コーヒー', label: 'Cafés', icon: 'ph-bold ph-coffee', rows: [['Café solo', 2], ['Café largo / corto / americano', 2.15], ['Cortado', 2.25], ['Café con leche', 2.35], ['Café bombón', 2.85], ['Trifásico', 3.55, MIX], ['Carajillo', 3.55, MIX]] },
-  { jp: '茶', label: 'Tés e infusiones', icon: 'ph-bold ph-tea-bag', rows: [['Té rojo', 2.75], ['Té verde', 2.75], ['Menta poleo / Manzanilla', 2.75], ['Té japonés', 2.95]] }
-];
-const SHELF_V = SHELVES.map(s => ({ ...s, items: s.items.map(([n, p, i]) => ({ n, p: E(p), img: BI(i) })) }));
-const LIST_V = LISTS.map(g => ({ ...g, rows: g.rows.map(([n, p, note]) => ({ n, p: E(p), note: note || '', hasNote: !!note })) }));
+const shelvesV = (B, ov) => B.SHELVES.map(sh => ({ ...sh, items: sh.items.map(([n, p, i]) => ({ n, p, i, o: ov['b:' + sh.label + ':' + n] || {} })).filter(x => !x.o.oculto)
+  .map(x => ({ n: x.o.nombre || x.n, p: x.o.agotado ? 'AGOTADO HOY' : (x.o.precio != null && x.o.precio !== '' ? x.o.precio : E(x.p)), img: BI(x.i) })) }));
+const listsV = (B, ov) => B.LISTS.map(g => ({ ...g, rows: g.rows.map(([n, p, note]) => ({ n, p, note, o: ov['b:' + g.label + ':' + n] || {} })).filter(x => !x.o.oculto)
+  .map(x => ({ n: x.o.nombre || x.n, p: x.o.agotado ? 'AGOTADO' : (x.o.precio != null && x.o.precio !== '' ? x.o.precio : E(x.p)), note: x.o.descripcion || x.note || '', hasNote: !!(x.o.descripcion || x.note) })) }));
 const SEQ = ['frios', 'calientes', 'gyoza', 'nigiri', 'rolls', 'sashimi', 'ramen', 'arroz', 'postre'];
 
 class Component extends DCLogic {
-  state = { d: null, excl: [] };
-  componentDidMount() { import('./carta-data.js').then(d => this.setState({ d })); }
+  state = { d: null, b: null, ov: {}, excl: [] };
+  componentDidMount() {
+    import('./carta-data.js').then(d => this.setState({ d }));
+    import('./bebidas-data.js').then(b => this.setState({ b }));
+    // Cambios del panel de admin (agotado hoy, oculto, precio…). Si falla, la carta sale tal cual.
+    fetch('/api/carta').then(r => r.ok ? r.json() : null).then(j => { if (j && j.ok) this.setState({ ov: j.cambios || {} }); }).catch(() => {});
+  }
   toggle(k) { this.setState(s => ({ excl: s.excl.includes(k) ? s.excl.filter(x => x !== k) : [...s.excl, k] })); }
   renderVals() {
-    const { d, excl } = this.state;
+    const { d, b, ov, excl } = this.state;
+    const SHELF_V = b ? shelvesV(b, ov) : [], LIST_V = b ? listsV(b, ov) : [];
     if (!d) return { cats: [], legend: [], sections: [], hasExcl: false, shelves: SHELF_V, lists: LIST_V };
     const cats = d.CATS;
     const ok = it => it[3] == null ? excl.length === 0 : !it[3].split(' ').some(c => excl.includes(c));
@@ -246,7 +231,8 @@ class Component extends DCLogic {
       legend: ORDER.map(k => { const on = excl.includes(k); return { k, on, es: d.AL[k], ca: TR[k][0], en: TR[k][1], icon: 'assets/alergenos/' + k + '.png',
         bg: on ? '#D7263D' : 'transparent', bd: on ? '#FAF3E3' : '#3a3a3a', op: 1, td: on ? 'line-through' : 'none', onClick: () => this.toggle(k) }; }),
       hasExcl: excl.length > 0, exclText: excl.map(k => d.AL[k]).join(', '), clearExcl: () => this.setState({ excl: [] }),
-      sections: cats.map(c => { const items = d.MENU[c.id].filter(ok).map(it => ({ num: it[0], n: it[1], d: it[2], hasImg: !!((d.IMG && d.IMG[it[0]]) || (d.PIMG && d.PIMG[it[1]])), img: d.IMG && d.IMG[it[0]] ? 'assets/platos/' + d.IMG[it[0]] + '.jpg' : (d.PIMG && d.PIMG[it[1]]) || '', price: it[4] || '', hasPrice: !!it[4],
+      sections: cats.map(c => { const items = d.MENU[c.id].filter(ok).map(it => [it, ov['p:' + c.id + ':' + (it[0] || it[1])] || {}]).filter(([, o]) => !o.oculto).map(([it, o]) => ({ num: it[0], n: o.nombre || it[1], d: o.descripcion || it[2],
+        agotado: !!o.agotado, op: o.agotado ? 0.55 : 1, hasImg: !!((d.IMG && d.IMG[it[0]]) || (d.PIMG && d.PIMG[it[1]])), img: d.IMG && d.IMG[it[0]] ? 'assets/platos/' + d.IMG[it[0]] + '.jpg' : (d.PIMG && d.PIMG[it[1]]) || '', price: (o.precio != null && o.precio !== '' ? o.precio : it[4]) || '', hasPrice: !!((o.precio != null && o.precio !== '') || it[4]),
         tags: it[3] == null ? [{ t: 'Alérgenos: consultar en sala', isIcon: false, isText: true }] : it[3] ? it[3].split(' ').map(k => ({ t: d.AL[k], icon: 'assets/alergenos/' + k + '.png', isIcon: true, isText: false })) : [{ t: 'Sin alérgenos declarados', isIcon: false, isText: true }] }));
         return { ...c, items, empty: items.length === 0 }; })
     };

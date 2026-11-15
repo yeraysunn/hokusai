@@ -74,3 +74,13 @@ CREATE TABLE IF NOT EXISTS visitas (
   creado   TEXT NOT NULL DEFAULT (datetime('now'))
 );
 CREATE INDEX IF NOT EXISTS idx_visitas_dia ON visitas (dia);
+-- Cambios de la carta hechos desde el panel (clave: p:<categoría>:<nº o nombre> · b:<grupo>:<nombre>)
+CREATE TABLE IF NOT EXISTS carta_cambios (
+  clave       TEXT PRIMARY KEY,
+  oculto      INTEGER NOT NULL DEFAULT 0,
+  agotado_dia TEXT,                 -- fecha en la que se marcó «agotado hoy» (caduca sola al día siguiente)
+  nombre      TEXT,
+  descripcion TEXT,
+  precio      TEXT,
+  actualizado TEXT NOT NULL DEFAULT (datetime('now'))
+);

@@ -55,11 +55,12 @@
         '<a href="/admin/reservas/"><span class="jp">ヨヤク</span><b>Reservas</b><span>Hoy, mañana y cualquier día. Confirmar, llegadas y horas cerradas.</span><span class="big" id="k1">…</span></a>' +
         '<a href="/admin/fidelidad/"><span class="jp">ポイント</span><b>Tarjetas</b><span>Socios, puntos, canjes y ajustes.</span><span class="big" id="k2">…</span></a>' +
         '<a href="/admin/estadisticas/"><span class="jp">トウケイ</span><b>Estadísticas</b><span>Visitas, de dónde vienen y cuántos reservan.</span><span class="big" id="k3">…</span></a>' +
-        '<a class="soon" aria-disabled="true"><span class="jp">メニュー</span><b>Carta</b><span>Agotado hoy, precios y platos ocultos. Próximamente.</span></a>' +
+        '<a href="/admin/carta/"><span class="jp">メニュー</span><b>Carta</b><span>Agotado hoy, precios, nombres y platos ocultos.</span><span class="big" id="k4">…</span></a>' +
         '<a class="soon" aria-disabled="true"><span class="jp">センデン</span><b>Promociones</b><span>Enviar ofertas a los socios. Próximamente.</span></a>' +
       '</div></main>';
     HK.api('/api/admin/reservas').then(function (j) { if (j.ok) document.getElementById('k1').textContent = j.resumen.personas + ' pax hoy'; });
     HK.api('/api/admin/clientes').then(function (j) { if (j.ok) document.getElementById('k2').textContent = HK.fmt(j.total) + (j.total === 1 ? ' socio' : ' socios'); });
+    HK.api('/api/admin/carta').then(function (j) { if (j.ok) { var n = Object.values(j.cambios).filter(function (o) { return o.agotado; }).length; document.getElementById('k4').textContent = n + (n === 1 ? ' agotado' : ' agotados'); } });
     HK.api('/api/admin/estadisticas?dias=7').then(function (j) { if (j.ok) document.getElementById('k3').textContent = HK.fmt(j.kpis.visitantes) + (j.kpis.visitantes === 1 ? ' visita' : ' visitas'); });
   }
 

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141414">
+<title>Carta · Panel HOKUSAI</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="/admin/admin.js"></script>
+<style>
+.ctabs{display:inline-flex;margin:6px 0 12px}
+.cats{display:flex;gap:6px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.cats button{flex:none;min-height:36px;padding:0 12px;border:2px solid var(--ink);border-radius:999px;background:var(--card);font:400 14px Anton,sans-serif;letter-spacing:.04em;cursor:pointer}
+.cats button[aria-pressed=true]{background:var(--ink);color:var(--yellow)}
+.dish{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:start;padding:12px 14px;margin-bottom:8px;background:var(--card);border:3px solid var(--ink);border-radius:8px}
+.dish.agot{background:#ffe1e4}.dish.ocu{opacity:.5;border-style:dashed}
+.dish .num{font:400 20px Anton,sans-serif;color:var(--red);min-width:34px}
+.dish .nm{font:400 19px/1.15 Anton,sans-serif;text-transform:uppercase}
+.dish .ds{font-size:13px;color:var(--muted);margin-top:2px}
+.dish .badges{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.badge{padding:2px 8px;border:2px solid var(--ink);border-radius:999px;font:400 12px Anton,sans-serif;letter-spacing:.05em}
+.badge.r{background:var(--red);color:var(--paper)}.badge.k{background:var(--ink);color:var(--paper)}.badge.y{background:var(--yellow)}
+.dish .acts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.edit{grid-column:1/-1;display:grid;gap:8px;margin-top:8px;padding:12px;border:2px dashed var(--ink);border-radius:6px;background:#fff}
+.edit label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:700;letter-spacing:.08em}
+.edit input,.edit textarea{width:100%}
+.edit textarea{min-height:64px;padding:10px 12px;border:2.5px solid var(--ink);border-radius:6px;font:500 15px 'DM Sans',sans-serif;resize:vertical}
+</style>
+</head>
+<body>
+<main>
+  <span class="kana">メニュー · CARTA</span>
+  <h1 class="h">La carta</h1>
+  <p class="muted" style="margin:-6px 0 12px">Los cambios salen en hokusaisalou.com/carta en menos de un minuto. «Agotado hoy» se quita solo mañana.</p>
+  <div class="ctabs seg" role="group" aria-label="Tipo">
+    <button type="button" data-t="p" aria-pressed="true">PLATOS</button><button type="button" data-t="b" aria-pressed="false">BEBIDAS</button>
+  </div>
+  <form class="search" id="sf" role="search" onsubmit="return false"><input type="search" id="q" placeholder="Buscar plato o número" aria-label="Buscar"></form>
+  <div class="cats" id="cats"></div>
+  <div class="kpis" id="kpis" style="margin:4px 0 12px"></div>
+  <div id="list"><p class="empty">Cargando la carta…</p></div>
+</main>
+<script type="module">
+import * as D from '/carta-data.js';
+import * as B from '/bebidas-data.js';
+const esc = HK.esc, $ = id => document.getElementById(id);
+HK.header('carta');
+const E = v => v.toFixed(2).replace('.', ',') + ' €';
+const st = { t: 'p', cat: 'todo', q: '', ov: {}, abierto: null };
+
+// Lista plana de todo lo editable
+const PLATOS = D.CATS.flatMap(c => D.MENU[c.id].map(it => ({ clave: 'p:' + c.id + ':' + (it[0] || it[1]), cat: c.id, catLabel: c.label, num: it[0], n: it[1], d: it[2] || '', precio: it[4] || '' })));
+const BEBIDAS = [
+  ...B.SHELVES.flatMap(s => s.items.map(([n, p]) => ({ clave: 'b:' + s.label + ':' + n, cat: s.label, catLabel: s.label, num: '', n, d: '', precio: E(p) }))),
+  ...B.LISTS.flatMap(g => g.rows.map(([n, p, note]) => ({ clave: 'b:' + g.label + ':' + n, cat: g.label, catLabel: g.label, num: '', n, d: note || '', precio: E(p) })))
+];
+
+function cats() {
+  const list = st.t === 'p' ? D.CATS.map(c => [c.id, c.label]) : [...new Set(BEBIDAS.map(b => b.cat))].map(c => [c, c]);
+  $('cats').innerHTML = [['todo', 'TODO'], ['cambios', '✎ CON CAMBIOS'], ...list].map(([id, l]) => `<button type="button" data-c="${esc(id)}" aria-pressed="${st.cat === id}">${esc(l.toUpperCase())}</button>`).join('');
+}
+function render() {
+  const all = st.t === 'p' ? PLATOS : BEBIDAS;
+  const q = st.q.toLowerCase();
+  const rows = all.filter(x => {
+    const o = st.ov[x.clave];
+    if (st.cat === 'cambios') { if (!o) return false; } else if (st.cat !== 'todo' && x.cat !== st.cat) return false;
+    return !q || (x.n + ' ' + x.d + ' ' + x.num + ' ' + (o && o.nombre || '')).toLowerCase().includes(q);
+  });
+  const ag = Object.values(st.ov).filter(o => o.agotado).length, oc = Object.values(st.ov).filter(o => o.oculto).length;
+  $('kpis').innerHTML = `<div class="kpi${ag ? ' hl' : ''}"><b>${ag}</b><span>Agotados hoy</span></div><div class="kpi"><b>${oc}</b><span>Ocultos</span></div><div class="kpi"><b>${Object.keys(st.ov).length}</b><span>Con cambios</span></div>`;
+  $('list').innerHTML = rows.length ? rows.map(x => {
+    const o = st.ov[x.clave] || {};
+    const cambiado = o.nombre || o.descripcion || o.precio;
+    return `<article class="dish${o.agotado ? ' agot' : ''}${o.oculto ? ' ocu' : ''}" data-k="${esc(x.clave)}">
+      <span class="num">${esc(x.num)}</span>
+      <div><div class="nm">${esc(o.nombre || x.n)}</div>
+        <div class="ds">${esc(o.descripcion || x.d)}${(o.precio || x.precio) ? ' · <b>' + esc(o.precio || x.precio) + '</b>' : (st.t === 'p' ? ' · incluido en el buffet' : '')}</div>
+        <div class="badges">${st.cat === 'todo' || st.cat === 'cambios' ? `<span class="badge">${esc(x.catLabel)}</span>` : ''}${o.agotado ? '<span class="badge r">AGOTADO HOY</span>' : ''}${o.oculto ? '<span class="badge k">OCULTO</span>' : ''}${cambiado ? '<span class="badge y">EDITADO</span>' : ''}</div></div>
+      <div class="acts">
+        <button class="btn sm ${o.agotado ? 'green' : 'red'}" type="button" data-a="agotado">${o.agotado ? '✓ HAY DE NUEVO' : '✕ AGOTADO HOY'}</button>
+        <button class="btn sm" type="button" data-a="oculto">${o.oculto ? '👁 MOSTRAR' : '🙈 OCULTAR'}</button>
+        <button class="btn sm" type="button" data-a="editar">✎ EDITAR</button>
+      </div>
+      ${st.abierto === x.clave ? `<form class="edit" data-k="${esc(x.clave)}">
+        <label>NOMBRE<input type="text" name="nombre" value="${esc(o.nombre || '')}" placeholder="${esc(x.n)}"></label>
+        <label>DESCRIPCIÓN<textarea name="descripcion" placeholder="${esc(x.d || 'Sin descripción')}">${esc(o.descripcion || '')}</textarea></label>
+        <label>${st.t === 'p' && !x.precio ? 'PRECIO APARTE (€) · vacío = incluido en el buffet' : 'PRECIO (€)'}<input type="text" inputmode="decimal" name="precio" value="${esc(o.precio || '')}" placeholder="${esc(x.precio || 'Ej.: 3,50')}"></label>
+        <p class="muted" style="margin:0;font-size:12px">Deja un campo vacío para usar el original.</p>
+        <div class="row"><button class="btn red" type="submit">GUARDAR</button><button class="btn" type="button" data-a="cerrar">VOLVER</button>${st.ov[x.clave] ? '<button class="btn sm" type="button" data-a="restablecer">↺ RESTABLECER ORIGINAL</button>' : ''}</div>
+      </form>` : ''}
+    </article>`;
+  }).join('') : '<p class="empty">No hay nada que coincida.</p>';
+}
+function guardar(clave, datos) {
+  return HK.api('/api/admin/carta', { clave, ...datos }).then(j => {
+    if (!j.ok) return HK.toast(j.error);
+    if (datos.restablecer) delete st.ov[clave];
+    else { const c = j.cambio; if (c.oculto || c.agotado || c.nombre || c.descripcion || c.precio) st.ov[clave] = c; else delete st.ov[clave]; }
+    HK.toast('Guardado'); render();
+  }).catch(() => {});
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.t) { st.t = b.dataset.t; st.cat = 'todo'; st.abierto = null; document.querySelectorAll('[data-t]').forEach(x => x.setAttribute('aria-pressed', String(x === b))); cats(); render(); return; }
+  if (b.dataset.c) { st.cat = b.dataset.c; cats(); render(); return; }
+  const k = b.closest('[data-k]') && b.closest('[data-k]').dataset.k; if (!k) return;
+  const o = st.ov[k] || {};
+  if (b.dataset.a === 'agotado') guardar(k, { agotado: !o.agotado });
+  if (b.dataset.a === 'oculto') guardar(k, { oculto: !o.oculto });
+  if (b.dataset.a === 'editar') { st.abierto = st.abierto === k ? null : k; render(); }
+  if (b.dataset.a === 'cerrar') { st.abierto = null; render(); }
+  if (b.dataset.a === 'restablecer') { st.abierto = null; guardar(k, { restablecer: true }); }
+});
+document.addEventListener('submit', e => {
+  const f = e.target.closest('form.edit'); if (!f) return;
+  e.preventDefault(); st.abierto = null;
+  guardar(f.dataset.k, { nombre: f.nombre.value, descripcion: f.descripcion.value, precio: f.precio.value });
+});
+$('q').addEventListener('input', e => { st.q = e.target.value.trim(); render(); });
+
+HK.api('/api/admin/carta').then(j => { if (j.ok) { st.ov = j.cambios; cats(); render(); } }).catch(() => {});
+</script>
+</body>
+</html>
