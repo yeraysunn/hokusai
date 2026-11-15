@@ -14,6 +14,8 @@ TELEFONO = "622 01 59 96"
 MAX_PERSONAS_FRANJA = "40"   # personas máximas por hora reservada
 # Tarjeta de fidelidad: privada hasta dar la señal → cambiar a "1"
 FIDELIDAD_ACTIVA = "0"
+# Reservas por Telegram: privadas (en /reservar-telegram) hasta dar la señal → "1"
+RESERVAS_ACTIVA = "0"
 
 # Secretos (NO van aquí). Se ponen con:
 #   npx wrangler pages secret put TELEGRAM_BOT_TOKEN

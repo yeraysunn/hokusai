@@ -1,5 +1,12 @@
 # Reservas con Telegram + Tarjeta de puntos · HOKUSAI
 
+## Estado (15-11-2026)
+- /reservar público = sistema de WhatsApp de siempre.
+- Reservas por Telegram: PRIVADAS en /reservar-telegram (RESERVAS_ACTIVA = "0").
+- Tarjeta de puntos: PRIVADA en /fidelidad (FIDELIDAD_ACTIVA = "0").
+- Para verlas: abrir una vez /reservar-telegram?preview=CLAVE (CLAVE en .secretos.local).
+- Lanzar reservas Telegram: RESERVAS_ACTIVA = "1" y copiar Reservar-telegram.dc.html sobre Reservar.dc.html.
+
 ## Cómo funciona
 - **/reservar** → el cliente elige día, hora y personas → se guarda en D1 → llega al grupo de Telegram con ✅ Confirmar / ❌ Rechazar → el cliente recibe un email y tiene `/reserva/?t=…` para ver o cancelar.
 - **Bot** (solo personal): `/hoy`, `/manana`, `/dia 2026-12-24`, `/id`, `/ayuda`.
