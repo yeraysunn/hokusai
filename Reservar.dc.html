@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="HOKUSAI Sushi">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Reservar mesa · HOKUSAI Sushi Salou">
-<meta property="og:description" content="Reserva tu mesa en el buffet libre japonés HOKUSAI de Salou: elige día, hora y personas y confirma por WhatsApp.">
+<meta property="og:description" content="Reserva tu mesa en el buffet libre japonés HOKUSAI de Salou: elige día, hora y personas y te confirmamos la mesa por email.">
 <meta property="og:url" content="https://hokusaisushi.es/reservar">
 <meta property="og:image" content="https://hokusaisushi.es/assets/local-noren.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Reservar mesa · HOKUSAI Sushi Salou">
-<meta name="twitter:description" content="Reserva tu mesa en el buffet libre japonés HOKUSAI de Salou: elige día, hora y personas y confirma por WhatsApp.">
+<meta name="twitter:description" content="Reserva tu mesa en el buffet libre japonés HOKUSAI de Salou: elige día, hora y personas y te confirmamos la mesa por email.">
 <meta name="twitter:image" content="https://hokusaisushi.es/assets/local-noren.jpg">
 <meta name="theme-color" content="#FAF3E3">
 <meta name="format-detection" content="telephone=no">
@@ -30,7 +30,7 @@
 {"@context":"https://schema.org","@type":"WebPage","name":"Reservar mesa","url":"https://hokusaisushi.es/reservar","inLanguage":"es","about":{"@id":"https://hokusaisushi.es/#restaurant"},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://hokusaisushi.es/"},{"@type":"ListItem","position":2,"name":"Reservar","item":"https://hokusaisushi.es/reservar"}]}}
 </script>
 <title>Reservar mesa · HOKUSAI Sushi Buffet Libre Salou</title>
-<meta name="description" content="Reserva tu mesa en HOKUSAI Sushi, buffet libre japonés en Salou. Elige día, hora y personas y confirma por WhatsApp en un toque.">
+<meta name="description" content="Reserva tu mesa en HOKUSAI Sushi, buffet libre japonés en Salou. Elige día, hora y personas y y te confirmamos por email.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=Noto+Sans+JP:wght@700;900&amp;display=swap">
@@ -68,7 +68,7 @@ a:hover{color:#D7263D}
     <div style="position:relative;max-width:1320px;margin:0 auto;padding:clamp(32px,5vw,64px) clamp(18px,4vw,40px);padding-right:clamp(40px,42vw,560px);display:flex;flex-direction:column;gap:10px">
       <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#F2A33A;letter-spacing:.2em;font-size:15px">ヨヤク · RESERVA</span>
       <h1 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(52px,9vw,112px);line-height:.9;text-transform:uppercase;text-shadow:5px 5px 0 #141414">Reserva tu mesa</h1>
-      <p style="margin:0;max-width:560px;font-size:18px;line-height:1.55">Tres pasos y listo. Al final te abrimos WhatsApp con el mensaje ya escrito: solo tienes que darle a enviar.</p>
+      <p style="margin:0;max-width:560px;font-size:18px;line-height:1.55">Cuatro pasos y listo. Te confirmamos la mesa por email en cuanto la vea el equipo.</p>
     </div>
   </section>
 
@@ -139,9 +139,22 @@ a:hover{color:#D7263D}
           <label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Teléfono
             <input type="tel" value="{{ phone }}" onChange="{{ onPhone }}" autocomplete="tel" placeholder="+34 …" style="height:50px;padding:0 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
           </label>
-          <label style="grid-column:1/-1;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Comentarios <span style="font-weight:500">(opcional: alergias, trona, cumpleaños…)</span>
+          <label style="grid-column:1/-1;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Email <span style="font-weight:500">(para recibir la confirmación)</span>
+            <input type="email" value="{{ email }}" onChange="{{ onEmail }}" autocomplete="email" placeholder="tu@email.com" style="height:50px;padding:0 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;min-width:0">
+          </label>
+          <div style="grid-column:1/-1;display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ extras }}" as="x" hint-placeholder-count="3">
+              <button type="button" onClick="{{ x.onClick }}" aria-pressed="{{ x.on }}" style="display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 16px;border:2.5px solid #141414;border-radius:999px;background:{{ x.bg }};color:{{ x.fg }};box-shadow:{{ x.sh }};font:700 15px 'DM Sans',sans-serif;cursor:pointer;transition:transform .12s" style-active="transform:scale(.94)"><i class="{{ x.icon }}"></i>{{ x.label }}</button>
+            </sc-for>
+          </div>
+          <label style="grid-column:1/-1;display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:14px">Comentarios <span style="font-weight:500">(opcional: alergias, preferencias…)</span>
             <textarea value="{{ notes }}" onChange="{{ onNotes }}" rows="3" placeholder="Ej.: uno de nosotros es celíaco" style="padding:12px 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font:500 16px 'DM Sans',sans-serif;color:#141414;resize:vertical;min-width:0"></textarea>
           </label>
+          <label style="grid-column:1/-1;display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.45;cursor:pointer">
+            <input type="checkbox" checked="{{ privacy }}" onChange="{{ onPrivacy }}" style="flex:none;width:22px;height:22px;margin:0;accent-color:#D7263D">
+            <span>He leído y acepto la <a href="Legal.dc.html#privacidad" target="_blank">política de privacidad</a>.</span>
+          </label>
+          <input type="text" name="web" value="{{ hp }}" onChange="{{ onHp }}" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         </div>
       </section>
     </div>
@@ -155,9 +168,22 @@ a:hover{color:#D7263D}
         </div>
       </sc-for>
       <div style="height:18px"></div>
-      <sc-if value="{{ ready }}" hint-placeholder-val="{{ false }}">
-        <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:0 18px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:24px;letter-spacing:.06em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px) rotate(-1deg);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">SOLICITAR RESERVA</a>
-        <p style="margin:10px 0 0;font-size:13px;line-height:1.45;text-align:center">Se abrirá WhatsApp con tu mensaje listo. Solo dale a <strong>enviar</strong>.</p>
+      <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+        <div role="status" style="background:#FFE600;border:3px solid #141414;border-radius:8px;box-shadow:5px 5px 0 #141414;padding:18px;display:flex;flex-direction:column;gap:8px;transform:rotate(-1deg)">
+          <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#D7263D;letter-spacing:.2em;font-size:13px">ウケツケ · RECIBIDA</span>
+          <strong style="font-family:Anton,sans-serif;font-weight:400;font-size:30px;line-height:1;text-transform:uppercase">¡Reserva enviada!</strong>
+          <p style="margin:0;font-size:15px;line-height:1.5">{{ doneMsg }}</p>
+          <a href="{{ doneLink }}" style="font-weight:700;color:#141414">Ver el estado de mi reserva →</a>
+        </div>
+      </sc-if>
+      <sc-if value="{{ canSend }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ submit }}" disabled="{{ sending }}" style="display:flex;width:100%;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:0 18px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:24px;letter-spacing:.06em;cursor:pointer;opacity:{{ sendOp }};transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px) rotate(-1deg);box-shadow:8px 8px 0 #141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414">{{ sendTxt }}</button>
+        <p style="margin:10px 0 0;font-size:13px;line-height:1.45;text-align:center">El equipo la confirma en minutos. Te avisamos por email.</p>
+      </sc-if>
+      <sc-if value="{{ hasError }}" hint-placeholder-val="{{ false }}">
+        <div role="alert" style="margin-top:12px;padding:12px 14px;border:3px solid #141414;border-radius:6px;background:#FFFBF2;font-size:14px;line-height:1.45;font-weight:700;color:#D7263D">{{ error }}
+          <a href="{{ waHref }}" target="_blank" rel="noopener" style="display:block;margin-top:8px;color:#1B2A6B">O envíanosla por WhatsApp →</a>
+        </div>
       </sc-if>
       <sc-if value="{{ notReady }}" hint-placeholder-val="{{ true }}">
         <span aria-disabled="true" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:60px;padding:0 18px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:24px;letter-spacing:.06em;opacity:.55;cursor:not-allowed">SOLICITAR RESERVA</span>
@@ -186,9 +212,55 @@ const LUNCH = slots(12, 30, 15, 30), DINNER = slots(19, 30, 22, 30);
 const P_LUNCH = [16.95, 11.95], P_NIGHT = [22.95, 13.95];
 const eur = n => n.toFixed(2).replace('.', ',') + ' €';
 const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
+const ymd = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 
 class Component extends DCLogic {
-  state = { ad: 2, ni: 0, be: 0, mo: 0, date: null, time: null, turn: null, name: '', phone: '', notes: '' };
+  state = { ad: 2, ni: 0, be: 0, mo: 0, date: null, time: null, turn: null, name: '', phone: '', email: '', notes: '',
+    cumple: false, trona: false, carrito: false, privacy: false, hp: '', full: [], sending: false, error: '', done: null };
+  componentDidMount() {
+    // Datos que vienen del formulario rápido de la portada
+    try {
+      const p = JSON.parse(sessionStorage.getItem('hokusai-prefill') || 'null');
+      sessionStorage.removeItem('hokusai-prefill');
+      if (p) {
+        const st = { name: p.name || '', phone: p.phone || '' };
+        const n = parseInt(p.people); if (n > 0) st.ad = Math.min(20, n);
+        this.setState(st);
+        if (/^\d{4}-\d{2}-\d{2}$/.test(p.date || '')) {
+          const [y, m, d] = p.date.split('-').map(Number); const dt = new Date(y, m - 1, d);
+          const now = new Date(); now.setHours(0, 0, 0, 0);
+          if (dt >= now) {
+            const mo = (dt.getFullYear() - now.getFullYear()) * 12 + dt.getMonth() - now.getMonth();
+            this.setState({ mo: Math.max(0, Math.min(5, mo)) });
+            this.pickDate(dt);
+            if (p.time) this.setState({ time: p.time, turn: p.time < '17:00' ? 'lunch' : 'night' });
+          }
+        }
+      }
+    } catch (e) {}
+  }
+  pickDate(dt) {
+    this.setState({ date: dt, time: null, turn: null, full: [], error: '' });
+    const iso = ymd(dt);
+    fetch('/api/reservas/disponibilidad?fecha=' + iso).then(r => r.ok ? r.json() : null)
+      .then(j => { if (j && j.ok && this.state.date && ymd(this.state.date) === iso) this.setState({ full: j.completas || [] }); }).catch(() => {});
+  }
+  async send() {
+    const s = this.state;
+    if (s.sending) return;
+    this.setState({ sending: true, error: '' });
+    try {
+      const r = await fetch('/api/reservas/crear', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({
+        fecha: ymd(s.date), hora: s.time, adultos: s.ad, ninos: s.ni, bebes: s.be, nombre: s.name.trim(), telefono: s.phone.trim(), email: s.email.trim(),
+        comentarios: s.notes.trim(), cumple: s.cumple, trona: s.trona, carrito: s.carrito, privacidad: s.privacy, web: s.hp }) });
+      const j = await r.json().catch(() => null);
+      if (!r.ok || !j || !j.ok) throw new Error((j && j.error) || 'No se pudo enviar la reserva. Llámanos al 622 01 59 96.');
+      this.setState({ sending: false, done: j });
+      try { window.hokusaiEvento && window.hokusaiEvento('reserva_enviada'); } catch (x) {}
+    } catch (e) {
+      this.setState({ sending: false, error: e.message || 'No se pudo enviar la reserva.' });
+    }
+  }
   renderVals() {
     const s = this.state;
     const now = new Date(); const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -201,12 +273,12 @@ class Component extends DCLogic {
       const dt = new Date(y, mth, d); const past = dt < today || dt.getDay() === 2; const isT = +dt === +today; const sel = s.date && +dt === +s.date;
       days.push({ label: d, off: past, sel: !!sel, vis: 'visible', aria: dt.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }),
         bg: sel ? '#141414' : isT ? '#F2A33A' : '#FAF3E3', fg: sel ? '#FFE600' : '#141414', bd: past ? 'transparent' : '#141414', op: past ? 0.35 : 1,
-        onClick: () => this.setState({ date: dt, time: null, turn: null }) });
+        onClick: () => this.pickDate(dt) });
     }
     const weekend = s.date && (s.date.getDay() === 0 || s.date.getDay() === 6);
     const isToday = s.date && +s.date === +today;
     const nowMin = now.getHours() * 60 + now.getMinutes();
-    const mk = (list, turn) => list.map(t => { const [h, m] = t.split(':').map(Number); const off = isToday && h * 60 + m <= nowMin + 30; const sel = s.time === t;
+    const mk = (list, turn) => list.map(t => { const [h, m] = t.split(':').map(Number); const off = (isToday && h * 60 + m <= nowMin + 30) || s.full.includes(t); const sel = s.time === t;
       return { t, off, sel, bg: sel ? '#141414' : '#FAF3E3', fg: sel ? '#FFE600' : '#141414', sh: sel ? '3px 3px 0 #D7263D' : 'none', op: off ? 0.35 : 1, td: off ? 'line-through' : 'none',
         onClick: () => this.setState({ time: t, turn }) }; });
     const lunchP = weekend ? P_NIGHT : P_LUNCH;
@@ -222,7 +294,10 @@ class Component extends DCLogic {
     const miss = [];
     if (!s.ad && !s.ni) miss.push('personas'); if (!s.date) miss.push('día'); if (!s.time) miss.push('hora');
     if (!s.name.trim()) miss.push('nombre'); if (s.phone.replace(/\D/g, '').length < 9) miss.push('teléfono');
-    const msg = `¡Hola HOKUSAI! Quiero reservar mesa:\n\n📅 ${dayCap}\n🕐 ${s.time}\n👥 ${peopleTxt}\n👤 ${s.name.trim()}\n📞 ${s.phone.trim()}` + (s.notes.trim() ? `\n📝 ${s.notes.trim()}` : '') + '\n\n¡Gracias!';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(s.email.trim())) miss.push('email'); if (!s.privacy) miss.push('aceptar la privacidad');
+    const extra = (key, label, icon) => { const on = !!s[key]; return { label, icon, on, bg: on ? '#141414' : '#FAF3E3', fg: on ? '#FFE600' : '#141414', sh: on ? '3px 3px 0 #D7263D' : 'none', onClick: () => this.setState(st => ({ [key]: !st[key] })) }; };
+    const flags = [s.cumple && '🎂 Cumpleaños', s.trona && '🪑 Trona', s.carrito && '👶 Carrito'].filter(Boolean).join(' · ');
+    const msg = `¡Hola HOKUSAI! Quiero reservar mesa:\n\n📅 ${dayCap}\n🕐 ${s.time}\n👥 ${peopleTxt}\n👤 ${s.name.trim()}\n📞 ${s.phone.trim()}` + (flags ? `\n${flags}` : '') + (s.notes.trim() ? `\n📝 ${s.notes.trim()}` : '') + '\n\n¡Gracias!';
     const person = (key, label, sub, max) => ({ label, sub, n: s[key],
       inc: () => this.setState(st => ({ [key]: Math.min(max, st[key] + 1) })), dec: () => this.setState(st => ({ [key]: Math.max(0, st[key] - 1) })),
       decOff: s[key] === 0, decOp: s[key] === 0 ? 0.35 : 1, decLabel: 'Quitar ' + label.toLowerCase(), incLabel: 'Añadir ' + label.toLowerCase() });
@@ -232,7 +307,12 @@ class Component extends DCLogic {
       prevMonth: () => this.setState(st => ({ mo: Math.max(0, st.mo - 1) })), nextMonth: () => this.setState(st => ({ mo: Math.min(5, st.mo + 1) })),
       prevOff: s.mo === 0, prevOp: s.mo === 0 ? 0.35 : 1,
       noDate: !s.date, hasDate: !!s.date, turns,
-      name: s.name, phone: s.phone, notes: s.notes,
+      name: s.name, phone: s.phone, notes: s.notes, email: s.email, privacy: s.privacy, hp: s.hp,
+      onEmail: e => this.setState({ email: e.target.value }), onPrivacy: e => this.setState({ privacy: e.target.checked }), onHp: e => this.setState({ hp: e.target.value }),
+      extras: [extra('cumple', 'Cumpleaños', 'ph-bold ph-cake'), extra('trona', 'Necesito trona', 'ph-bold ph-chair'), extra('carrito', 'Carrito de bebé', 'ph-bold ph-baby-carriage')],
+      done: !!s.done, doneMsg: s.done ? `Cuando el equipo la confirme te llegará un email a ${s.email.trim()}.` : '', doneLink: s.done ? s.done.enlace : '#',
+      canSend: miss.length === 0 && !s.done, sending: s.sending, sendOp: s.sending ? 0.6 : 1, sendTxt: s.sending ? 'ENVIANDO…' : 'SOLICITAR RESERVA', submit: () => this.send(),
+      hasError: !!s.error && !s.done, error: s.error,
       onName: e => this.setState({ name: e.target.value }), onPhone: e => this.setState({ phone: e.target.value }), onNotes: e => this.setState({ notes: e.target.value }),
       summary: [
         { k: 'Personas', v: peopleTxt, c: '#141414' },
@@ -241,7 +321,7 @@ class Component extends DCLogic {
         { k: 'A nombre de', v: s.name.trim() || 'Sin indicar', c: s.name.trim() ? '#141414' : '#6b6356' }
       ],
       total, totalNote: s.date && s.time ? `${s.turn === 'night' || weekend ? 'Tarifa noche y fin de semana' : 'Tarifa mediodía'}. IVA incluido, bebidas aparte. Se paga en el local.` : 'Elige día y hora para ver el precio.',
-      ready: miss.length === 0, notReady: miss.length > 0, missing: 'Falta: ' + miss.join(', '),
+      notReady: miss.length > 0 && !s.done, missing: 'Falta: ' + miss.join(', '),
       waHref: `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`
     };
   }

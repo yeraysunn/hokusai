@@ -17,12 +17,12 @@
 <meta property="og:site_name" content="HOKUSAI Sushi">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="HOKUSAI Sushi · Buffet Libre en Salou">
-<meta property="og:description" content="Sushi buffet libre en Salou con temática anime: nigiris, makis, ramen y postres sin límite. Reserva por WhatsApp.">
+<meta property="og:description" content="Sushi buffet libre en Salou con temática anime: nigiris, makis, ramen y postres sin límite. Reserva online.">
 <meta property="og:url" content="https://hokusaisushi.es/">
 <meta property="og:image" content="https://hokusaisushi.es/assets/local-noren.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="HOKUSAI Sushi · Buffet Libre en Salou">
-<meta name="twitter:description" content="Sushi buffet libre en Salou con temática anime: nigiris, makis, ramen y postres sin límite. Reserva por WhatsApp.">
+<meta name="twitter:description" content="Sushi buffet libre en Salou con temática anime: nigiris, makis, ramen y postres sin límite. Reserva online.">
 <meta name="twitter:image" content="https://hokusaisushi.es/assets/local-noren.jpg">
 <meta name="theme-color" content="#FAF3E3">
 <meta name="format-detection" content="telephone=no">
@@ -503,8 +503,8 @@ a:hover{color:#D7263D}
     <div data-reveal="" style="display:flex;flex-direction:column;gap:16px">
       <span style="font-family:'Noto Sans JP',sans-serif;font-weight:900;color:#F2A33A;letter-spacing:.2em;font-size:15px">ヨヤク · RESERVA</span>
       <h2 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,88px);line-height:.92;text-transform:uppercase;text-shadow:4px 4px 0 #141414">Reserva<br>tu mesa</h2>
-      <p style="margin:0;max-width:440px;font-size:18px;line-height:1.55">En verano y fines de semana se llena. Rellena el formulario y te abrimos WhatsApp con el mensaje listo para enviar.</p>
-      <a href="{{ waHref }}" target="_blank" rel="noopener" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 22px;background:#25D366;color:#141414;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:21px;letter-spacing:.04em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#141414" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-whatsapp-logo" style="font-size:24px"></i>RESERVAR POR WHATSAPP</a>
+      <p style="margin:0;max-width:440px;font-size:18px;line-height:1.55">En verano y fines de semana se llena. Rellena el formulario y termina tu reserva online: te la confirmamos por email.</p>
+      <a href="Reservar.dc.html" style="align-self:flex-start;display:inline-flex;align-items:center;gap:10px;min-height:56px;padding:0 22px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;box-shadow:5px 5px 0 #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:21px;letter-spacing:.04em;text-decoration:none;transition:transform .12s,box-shadow .12s" style-hover="transform:translate(-2px,-2px);box-shadow:8px 8px 0 #141414;color:#FAF3E3" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-calendar-check" style="font-size:24px"></i>RESERVAR ONLINE</a>
       <p style="margin:0;font-size:15px">O llámanos: <a href="tel:+34622015996" style="color:#F2A33A;font-weight:700">622 01 59 96</a></p>
     </div>
     <div data-reveal="" style="background:#FAF3E3;color:#141414;border:3px solid #141414;box-shadow:8px 8px 0 #F2A33A;padding:clamp(20px,3vw,32px)">
@@ -539,7 +539,7 @@ a:hover{color:#D7263D}
         <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start;padding:10px 0">
           <span style="font-family:'Noto Sans JP';font-weight:900;font-size:44px;color:#D7263D">ヤッタ!</span>
           <h3 style="margin:0;font-family:Anton,sans-serif;font-weight:400;font-size:36px;text-transform:uppercase">¡Casi listo!</h3>
-          <p style="margin:0;line-height:1.5">Te hemos abierto WhatsApp con tu reserva escrita. Solo falta darle a enviar.</p>
+          <p style="margin:0;line-height:1.5">Te llevamos a terminar tu reserva…</p>
           <button onClick="{{ reset }}" style="min-height:48px;padding:0 18px;background:#FAF3E3;border:3px solid #141414;border-radius:6px;font:700 15px 'DM Sans',sans-serif;cursor:pointer">Hacer otra reserva</button>
         </div>
       </sc-if>
@@ -592,7 +592,7 @@ a:hover{color:#D7263D}
   <a href="Reservar.dc.html" style="display:inline-flex;align-items:center;gap:8px;height:50px;padding:0 20px;background:#D7263D;color:#FAF3E3;border:3px solid #141414;border-radius:6px;font-family:Anton,sans-serif;font-size:19px;letter-spacing:.05em;text-decoration:none;white-space:nowrap;transition:transform .12s" style-hover="color:#FAF3E3" style-active="transform:scale(.96)"><i class="ph-bold ph-calendar-check"></i>RESERVAR</a>
 </div>
 <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
-  <a href="{{ waHref }}" target="_blank" rel="noopener" aria-label="Reservar por WhatsApp" style="position:fixed;right:16px;bottom:96px;z-index:70;width:62px;height:62px;display:grid;place-items:center;background:#25D366;color:#141414;border:3px solid #141414;border-radius:50%;box-shadow:4px 4px 0 #141414;font-size:32px;text-decoration:none" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-whatsapp-logo"></i></a>
+  <a href="{{ waHref }}" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp" style="position:fixed;right:16px;bottom:96px;z-index:70;width:62px;height:62px;display:grid;place-items:center;background:#25D366;color:#141414;border:3px solid #141414;border-radius:50%;box-shadow:4px 4px 0 #141414;font-size:32px;text-decoration:none" style-active="transform:translate(3px,3px);box-shadow:1px 1px 0 #141414"><i class="ph-bold ph-whatsapp-logo"></i></a>
 </sc-if>
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;hero&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;mix&quot;,&quot;manga&quot;,&quot;ukiyoe&quot;],&quot;default&quot;:&quot;mix&quot;,&quot;tsType&quot;:&quot;'mix'|'manga'|'ukiyoe'&quot;}}">
@@ -727,7 +727,7 @@ class Component extends DCLogic {
       onName: e => this.upd('name', e.target.value), onDate: e => this.upd('date', e.target.value),
       onTime: e => this.upd('time', e.target.value), onPeople: e => this.upd('people', e.target.value),
       onPhone: e => this.upd('phone', e.target.value),
-      onSubmit: e => { e.preventDefault(); window.open(`https://wa.me/${WA}?text=${encodeURIComponent(waText)}`, '_blank'); this.setState({ sent: true }); },
+      onSubmit: e => { e.preventDefault(); try { sessionStorage.setItem('hokusai-prefill', JSON.stringify(f)); } catch (x) {} this.setState({ sent: true }); location.href = 'Reservar.dc.html'; },
       reset: () => this.setState({ sent: false }),
       sent: this.state.sent, notSent: !this.state.sent,
       waHref: `https://wa.me/${WA}?text=${encodeURIComponent(waText)}`,
