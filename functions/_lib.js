@@ -76,13 +76,13 @@ export const botonesReserva = r => r.estado === 'pendiente'
 // ── Telegram ───────────────────────────────────────────────
 export async function tg(env, method, payload) {
   if (!env.TELEGRAM_BOT_TOKEN) return null;
-  const r = await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/${method}`, {
+  const r = await fetch(`https://api.telegram.org/bot${String(env.TELEGRAM_BOT_TOKEN).trim()}/${method}`, {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload)
   });
   return r.json().catch(() => null);
 }
 export const staffIds = env => String(env.TELEGRAM_STAFF_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
-export const esStaff = (env, userId, chatId) => staffIds(env).includes(String(userId)) || String(chatId) === String(env.TELEGRAM_CHAT_ID);
+export const esStaff = (env, userId, chatId) => staffIds(env).includes(String(userId)) || String(chatId) === String(env.TELEGRAM_CHAT_ID || '').trim();
 
 // ── Email (Resend) ─────────────────────────────────────────
 export async function mail(env, to, subject, html) {
