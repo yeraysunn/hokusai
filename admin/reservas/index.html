@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141414">
+<title>Reservas · Panel HOKUSAI</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="/admin/admin.js"></script>
+</head>
+<body>
+<main>
+  <span class="kana">ヨヤク · RESERVAS</span>
+  <div class="daybar">
+    <button class="btn" type="button" id="prev" aria-label="Día anterior">‹</button>
+    <div class="day" id="day">…</div>
+    <button class="btn" type="button" id="next" aria-label="Día siguiente">›</button>
+    <button class="btn ink" type="button" id="hoy">HOY</button>
+    <input type="date" id="pick" aria-label="Elegir día">
+  </div>
+  <div id="alert"></div>
+  <div class="kpis" id="kpis"></div>
+  <div id="list"><p class="empty">Cargando…</p></div>
+
+  <details class="hrs" id="hrsBox">
+    <summary>HORAS DE RESERVA · <span id="hrsTxt"></span></summary>
+    <p class="muted" style="margin:8px 0">Toca una hora para cerrarla o abrirla. Las horas cerradas no se pueden reservar desde la web.</p>
+    <div id="turns"></div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn sm" type="button" data-all="1">CERRAR TODO EL DÍA</button>
+      <button class="btn sm" type="button" data-all="0">ABRIR TODO</button>
+    </div>
+  </details>
+</main>
+<script>
+(function () {
+  HK.header('reservas');
+  var esc = HK.esc, state = { fecha: new URLSearchParams(location.search).get('d') || null, data: null };
+  var TXT = { pendiente: 'PENDIENTE', confirmada: 'CONFIRMADA', rechazada: 'RECHAZADA', cancelada: 'CANCELADA POR EL CLIENTE', llego: 'HA LLEGADO', no_vino: 'NO VINO' };
+  var $ = function (id) { return document.getElementById(id); };
+  function addDays(f, n) { var d = new Date(f + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
+
+  function load(f) {
+    HK.api('/api/admin/reservas' + (f ? '?fecha=' + f : '')).then(function (j) {
+      if (!j.ok) { $('list').innerHTML = '<p class="empty">' + esc(j.error) + '</p>'; return; }
+      state.data = j; state.fecha = j.fecha;
+      history.replaceState(null, '', j.fecha === j.hoy ? location.pathname : '?d=' + j.fecha);
+      render();
+    }).catch(function () {});
+  }
+
+  function render() {
+    var j = state.data, r = j.resumen;
+    var rel = j.fecha === j.hoy ? 'Hoy · ' : j.fecha === addDays(j.hoy, 1) ? 'Mañana · ' : '';
+    $('day').textContent = rel + j.fechaTxt; $('pick').value = j.fecha;
+    $('alert').innerHTML = (j.martes ? '<div class="alert">Martes: el restaurante está cerrado.</div>' : '') +
+      (j.otrasPendientes.length ? '<div class="alert">Pendientes de confirmar en otros días: ' + j.otrasPendientes.map(function (o) { return '<a href="?d=' + o.fecha + '" data-go="' + o.fecha + '">' + esc(o.fechaTxt) + ' (' + o.n + ')</a>'; }).join(' · ') + '</div>' : '');
+    $('kpis').innerHTML =
+      '<div class="kpi hl"><b>' + r.personas + '</b><span>Personas</span></div>' +
+      '<div class="kpi"><b>' + r.mediodia + '</b><span>Mediodía</span></div>' +
+      '<div class="kpi"><b>' + r.noche + '</b><span>Noche</span></div>' +
+      '<div class="kpi"' + (r.pendientes ? ' style="background:var(--orange)"' : '') + '><b>' + r.pendientes + '</b><span>Por confirmar</span></div>';
+
+    if (!j.reservas.length) $('list').innerHTML = '<p class="empty">No hay reservas este día.</p>';
+    else {
+      var html = '', hora = '';
+      j.reservas.forEach(function (x) {
+        if (x.hora !== hora) {
+          hora = x.hora;
+          var pax = j.reservas.filter(function (y) { return y.hora === hora && ['pendiente', 'confirmada', 'llego'].indexOf(y.estado) >= 0; }).reduce(function (s, y) { return s + y.total; }, 0);
+          html += '<div class="slot">' + hora + ' <small>' + pax + ' personas</small></div>';
+        }
+        var flags = [x.cumple && '🎂 CUMPLEAÑOS', x.trona && '🪑 TRONA', x.carrito && '👶 CARRITO'].filter(Boolean);
+        var acts = '';
+        if (x.estado === 'pendiente') acts = btn(x.id, 'confirmar', '✅ CONFIRMAR', 'green') + btn(x.id, 'cancelar', '❌ RECHAZAR', '');
+        else if (x.estado === 'confirmada') acts = btn(x.id, 'llego', '🍣 HA LLEGADO', 'ink') + btn(x.id, 'no_vino', '👻 NO VINO', '') + btn(x.id, 'deshacer', '↩ DESHACER', 'sm');
+        else if (['llego', 'no_vino', 'rechazada'].indexOf(x.estado) >= 0) acts = btn(x.id, 'deshacer', '↩ DESHACER', 'sm');
+        html += '<article class="res ' + x.estado + '">' +
+          '<div class="who"><b>' + esc(x.nombre) + '</b><span class="tag ' + x.estado + '">' + TXT[x.estado] + '</span></div>' +
+          '<div class="meta"><span>👥 ' + esc(x.personas) + '</span><a href="tel:' + esc(x.tel) + '">📞 ' + esc(x.tel) + '</a>' + (x.email ? '<span>📧 ' + esc(x.email) + '</span>' : '') + '</div>' +
+          (flags.length ? '<div class="flags">' + flags.map(function (f) { return '<span class="flag">' + f + '</span>'; }).join('') + '</div>' : '') +
+          (x.comentarios ? '<div class="note">📝 ' + esc(x.comentarios) + '</div>' : '') +
+          (acts ? '<div class="row">' + acts + '</div>' : '') +
+        '</article>';
+      });
+      $('list').innerHTML = html;
+    }
+    renderHoras();
+  }
+  function btn(id, a, t, c) { return '<button class="btn ' + c + '" type="button" data-id="' + id + '" data-a="' + a + '">' + t + '</button>'; }
+
+  function renderHoras() {
+    var j = state.data, cer = j.cerradas;
+    var turns = [['MEDIODÍA', j.horas.filter(function (h) { return h < '17:00'; })], ['NOCHE', j.horas.filter(function (h) { return h >= '17:00'; })]];
+    $('hrsTxt').textContent = cer.length === 0 ? 'Todas abiertas' : cer.length === j.horas.length ? 'Día cerrado' : cer.length + ' horas cerradas';
+    $('turns').innerHTML = turns.map(function (t) {
+      var allOff = t[1].every(function (h) { return cer.indexOf(h) >= 0; });
+      return '<div style="margin-top:12px"><div class="row"><b style="font:400 18px Anton,sans-serif">' + t[0] + '</b>' +
+        '<button class="btn sm" type="button" data-turn="' + t[1].join(',') + '" data-close="' + (allOff ? 0 : 1) + '">' + (allOff ? 'ABRIR TURNO' : 'CERRAR TURNO') + '</button></div>' +
+        '<div class="hours">' + t[1].map(function (h) { return '<button type="button" data-h="' + h + '" class="' + (cer.indexOf(h) >= 0 ? 'off' : '') + '" aria-pressed="' + (cer.indexOf(h) >= 0) + '">' + h + '</button>'; }).join('') + '</div></div>';
+    }).join('');
+  }
+
+  function cierre(horas, cerrar) {
+    HK.api('/api/admin/cierres', { fecha: state.fecha, horas: horas, cerrar: cerrar }).then(function (j) {
+      if (!j.ok) return HK.toast(j.error);
+      state.data.cerradas = j.cerradas; renderHoras(); HK.toast(cerrar ? 'Cerrado' : 'Abierto');
+    }).catch(function () {});
+  }
+
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('button,a[data-go]'); if (!b) return;
+    if (b.dataset.go) { e.preventDefault(); load(b.dataset.go); return; }
+    if (b.dataset.a) {
+      b.disabled = true;
+      HK.api('/api/admin/reservas', { id: +b.dataset.id, accion: b.dataset.a }).then(function (j) {
+        if (!j.ok) { b.disabled = false; return HK.toast(j.error); }
+        HK.toast('Hecho · ' + TXT[j.estado]); load(state.fecha);
+      }).catch(function () {});
+    }
+    if (b.dataset.h) cierre([b.dataset.h], !b.classList.contains('off'));
+    if (b.dataset.turn) cierre(b.dataset.turn.split(','), b.dataset.close === '1');
+    if (b.dataset.all) cierre(state.data.horas, b.dataset.all === '1');
+  });
+  $('prev').onclick = function () { load(addDays(state.fecha, -1)); };
+  $('next').onclick = function () { load(addDays(state.fecha, 1)); };
+  $('hoy').onclick = function () { load(null); };
+  $('pick').onchange = function () { if (this.value) load(this.value); };
+  load(state.fecha);
+  setInterval(function () { if (!document.hidden) load(state.fecha); }, 60000); // se refresca solo cada minuto
+})();
+</script>
+</body>
+</html>

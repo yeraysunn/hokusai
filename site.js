@@ -43,3 +43,25 @@
   function init() { if (!get()) open(); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();
+
+// HOKUSAI · estadísticas anónimas sin cookies (para el panel de admin)
+(function () {
+  if (!/^https:/.test(location.protocol)) return;
+  var u = new URLSearchParams(location.search).get('utm_source') || '';
+  function send(e) {
+    try {
+      var d = JSON.stringify({ p: location.pathname, r: document.referrer, u: u, e: e || null });
+      if (navigator.sendBeacon) navigator.sendBeacon('/api/visita', new Blob([d], { type: 'application/json' }));
+      else fetch('/api/visita', { method: 'POST', body: d, keepalive: true, headers: { 'content-type': 'application/json' } });
+    } catch (x) {}
+  }
+  window.hokusaiEvento = send;
+  if (!/^\/(admin|reserva\/|fidelidad\/tarjeta)/.test(location.pathname)) send();
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest && ev.target.closest('a[href]'); if (!a) return;
+    var h = a.getAttribute('href') || '';
+    var e = /^tel:/.test(h) ? 'llamar' : /wa\.me|whatsapp/.test(h) ? 'whatsapp' : /google\.[a-z.]+\/maps|maps\.app|goo\.gl\/maps/.test(h) ? 'como_llegar'
+      : /reservar/i.test(h) ? 'reservar' : /instagram\.com/.test(h) ? 'instagram' : /tiktok\.com/.test(h) ? 'tiktok' : /carta/i.test(h) ? 'carta' : /fidelidad/.test(h) ? 'tarjeta' : null;
+    if (e) send(e);
+  }, true);
+})();

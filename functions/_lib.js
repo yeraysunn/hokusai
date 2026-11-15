@@ -62,7 +62,7 @@ export function fechaLarga(fecha) {
 export const personasTxt = r => [r.adultos && `${r.adultos} adulto${r.adultos > 1 ? 's' : ''}`, r.ninos && `${r.ninos} niño${r.ninos > 1 ? 's' : ''}`, r.bebes && `${r.bebes} bebé${r.bebes > 1 ? 's' : ''}`].filter(Boolean).join(', ');
 export const fmtPts = n => String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
-const ESTADOS = { pendiente: '⏳ Pendiente', confirmada: '✅ CONFIRMADA', rechazada: '❌ RECHAZADA', cancelada: '🚫 CANCELADA por el cliente' };
+const ESTADOS = { pendiente: '⏳ Pendiente', confirmada: '✅ CONFIRMADA', rechazada: '❌ RECHAZADA', cancelada: '🚫 CANCELADA', llego: '🍣 HA LLEGADO', no_vino: '👻 NO VINO' };
 export function telefonoTxt(t) {
   const d = String(t || '').replace(/[^\d+]/g, '');
   if (/^\d{9}$/.test(d)) return '+34' + d;
@@ -118,3 +118,26 @@ ${boton ? `<p style="margin:22px 0 0"><a href="${boton.href}" style="display:inl
 <tr><td style="padding:14px 22px;border-top:2px solid #141414;font-size:12px">HOKUSAI Sushi · Carrer del Carrilet, 9 · Salou</td></tr>
 </table></td></tr></table></body></html>`;
 }
+
+// ── Reservas: actualizar el aviso de Telegram y avisar al cliente ──
+export async function refrescar(env, r) {
+  if (!r.tg_chat || !r.tg_msg) return;
+  await tg(env, 'editMessageText', { chat_id: r.tg_chat, message_id: r.tg_msg, text: textoReserva(r), parse_mode: 'HTML', reply_markup: botonesReserva(r) });
+}
+
+export async function avisarCliente(env, r) {
+  if (!r.email) return;
+  const site = env.SITE_URL || 'https://hokusaisalou.com';
+  const tel = env.TELEFONO || '622 01 59 96';
+  const datos = `<p style="font-size:16px;line-height:1.6;margin:0">📅 <b>${fechaLarga(r.fecha)}</b><br>🕐 <b>${r.hora}</b><br>👥 ${personasTxt(r)}<br>👤 ${esc(r.nombre)}</p>`;
+  if (r.estado === 'confirmada') {
+    await mail(env, r.email, `Reserva confirmada · ${fechaLarga(r.fecha)} ${r.hora} · HOKUSAI`, plantillaMail('¡Mesa confirmada! ヨヤク OK',
+      `<p style="margin:0 0 14px;font-size:16px">¡Te esperamos, ${esc(r.nombre)}! 🍣</p>${datos}<p style="margin:16px 0 0;font-size:14px">Si no podéis venir, cancela desde el botón para liberar la mesa. Te guardamos la mesa 15 minutos.</p>`,
+      { href: `${site}/reserva/?t=${r.token}`, txt: 'VER O CANCELAR MI RESERVA' }));
+  } else if (r.estado === 'rechazada') {
+    await mail(env, r.email, 'No tenemos mesa a esa hora · HOKUSAI', plantillaMail('Lo sentimos 🙏',
+      `<p style="margin:0 0 14px;font-size:16px">${esc(r.nombre)}, no nos queda mesa para esta reserva:</p>${datos}<p style="margin:16px 0 0;font-size:14px">Prueba otra hora o llámanos al ${tel} y te buscamos hueco.</p>`,
+      { href: `${site}/reservar`, txt: 'ELEGIR OTRA HORA' }));
+  }
+}
+

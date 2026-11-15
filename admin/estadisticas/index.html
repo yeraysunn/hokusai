@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141414">
+<title>Estadísticas · Panel HOKUSAI</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="/admin/admin.js"></script>
+</head>
+<body>
+<main>
+  <span class="kana">トウケイ · ESTADÍSTICAS</span>
+  <div class="row" style="justify-content:space-between;margin-bottom:6px">
+    <h1 class="h" style="margin:0">Tu web</h1>
+    <div class="seg" role="group" aria-label="Periodo">
+      <button type="button" data-d="7" aria-pressed="true">7 DÍAS</button><button type="button" data-d="30" aria-pressed="false">30 DÍAS</button><button type="button" data-d="90" aria-pressed="false">90 DÍAS</button>
+    </div>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <div class="panel"><h3>Visitas por día</h3><p class="sub">Personas distintas que entran cada día. Pasa el dedo o el ratón por una barra para ver el detalle.</p>
+    <div class="bars" id="bars"></div><p class="sub" id="barTxt" style="margin-top:8px;min-height:1.3em"></p></div>
+  <div class="grid2">
+    <div class="panel"><h3>De dónde vienen</h3><p class="sub">Entradas a la web según su origen.</p><div class="blist" id="origen"></div></div>
+    <div class="panel"><h3>Qué hacen</h3><p class="sub">Clics en llamar, WhatsApp, cómo llegar, reservar…</p><div class="blist" id="eventos"></div></div>
+    <div class="panel"><h3>Páginas más vistas</h3><p class="sub">&nbsp;</p><div class="blist" id="paginas"></div></div>
+  </div>
+  <p class="muted" style="font-size:13px;margin-top:18px">Estadísticas anónimas y sin cookies: no se guarda la IP ni se sigue a nadie entre días.</p>
+</main>
+<script>
+(function () {
+  HK.header('estadisticas');
+  var esc = HK.esc, fmt = HK.fmt, $ = function (id) { return document.getElementById(id); };
+  var EV = { llamar: 'Pulsan «Llamar»', whatsapp: 'Abren WhatsApp', como_llegar: 'Piden «Cómo llegar»', reservar: 'Van a reservar', reserva_enviada: 'Reservas enviadas', instagram: 'Van a Instagram', tiktok: 'Van a TikTok', carta: 'Ven la carta', tarjeta: 'Van a la tarjeta' };
+  var PG = { '/': 'Portada', '/Hokusai Home': 'Portada', '/index.html': 'Portada', '/reservar': 'Reservar', '/Reservar': 'Reservar', '/carta': 'Carta', '/Carta': 'Carta', '/legal': 'Legal', '/Legal': 'Legal', '/fidelidad/': 'Tarjeta' };
+  function lista(el, rows, label) {
+    var max = rows.reduce(function (m, r) { return Math.max(m, r.n); }, 0) || 1;
+    $(el).innerHTML = rows.length ? rows.map(function (r) {
+      return '<div class="bl"><span>' + esc(label(r)) + '</span><span class="t"><i style="width:' + Math.round(r.n / max * 100) + '%"></i></span><span>' + fmt(r.n) + '</span></div>';
+    }).join('') : '<p class="muted">Aún sin datos.</p>';
+  }
+  function load(d) {
+    document.querySelectorAll('.seg button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.d === String(d))); });
+    HK.api('/api/admin/estadisticas?dias=' + d).then(function (j) {
+      if (!j.ok) return;
+      var k = j.kpis;
+      $('kpis').innerHTML = [['VISITANTES', k.visitantes, 1], ['PÁGINAS VISTAS', k.paginas], ['RESERVAS ONLINE', k.reservas, 1], ['CONVERSIÓN', String(k.conversion).replace('.', ',') + ' %'], ['PERSONAS RESERVADAS', k.personas], ['TARJETAS NUEVAS', k.tarjetas], ['NO VINIERON', k.noVinieron], ['CANCELADAS', k.canceladas]]
+        .map(function (x) { return '<div class="kpi' + (x[2] ? ' hl' : '') + '"><b>' + (typeof x[1] === 'number' ? fmt(x[1]) : x[1]) + '</b><span>' + x[0] + '</span></div>'; }).join('');
+      var max = j.serie.reduce(function (m, s) { return Math.max(m, s.visitantes); }, 0) || 1;
+      $('bars').innerHTML = j.serie.map(function (s) {
+        var dd = new Date(s.dia + 'T12:00:00Z').toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+        return '<div class="' + (s.reservas ? 'r' : '') + '" style="height:' + Math.max(2, Math.round(s.visitantes / max * 100)) + '%" tabindex="0" data-t="' + esc(dd + ' · ' + s.visitantes + ' visitantes · ' + s.paginas + ' páginas · ' + s.reservas + ' reservas') + '"></div>';
+      }).join('');
+      $('barTxt').textContent = 'Las barras rojas son días con reservas online.';
+      lista('origen', j.origenes, function (r) { return r.origen; });
+      lista('eventos', j.eventos, function (r) { return EV[r.evento] || r.evento; });
+      lista('paginas', j.paginas, function (r) { return PG[r.pagina] || r.pagina; });
+    }).catch(function () {});
+  }
+  ['mouseover', 'focusin', 'touchstart'].forEach(function (ev) { $('bars').addEventListener(ev, function (e) { if (e.target.dataset && e.target.dataset.t) $('barTxt').textContent = e.target.dataset.t; }, { passive: true }); });
+  document.querySelector('.seg').onclick = function (e) { var b = e.target.closest('button'); if (b) load(+b.dataset.d); };
+  load(7);
+})();
+</script>
+</body>
+</html>

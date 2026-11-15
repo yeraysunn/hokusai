@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141414">
+<title>Tarjetas · Panel HOKUSAI</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="/admin/admin.js"></script>
+</head>
+<body>
+<main>
+  <span class="kana">ポイントカード · TARJETAS</span>
+  <h1 class="h">Socios</h1>
+  <div class="kpis" id="kpis"></div>
+  <form class="search" id="sf" role="search">
+    <input type="search" id="q" placeholder="Nombre, teléfono, email o HK-XXXXXX" aria-label="Buscar socio">
+    <button class="btn ink" type="submit">BUSCAR</button>
+  </form>
+  <div class="clist" id="list"><p class="empty">Cargando…</p></div>
+</main>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="cn"><div class="box" id="box"></div></div>
+
+<script>
+(function () {
+  HK.header('fidelidad');
+  var esc = HK.esc, fmt = HK.fmt, $ = function (id) { return document.getElementById(id); }, actual = null;
+
+  function buscar() {
+    HK.api('/api/admin/clientes?q=' + encodeURIComponent($('q').value.trim())).then(function (j) {
+      if (!j.ok) return;
+      $('kpis').innerHTML = '<div class="kpi hl"><b>' + fmt(j.total) + '</b><span>Socios</span></div>' +
+        '<div class="kpi"><b>' + fmt(j.puntosVivos) + '</b><span>Puntos sin gastar</span></div>' +
+        '<div class="kpi"><b>' + fmt(j.conPromos) + '</b><span>Aceptan promociones</span></div>';
+      $('list').innerHTML = j.clientes.length ? j.clientes.map(function (c) {
+        return '<button class="cli" type="button" data-id="' + c.id + '"><span><b>' + esc(c.nombre) + '</b><br><small class="muted">' + esc(c.codigo) + ' · ' + esc(c.telefono) + ' · ' + esc(c.rango.jp) + ' ' + esc(c.rango.nombre) + '</small></span><span class="pts">' + fmt(c.puntos) + '</span></button>';
+      }).join('') : '<p class="empty">No hay socios que coincidan.</p>';
+    }).catch(function () {});
+  }
+
+  function abrir(id) {
+    HK.api('/api/admin/clientes?id=' + id).then(function (j) {
+      if (!j.ok) return HK.toast(j.error);
+      actual = j; var c = j.cliente;
+      $('box').innerHTML =
+        '<div class="row" style="justify-content:space-between"><span class="kana">' + esc(c.rango.jp) + ' · ' + esc(c.rango.nombre.toUpperCase()) + '</span><button class="btn sm" type="button" id="cerrar">CERRAR ✕</button></div>' +
+        '<h2 id="cn">' + esc(c.nombre) + '</h2>' +
+        '<p style="margin:6px 0 12px">' + esc(c.codigo) + ' · <a href="tel:' + esc(c.telefono) + '">' + esc(c.telefono) + '</a> · ' + esc(c.email) + (c.promos ? ' · ✉️ promos' : '') + '</p>' +
+        '<div class="kpis"><div class="kpi hl"><b>' + fmt(c.puntos) + '</b><span>Puntos</span></div><div class="kpi"><b>' + fmt(c.total) + '</b><span>Ganados en total</span></div></div>' +
+        '<div class="panel" style="box-shadow:4px 4px 0 var(--ink);margin-bottom:14px"><h3>Sumar compra</h3><p class="sub">1.000 puntos por cada 10 € completos.</p>' +
+          '<form class="row" id="fs"><input type="text" inputmode="decimal" id="imp" placeholder="Importe €  (ej. 45,90)" style="flex:1"><button class="btn green" type="submit">➕ SUMAR</button></form></div>' +
+        '<div class="panel" style="box-shadow:4px 4px 0 var(--ink);margin-bottom:14px"><h3>Canjear premio</h3><div class="row" style="margin-top:8px">' +
+          j.premios.map(function (p) { return '<button class="btn ' + (c.puntos >= p.puntos ? 'yellow' : '') + '" type="button" data-premio="' + p.id + '"' + (c.puntos >= p.puntos ? '' : ' disabled') + '>🎁 ' + esc(p.nombre) + ' · ' + fmt(p.puntos) + '</button>'; }).join('') +
+        '</div></div>' +
+        '<details style="margin-bottom:14px"><summary style="cursor:pointer;font-weight:700">Ajuste manual de puntos</summary>' +
+          '<form class="row" id="fa" style="margin-top:8px"><input type="number" id="ap" placeholder="+500 o -500" style="width:130px"><input type="text" id="am" placeholder="Motivo" style="flex:1"><button class="btn" type="submit">GUARDAR</button></form></details>' +
+        '<h3 style="font:400 22px Anton,sans-serif;margin:16px 0 4px">MOVIMIENTOS</h3>' +
+        (j.movimientos.length ? j.movimientos.map(function (m) {
+          return '<div class="mv"><span>' + esc(m.concepto) + (m.importe ? ' · ' + Number(m.importe).toFixed(2).replace('.', ',') + ' €' : '') + '<br><small class="muted">' + esc(m.creado) + ' · ' + esc(m.staff || '') + '</small></span><b class="' + (m.puntos >= 0 ? 'pos' : 'neg') + '">' + (m.puntos >= 0 ? '+' : '') + fmt(m.puntos) + '</b></div>';
+        }).join('') : '<p class="muted">Sin movimientos.</p>');
+      $('sheet').classList.add('on');
+      $('cerrar').onclick = cerrar;
+      $('fs').onsubmit = function (e) { e.preventDefault(); accion({ accion: 'sumar', importe: $('imp').value }); };
+      $('fa').onsubmit = function (e) { e.preventDefault(); accion({ accion: 'ajustar', puntos: $('ap').value, motivo: $('am').value }); };
+    }).catch(function () {});
+  }
+  function accion(d) {
+    d.id = actual.cliente.id;
+    HK.api('/api/admin/clientes', d).then(function (j) {
+      if (!j.ok) return HK.toast(j.error);
+      HK.toast(j.mensaje); abrir(d.id); buscar();
+    }).catch(function () {});
+  }
+  function cerrar() { $('sheet').classList.remove('on'); actual = null; }
+
+  $('sf').onsubmit = function (e) { e.preventDefault(); buscar(); };
+  $('list').onclick = function (e) { var b = e.target.closest('[data-id]'); if (b) abrir(b.dataset.id); };
+  $('box').addEventListener('click', function (e) { var b = e.target.closest('[data-premio]'); if (b && !b.disabled) accion({ accion: 'canjear', premio: b.dataset.premio }); });
+  $('sheet').onclick = function (e) { if (e.target === this) cerrar(); };
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') cerrar(); });
+  buscar();
+})();
+</script>
+</body>
+</html>

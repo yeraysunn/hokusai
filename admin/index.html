@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#141414">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hokusai Admin">
+<title>Panel · HOKUSAI</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/admin/admin.css">
+<script src="/admin/admin.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+(function () {
+  var app = document.getElementById('app');
+  var volver = new URLSearchParams(location.search).get('volver');
+  if (volver && !/^\/admin\//.test(volver)) volver = null;
+
+  function login() {
+    document.body.style.background = 'var(--navy)';
+    app.innerHTML =
+      '<div class="login"><form id="f" autocomplete="on">' +
+        '<span class="sfx">ガチャ!</span>' +
+        '<div class="row"><span class="hanko">北斎</span><span class="kana">管理 · PANEL HOKUSAI</span></div>' +
+        '<h1>Bienvenido <em>admin</em></h1>' +
+        '<p style="margin:0;line-height:1.5">Pon la contraseña para entrar a reservas, tarjetas de puntos y estadísticas.</p>' +
+        '<label style="display:flex;flex-direction:column;gap:6px;font-weight:700;font-size:13px;letter-spacing:.1em">CONTRASEÑA' +
+          '<input type="password" name="password" autocomplete="current-password" required autofocus></label>' +
+        '<button class="btn red" type="submit" style="min-height:54px;font-size:22px">ENTRAR →</button>' +
+        '<p class="err" role="alert"></p>' +
+        '<p class="muted" style="margin:0;font-size:13px;text-align:center">Este dispositivo se queda conectado 30 días.</p>' +
+      '<img src="/assets/personaje-reserva.png" alt="" aria-hidden="true"></form></div>';
+    var f = document.getElementById('f'), e = f.querySelector('.err'), b = f.querySelector('button');
+    f.onsubmit = function (ev) {
+      ev.preventDefault(); b.disabled = true; e.textContent = '';
+      fetch('/api/admin/login', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ password: f.password.value }) })
+        .then(function (r) { return r.json(); })
+        .then(function (j) { b.disabled = false; if (j.ok) location.href = volver || '/admin/'; else { e.textContent = j.error || 'No se pudo entrar.'; f.password.select(); } })
+        .catch(function () { b.disabled = false; e.textContent = 'Error de conexión.'; });
+    };
+  }
+
+  function hub() {
+    HK.header('');
+    app.innerHTML = '<main><span class="kana">オカエリ · HOLA</span><h1 class="h">Panel Hokusai</h1>' +
+      '<div class="hub">' +
+        '<a href="/admin/reservas/"><span class="jp">ヨヤク</span><b>Reservas</b><span>Hoy, mañana y cualquier día. Confirmar, llegadas y horas cerradas.</span><span class="big" id="k1">…</span></a>' +
+        '<a href="/admin/fidelidad/"><span class="jp">ポイント</span><b>Tarjetas</b><span>Socios, puntos, canjes y ajustes.</span><span class="big" id="k2">…</span></a>' +
+        '<a href="/admin/estadisticas/"><span class="jp">トウケイ</span><b>Estadísticas</b><span>Visitas, de dónde vienen y cuántos reservan.</span><span class="big" id="k3">…</span></a>' +
+        '<a class="soon" aria-disabled="true"><span class="jp">メニュー</span><b>Carta</b><span>Agotado hoy, precios y platos ocultos. Próximamente.</span></a>' +
+        '<a class="soon" aria-disabled="true"><span class="jp">センデン</span><b>Promociones</b><span>Enviar ofertas a los socios. Próximamente.</span></a>' +
+      '</div></main>';
+    HK.api('/api/admin/reservas').then(function (j) { if (j.ok) document.getElementById('k1').textContent = j.resumen.personas + ' pax hoy'; });
+    HK.api('/api/admin/clientes').then(function (j) { if (j.ok) document.getElementById('k2').textContent = HK.fmt(j.total) + (j.total === 1 ? ' socio' : ' socios'); });
+    HK.api('/api/admin/estadisticas?dias=7').then(function (j) { if (j.ok) document.getElementById('k3').textContent = HK.fmt(j.kpis.visitantes) + (j.kpis.visitantes === 1 ? ' visita' : ' visitas'); });
+  }
+
+  fetch('/api/admin/login').then(function (r) { return r.json(); })
+    .then(function (j) { if (j.ok) { if (volver) location.href = volver; else hub(); } else login(); })
+    .catch(login);
+})();
+</script>
+</body>
+</html>

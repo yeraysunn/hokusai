@@ -6,7 +6,7 @@
 // Ayuda:     /id (muestra tu id y el del chat, para configurarlo) · /ayuda
 import {
   json, tg, esStaff, ahoraMadrid, sumarDias, fechaLarga, personasTxt, esc, mail, plantillaMail,
-  textoReserva, botonesReserva, PREMIOS, PUNTOS_POR_10, rango, fmtPts
+  textoReserva, botonesReserva, refrescar, avisarCliente, PREMIOS, PUNTOS_POR_10, rango, fmtPts
 } from '../../_lib.js';
 
 const send = (env, chat_id, text, extra = {}) => tg(env, 'sendMessage', { chat_id, text, parse_mode: 'HTML', disable_web_page_preview: true, ...extra });
@@ -114,27 +114,6 @@ async function onCallback(env, q) {
 }
 
 // ── Reservas ──────────────────────────────────────────────
-async function refrescar(env, r) {
-  if (!r.tg_chat || !r.tg_msg) return;
-  await tg(env, 'editMessageText', { chat_id: r.tg_chat, message_id: r.tg_msg, text: textoReserva(r), parse_mode: 'HTML', reply_markup: botonesReserva(r) });
-}
-
-async function avisarCliente(env, r) {
-  if (!r.email) return;
-  const site = env.SITE_URL || 'https://hokusaisalou.com';
-  const tel = env.TELEFONO || '622 01 59 96';
-  const datos = `<p style="font-size:16px;line-height:1.6;margin:0">📅 <b>${fechaLarga(r.fecha)}</b><br>🕐 <b>${r.hora}</b><br>👥 ${personasTxt(r)}<br>👤 ${esc(r.nombre)}</p>`;
-  if (r.estado === 'confirmada') {
-    await mail(env, r.email, `Reserva confirmada · ${fechaLarga(r.fecha)} ${r.hora} · HOKUSAI`, plantillaMail('¡Mesa confirmada! ヨヤク OK',
-      `<p style="margin:0 0 14px;font-size:16px">¡Te esperamos, ${esc(r.nombre)}! 🍣</p>${datos}<p style="margin:16px 0 0;font-size:14px">Si no podéis venir, cancela desde el botón para liberar la mesa. Te guardamos la mesa 15 minutos.</p>`,
-      { href: `${site}/reserva/?t=${r.token}`, txt: 'VER O CANCELAR MI RESERVA' }));
-  } else if (r.estado === 'rechazada') {
-    await mail(env, r.email, 'No tenemos mesa a esa hora · HOKUSAI', plantillaMail('Lo sentimos 🙏',
-      `<p style="margin:0 0 14px;font-size:16px">${esc(r.nombre)}, no nos queda mesa para esta reserva:</p>${datos}<p style="margin:16px 0 0;font-size:14px">Prueba otra hora o llámanos al ${tel} y te buscamos hueco.</p>`,
-      { href: `${site}/reservar`, txt: 'ELEGIR OTRA HORA' }));
-  }
-}
-
 async function listado(env, chat, fecha) {
   const { results } = await env.DB.prepare(`SELECT * FROM reservas WHERE fecha=? AND estado IN ('pendiente','confirmada') ORDER BY hora, id`).bind(fecha).all();
   if (!results.length) return send(env, chat, `📅 <b>${fechaLarga(fecha)}</b>\nSin reservas.`);

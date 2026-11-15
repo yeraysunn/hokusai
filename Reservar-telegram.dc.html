@@ -235,6 +235,7 @@ class Component extends DCLogic {
       const j = await r.json().catch(() => null);
       if (!r.ok || !j || !j.ok) throw new Error((j && j.error) || 'No se pudo enviar la reserva. Llámanos al 622 01 59 96.');
       this.setState({ sending: false, done: j });
+      try { window.hokusaiEvento && window.hokusaiEvento('reserva_enviada'); } catch (x) {}
     } catch (e) {
       this.setState({ sending: false, error: e.message || 'No se pudo enviar la reserva.' });
     }

@@ -55,3 +55,22 @@ CREATE TABLE IF NOT EXISTS bot_estado (
   modo     TEXT,
   actualizado TEXT NOT NULL DEFAULT (datetime('now'))
 );
+
+-- ── Panel de admin ─────────────────────────────────────────
+-- Horas cerradas a reservas (un registro por fecha+hora)
+CREATE TABLE IF NOT EXISTS cierres (
+  fecha TEXT NOT NULL,
+  hora  TEXT NOT NULL,
+  PRIMARY KEY (fecha, hora)
+);
+-- Estadísticas sin cookies: visitante = hash diario anónimo
+CREATE TABLE IF NOT EXISTS visitas (
+  id       INTEGER PRIMARY KEY AUTOINCREMENT,
+  dia      TEXT NOT NULL,
+  visitante TEXT NOT NULL,
+  pagina   TEXT NOT NULL,
+  origen   TEXT NOT NULL,
+  evento   TEXT,                 -- NULL = página vista; si no: llamar, whatsapp, como_llegar, reservar, instagram, tarjeta…
+  creado   TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS idx_visitas_dia ON visitas (dia);

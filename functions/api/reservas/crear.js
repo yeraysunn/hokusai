@@ -29,6 +29,9 @@ export async function onRequestPost({ request, env }) {
   const [h, m] = hora.split(':').map(Number);
   if (fecha === now.fecha && h * 60 + m <= now.min + 30) return err(`Esa hora ya no se puede reservar online. Llámanos al ${tel}.`);
 
+  // Horas cerradas desde el panel
+  if (await env.DB.prepare('SELECT 1 FROM cierres WHERE fecha=? AND hora=?').bind(fecha, hora).first()) return err(`Esa hora no está disponible. Prueba otra o llámanos al ${tel}.`, 409);
+
   // Aforo por franja
   const max = parseInt(env.MAX_PERSONAS_FRANJA || '40');
   const ocu = await env.DB.prepare(`SELECT COALESCE(SUM(adultos+ninos),0) n FROM reservas WHERE fecha=? AND hora=? AND estado IN ('pendiente','confirmada')`).bind(fecha, hora).first();
