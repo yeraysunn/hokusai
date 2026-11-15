@@ -1,5 +1,5 @@
 // GET /api/telegram/setup?key=TELEGRAM_WEBHOOK_SECRET → conecta el bot a esta web (una sola vez)
-import { json, tg, mail, plantillaMail, esc, fechaLarga, personasTxt } from '../../_lib.js';
+import { json, tg, mail, plantillaMail, esc, fechaLarga, personasTxt, refrescar } from '../../_lib.js';
 
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
@@ -29,7 +29,12 @@ export async function onRequestGet({ request, env }) {
   // TEMPORAL: email de disculpa (rechazo por error) a una reserva concreta
   const dis = parseInt(url.searchParams.get('disculpa'));
   if (dis) {
-    const r = await env.DB.prepare('SELECT * FROM reservas WHERE id=?').bind(dis).first();
+    let r = await env.DB.prepare('SELECT * FROM reservas WHERE id=?').bind(dis).first();
+    if (r && ['pendiente', 'rechazada'].includes(r.estado)) {
+      await env.DB.prepare(`UPDATE reservas SET estado='confirmada', gestionada_por='Yeray' WHERE id=?`).bind(r.id).run();
+      r = { ...r, estado: 'confirmada', gestionada_por: 'Yeray' };
+      await refrescar(env, r);
+    }
     if (r && r.email && r.estado === 'confirmada') {
       const site = env.SITE_URL || 'https://hokusaisalou.com';
       const ok = await mail(env, r.email, 'Perdona el error: tu mesa está confirmada · HOKUSAI', plantillaMail('¡Sí hay mesa! ✅',
