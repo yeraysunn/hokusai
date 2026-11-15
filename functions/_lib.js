@@ -59,15 +59,28 @@ export function fechaLarga(fecha) {
   const s = new Date(fecha + 'T12:00:00Z').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
   return s[0].toUpperCase() + s.slice(1);
 }
-export const personasTxt = r => [r.adultos && `${r.adultos} adulto${r.adultos > 1 ? 's' : ''}`, r.ninos && `${r.ninos} niño${r.ninos > 1 ? 's' : ''}`, r.bebes && `${r.bebes} bebé${r.bebes > 1 ? 's' : ''}`].filter(Boolean).join(' + ');
+export const personasTxt = r => [r.adultos && `${r.adultos} adulto${r.adultos > 1 ? 's' : ''}`, r.ninos && `${r.ninos} niño${r.ninos > 1 ? 's' : ''}`, r.bebes && `${r.bebes} bebé${r.bebes > 1 ? 's' : ''}`].filter(Boolean).join(', ');
 export const fmtPts = n => String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 
 const ESTADOS = { pendiente: '⏳ Pendiente', confirmada: '✅ CONFIRMADA', rechazada: '❌ RECHAZADA', cancelada: '🚫 CANCELADA por el cliente' };
+export function telefonoTxt(t) {
+  const d = String(t || '').replace(/[^\d+]/g, '');
+  if (/^\d{9}$/.test(d)) return '+34' + d;
+  if (/^34\d{9}$/.test(d)) return '+' + d;
+  return d || String(t || '');
+}
 export function textoReserva(r) {
+  const dia = fechaLarga(r.fecha).toLowerCase().replace(",", "");
   const extras = [r.cumple && '🎂 Cumpleaños', r.trona && '🪑 Trona', r.carrito && '👶 Carrito'].filter(Boolean).join(' · ');
-  return `🍣 <b>RESERVA #${r.id}</b>\n\n📅 <b>${fechaLarga(r.fecha)}</b>\n🕐 <b>${r.hora}</b>\n👥 ${personasTxt(r)}\n👤 ${esc(r.nombre)}\n📞 ${esc(r.telefono)}` +
-    (r.email ? `\n✉️ ${esc(r.email)}` : '') + (extras ? `\n${extras}` : '') + (r.comentarios ? `\n📝 ${esc(r.comentarios)}` : '') +
-    `\n\n${ESTADOS[r.estado] || r.estado}` + (r.gestionada_por && r.estado !== 'pendiente' ? ` · ${esc(r.gestionada_por)}` : '');
+  return `🍣 <b>Nueva reserva</b>\n\n` +
+    `👤 <b>Nombre:</b> ${esc(r.nombre)}\n` +
+    `📞 <b>Teléfono:</b> ${esc(telefonoTxt(r.telefono))}\n` +
+    (r.email ? `📧 <b>Email:</b> ${esc(r.email)}\n` : '') +
+    `📅 <b>Día:</b> ${dia}\n` +
+    `🕐 <b>Hora:</b> ${r.hora}\n` +
+    `👥 <b>Personas:</b> ${personasTxt(r)}` +
+    (extras ? `\n${extras}` : '') + (r.comentarios ? `\n📝 <b>Comentarios:</b> ${esc(r.comentarios)}` : '') +
+    (r.estado !== 'pendiente' ? `\n\n${ESTADOS[r.estado] || r.estado}` + (r.gestionada_por ? ` · ${esc(r.gestionada_por)}` : '') : '');
 }
 export const botonesReserva = r => r.estado === 'pendiente'
   ? { inline_keyboard: [[{ text: '✅ Confirmar', callback_data: `ok:${r.id}` }, { text: '❌ Rechazar', callback_data: `no:${r.id}` }]] }

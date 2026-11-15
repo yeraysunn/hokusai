@@ -47,7 +47,7 @@ export async function onRequestPost({ request, env }) {
   // Aviso a Telegram con botones
   const full = { ...r, id, estado: 'pendiente', email: email || null, comentarios: comentarios || null };
   const res = await tg(env, 'sendMessage', {
-    chat_id: env.TELEGRAM_CHAT_ID, text: '🔔 NUEVA\n' + textoReserva(full), parse_mode: 'HTML', reply_markup: botonesReserva(full)
+    chat_id: env.TELEGRAM_CHAT_ID, text: textoReserva(full), parse_mode: 'HTML', reply_markup: botonesReserva(full)
   });
   if (!res?.ok) {
     // Si el equipo no recibe el aviso, no damos la reserva por hecha: el cliente verá la opción de WhatsApp
