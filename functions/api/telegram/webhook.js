@@ -92,6 +92,15 @@ async function onCallback(env, q) {
     return avisarCliente(env, nr);
   }
 
+  if (acc === 'un') {
+    // Deshacer: confirmada/rechazada → vuelve a pendiente con los botones
+    const r = await env.DB.prepare('SELECT * FROM reservas WHERE id=?').bind(+a).first();
+    if (!r) return answer('No existe');
+    if (!['confirmada', 'rechazada'].includes(r.estado)) { await answer('No se puede deshacer'); return refrescar(env, r); }
+    await env.DB.prepare(`UPDATE reservas SET estado='pendiente', gestionada_por=NULL WHERE id=? AND estado IN ('confirmada','rechazada')`).bind(r.id).run();
+    await refrescar(env, { ...r, estado: 'pendiente', gestionada_por: null });
+    return answer('Vuelve a pendiente');
+  }
   if (acc === 'sm') {
     await env.DB.prepare(`INSERT INTO bot_estado (chat_id,codigo,modo,actualizado) VALUES (?,?, 'sumar', datetime('now')) ON CONFLICT(chat_id) DO UPDATE SET codigo=excluded.codigo, modo='sumar', actualizado=excluded.actualizado`).bind(String(chat), a).run();
     await answer('');

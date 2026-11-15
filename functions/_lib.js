@@ -85,7 +85,9 @@ export function textoReserva(r) {
 }
 export const botonesReserva = r => r.estado === 'pendiente'
   ? { inline_keyboard: [[{ text: '✅ Confirmar', callback_data: `ok:${r.id}` }, { text: '❌ Rechazar', callback_data: `no:${r.id}` }]] }
-  : { inline_keyboard: [] };
+  : ['confirmada', 'rechazada'].includes(r.estado)
+    ? { inline_keyboard: [[{ text: '↩ Deshacer', callback_data: `un:${r.id}` }]] }
+    : { inline_keyboard: [] };
 
 // ── Telegram ───────────────────────────────────────────────
 export async function tg(env, method, payload) {
