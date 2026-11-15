@@ -19,5 +19,7 @@ export async function onRequestGet({ request, env }) {
   ] });
   const t = String(env.TELEGRAM_BOT_TOKEN || '');
   const diag = { longitud: t.length, formato_ok: /^\d{8,12}:[A-Za-z0-9_-]{30,}$/.test(t.trim()), espacios: t !== t.trim(), id_bot: (t.trim().match(/^(\d+):/) || [])[1] || null };
-  return json({ webhook: hook, comandos: cmds, clave: diag });
+  const rk = String(env.RESEND_API_KEY || '').trim();
+  const resend = { longitud: rk.length, formato_ok: /^re_[A-Za-z0-9_]{20,}$/.test(rk), remitente: env.MAIL_FROM || null };
+  return json({ webhook: hook, comandos: cmds, clave: diag, resend });
 }

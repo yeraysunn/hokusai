@@ -102,7 +102,7 @@ export async function mail(env, to, subject, html) {
   if (!env.RESEND_API_KEY || !env.MAIL_FROM || !to) return false;
   const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
-    headers: { authorization: `Bearer ${env.RESEND_API_KEY}`, 'content-type': 'application/json' },
+    headers: { authorization: `Bearer ${String(env.RESEND_API_KEY).trim()}`, 'content-type': 'application/json' },
     body: JSON.stringify({ from: env.MAIL_FROM, to: [to], subject, html })
   });
   return r.ok;
