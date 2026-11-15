@@ -21,5 +21,10 @@ export async function onRequestGet({ request, env }) {
   const diag = { longitud: t.length, formato_ok: /^\d{8,12}:[A-Za-z0-9_-]{30,}$/.test(t.trim()), espacios: t !== t.trim(), id_bot: (t.trim().match(/^(\d+):/) || [])[1] || null };
   const rk = String(env.RESEND_API_KEY || '').trim();
   const resend = { longitud: rk.length, formato_ok: /^re_[A-Za-z0-9_]{20,}$/.test(rk), remitente: env.MAIL_FROM || null };
+  if (url.searchParams.get('probar_email') === '1' && rk) {
+    const r = await fetch('https://api.resend.com/emails', { method: 'POST', headers: { authorization: `Bearer ${rk}`, 'content-type': 'application/json' },
+      body: JSON.stringify({ from: env.MAIL_FROM, to: ['delivered@resend.dev'], subject: 'Prueba Hokusai', html: '<p>Prueba</p>' }) });
+    resend.prueba = { status: r.status, respuesta: (await r.text()).slice(0, 300) };
+  }
   return json({ webhook: hook, comandos: cmds, clave: diag, resend });
 }
