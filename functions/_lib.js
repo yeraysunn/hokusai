@@ -4,7 +4,8 @@ export const TZ = 'Europe/Madrid';
 
 // Turnos (deben coincidir con Reservar.dc.html)
 const slots = (h, m, eh, em) => { const o = []; for (let t = h * 60 + m; t <= eh * 60 + em; t += 15) o.push(String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0')); return o; };
-export const HORAS = [...slots(12, 30, 15, 30), ...slots(19, 30, 22, 30)];
+// Última reserva 15 minutos antes de cerrar (cierra 16:30 y 23:30)
+export const HORAS = [...slots(12, 30, 16, 15), ...slots(19, 30, 23, 15)];
 
 // Fidelidad: 1.000 puntos por cada 10 € completos (≈10 % de vuelta)
 export const PUNTOS_POR_10 = 1000;

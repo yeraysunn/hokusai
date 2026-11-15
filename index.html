@@ -688,7 +688,7 @@ class Component extends DCLogic {
     const dLong = f.date ? new Date(f.date + 'T12:00').toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' }) : '';
     const waText = f.name || f.date ? `¡Hola HOKUSAI! Quiero reservar mesa:\n\n📅 ${dLong || '[día]'}\n🕐 ${f.time || '[hora]'}\n👥 ${f.people} personas\n👤 ${f.name}\n📞 ${f.phone}\n\n¡Gracias!` : 'Hola, quiero reservar mesa en HOKUSAI Sushi.';
     const times = [];
-    [[750, 930], [1170, 1350]].forEach(([a, b]) => { for (let t = a; t <= b; t += 15) times.push(String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0')); });
+    [[750, 975], [1170, 1395]].forEach(([a, b]) => { for (let t = a; t <= b; t += 15) times.push(String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0')); });
     return {
       barY: this.state.scrolled ? '0' : '140%', barOp: this.state.scrolled ? 1 : 0, barPe: this.state.scrolled ? 'auto' : 'none',
       reviewHref: REVIEW_URL,

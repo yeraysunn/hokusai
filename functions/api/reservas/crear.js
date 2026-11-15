@@ -27,7 +27,7 @@ export async function onRequestPost({ request, env }) {
   if (fecha < now.fecha || fecha > sumarDias(now.fecha, 180)) return err('Esa fecha no está disponible.');
   if (new Date(fecha + 'T12:00:00Z').getUTCDay() === 2) return err('Los martes estamos cerrados. Elige otro día.');
   const [h, m] = hora.split(':').map(Number);
-  if (fecha === now.fecha && h * 60 + m <= now.min + 30) return err(`Esa hora ya no se puede reservar online. Llámanos al ${tel}.`);
+  if (fecha === now.fecha && h * 60 + m <= now.min) return err(`Esa hora ya ha pasado. Elige otra o llámanos al ${tel}.`);
 
   // Horas cerradas desde el panel
   if (await env.DB.prepare('SELECT 1 FROM cierres WHERE fecha=? AND hora=?').bind(fecha, hora).first()) return err(`Esa hora no está disponible. Prueba otra o llámanos al ${tel}.`, 409);

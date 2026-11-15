@@ -208,7 +208,8 @@ a:hover{color:#D7263D}
 const WA = '34622015996';
 const MONTHS = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 const slots = (h, m, endH, endM) => { const out = []; let t = h * 60 + m; while (t <= endH * 60 + endM) { out.push(String(Math.floor(t / 60)).padStart(2, '0') + ':' + String(t % 60).padStart(2, '0')); t += 15; } return out; };
-const LUNCH = slots(12, 30, 15, 30), DINNER = slots(19, 30, 22, 30);
+// Última reserva 15 minutos antes de cerrar (cierra 16:30 y 23:30)
+const LUNCH = slots(12, 30, 16, 15), DINNER = slots(19, 30, 23, 15);
 const P_LUNCH = [16.95, 11.95], P_NIGHT = [22.95, 13.95];
 const eur = n => n.toFixed(2).replace('.', ',') + ' €';
 const plural = (n, a, b) => n + ' ' + (n === 1 ? a : b);
@@ -233,7 +234,9 @@ class Component extends DCLogic {
             const mo = (dt.getFullYear() - now.getFullYear()) * 12 + dt.getMonth() - now.getMonth();
             this.setState({ mo: Math.max(0, Math.min(5, mo)) });
             this.pickDate(dt);
-            if (p.time) this.setState({ time: p.time, turn: p.time < '17:00' ? 'lunch' : 'night' });
+            const ahora = new Date(), [ph, pm] = String(p.time || '').split(':').map(Number);
+            const pasada = +dt === +now && ph * 60 + pm <= ahora.getHours() * 60 + ahora.getMinutes();
+            if ([...LUNCH, ...DINNER].includes(p.time) && !pasada) this.setState({ time: p.time, turn: p.time < '17:00' ? 'lunch' : 'night' });
           }
         }
       }
@@ -278,7 +281,7 @@ class Component extends DCLogic {
     const weekend = s.date && (s.date.getDay() === 0 || s.date.getDay() === 6);
     const isToday = s.date && +s.date === +today;
     const nowMin = now.getHours() * 60 + now.getMinutes();
-    const mk = (list, turn) => list.map(t => { const [h, m] = t.split(':').map(Number); const off = (isToday && h * 60 + m <= nowMin + 30) || s.full.includes(t); const sel = s.time === t;
+    const mk = (list, turn) => list.map(t => { const [h, m] = t.split(':').map(Number); const off = (isToday && h * 60 + m <= nowMin) || s.full.includes(t); const sel = s.time === t;
       return { t, off, sel, bg: sel ? '#141414' : '#FAF3E3', fg: sel ? '#FFE600' : '#141414', sh: sel ? '3px 3px 0 #D7263D' : 'none', op: off ? 0.35 : 1, td: off ? 'line-through' : 'none',
         onClick: () => this.setState({ time: t, turn }) }; });
     const lunchP = weekend ? P_NIGHT : P_LUNCH;
