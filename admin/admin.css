@@ -47,7 +47,7 @@ input[type=text],input[type=password],input[type=search],input[type=number],inpu
 .login h1{margin:0;font:400 44px/.9 Anton,sans-serif;text-transform:uppercase}
 .login h1 em{font-style:normal;color:var(--red)}
 .login .sfx{position:absolute;top:-26px;right:-12px;font:900 34px 'Noto Sans JP',sans-serif;color:var(--yellow);-webkit-text-stroke:2px var(--ink);paint-order:stroke;transform:rotate(10deg)}
-.login img{position:absolute;right:-70px;bottom:-4px;height:150px;z-index:-1;filter:drop-shadow(4px 4px 0 var(--ink));pointer-events:none}
+.login img{position:absolute;right:-118px;bottom:-6px;height:150px;z-index:-1;filter:drop-shadow(4px 4px 0 var(--ink));pointer-events:none}
 .login .err{margin:0;color:var(--red);font-weight:700;min-height:1.2em}
 
 /* hub */
@@ -121,3 +121,4 @@ details.hrs[open] summary::before{content:"▾ "}
 .seg{display:inline-flex;border:2.5px solid var(--ink);border-radius:999px;overflow:hidden}
 .seg button{min-height:40px;padding:0 14px;border:0;background:var(--card);font:400 15px Anton,sans-serif;letter-spacing:.05em;cursor:pointer}
 .seg button[aria-pressed=true]{background:var(--ink);color:var(--yellow)}
+@media (max-width:560px){.login img{display:none}}
