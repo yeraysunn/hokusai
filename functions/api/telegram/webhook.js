@@ -37,6 +37,7 @@ async function onMessage(env, m) {
     return;
   }
 
+  const privado = m.chat.type === 'private';
   if (cmd === '/start' && args[0]?.startsWith('c_')) return abrirTarjeta(env, chat, args[0].slice(2));
   if (cmd === '/start' || cmd === '/ayuda' || cmd === '/help') return send(env, chat,
     '<b>🍣 Bot HOKUSAI</b>\n\n<b>Reservas</b>\n/hoy · /manana · /dia AAAA-MM-DD\nLos avisos nuevos llegan con ✅ Confirmar / ❌ Rechazar.\n\n' +
@@ -50,6 +51,8 @@ async function onMessage(env, m) {
     return listado(env, chat, fecha);
   }
 
+  // Tarjeta de puntos: solo por chat privado con el bot (en el grupo solo van reservas)
+  if (!privado) return;
   if (cmd === '/puntos' && args.length >= 2) {
     const c = await cliente(env, args[0]);
     if (!c) return send(env, chat, 'No encuentro esa tarjeta.');
@@ -144,7 +147,7 @@ async function sumar(env, chat, c, importeTxt, quien) {
   const imp = parseFloat(String(importeTxt).replace('€', '').replace(',', '.'));
   if (!(imp > 0) || imp > 2000) return send(env, chat, 'Importe no válido.');
   const pts = Math.floor(imp / 10) * PUNTOS_POR_10;
-  if (!pts) return send(env, chat, `Con ${imp.toFixed(2)} € no llega a 10 €: no suma puntos.`);
+  if (!pts) return send(env, chat, `Con ${imp.toFixed(2).replace('.', ',')} € no llega a 10 €: no suma puntos.`);
   await env.DB.batch([
     env.DB.prepare('UPDATE clientes SET puntos=puntos+?, total=total+? WHERE id=?').bind(pts, pts, c.id),
     env.DB.prepare('INSERT INTO movimientos (cliente_id,puntos,importe,concepto,staff) VALUES (?,?,?,?,?)').bind(c.id, pts, imp, 'Compra', quien)

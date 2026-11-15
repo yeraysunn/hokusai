@@ -24,10 +24,6 @@ export async function onRequestPost({ request, env }) {
 
   await env.DB.prepare(`UPDATE reservas SET estado='cancelada', gestionada_por='cliente' WHERE id=?`).bind(r.id).run();
   if (r.tg_msg) await tg(env, 'editMessageText', { chat_id: r.tg_chat, message_id: r.tg_msg, text: textoReserva({ ...r, estado: 'cancelada', gestionada_por: 'el cliente' }), parse_mode: 'HTML', reply_markup: botonesReserva({ estado: 'cancelada' }) });
-  await tg(env, 'sendMessage', {
-    chat_id: r.tg_chat || env.TELEGRAM_CHAT_ID, parse_mode: 'HTML',
-    text: `🚫 <b>CANCELADA por el cliente</b> · reserva #${r.id}\n${fechaLarga(r.fecha)} · ${r.hora} · ${personasTxt(r)} · ${esc(r.nombre)}`,
-    ...(r.tg_msg ? { reply_parameters: { message_id: r.tg_msg, allow_sending_without_reply: true } } : {})
-  });
+  // En el grupo solo se edita el mensaje de la reserva (sin mensajes extra)
   return json({ ok: true, reserva: publica({ ...r, estado: 'cancelada' }) });
 }

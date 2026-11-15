@@ -26,5 +26,15 @@ export async function onRequestGet({ request, env }) {
       body: JSON.stringify({ from: env.MAIL_FROM, to: ['delivered@resend.dev'], subject: 'Prueba Hokusai', html: '<p>Prueba</p>' }) });
     resend.prueba = { status: r.status, respuesta: (await r.text()).slice(0, 300) };
   }
+  // ?limpiar=desde-hasta → borra del grupo los mensajes del bot en ese rango (pruebas)
+  const lim = (url.searchParams.get('limpiar') || '').match(/^(\d+)-(\d+)$/);
+  if (lim) {
+    let borrados = 0;
+    for (let id = +lim[1]; id <= Math.min(+lim[2], +lim[1] + 200); id++) {
+      const r = await tg(env, 'deleteMessage', { chat_id: String(env.TELEGRAM_CHAT_ID).trim(), message_id: id });
+      if (r?.ok) borrados++;
+    }
+    resend.limpieza = { borrados };
+  }
   return json({ webhook: hook, comandos: cmds, clave: diag, resend });
 }
