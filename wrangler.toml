@@ -1,0 +1,25 @@
+# HOKUSAI Sushi · Cloudflare Pages + Functions + D1
+name = "hokusai"
+compatibility_date = "2026-10-01"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hokusai"
+database_id = "98ea683b-5782-4730-9b11-ac48b0e83787"
+
+[vars]
+SITE_URL = "https://hokusaisalou.com"
+TELEFONO = "622 01 59 96"
+MAX_PERSONAS_FRANJA = "40"   # personas máximas por hora reservada
+# Tarjeta de fidelidad: privada hasta dar la señal → cambiar a "1"
+FIDELIDAD_ACTIVA = "0"
+
+# Secretos (NO van aquí). Se ponen con:
+#   npx wrangler pages secret put TELEGRAM_BOT_TOKEN
+#   TELEGRAM_CHAT_ID         id del grupo de reservas (el bot dice cuál con /id)
+#   TELEGRAM_STAFF_IDS       ids de personal autorizado, separados por comas
+#   TELEGRAM_WEBHOOK_SECRET  texto largo aleatorio
+#   BOT_USERNAME             usuario del bot sin @
+#   RESEND_API_KEY / MAIL_FROM   para los emails al cliente
+#   FIDELIDAD_PREVIEW_KEY    clave para ver la tarjeta antes de lanzarla

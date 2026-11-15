@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Tarjeta de puntos · HOKUSAI Sushi Salou</title>
+<meta name="description" content="La tarjeta de puntos de HOKUSAI: 1.000 puntos por cada 10 €, sube de rango y canjea mochis, postres y buffets.">
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/fidelidad/fidelidad.css">
+</head>
+<body>
+<header class="top">
+  <span class="hanko">北斎</span>
+  <a class="brand" href="/"><b>HOKUSAI</b><small>ポイントカード · PUNTOS</small></a>
+  <span class="sp"></span>
+  <a class="pill" href="#ya">VER MI TARJETA</a>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-txt">
+        <span class="kana">ポイントカード · TARJETA DE PUNTOS</span>
+        <h1 class="h">Come.<br>Sube de nivel.<br>Canjea.</h1>
+        <p class="lead">Tu tarjeta de cliente Hokusai, gratis y en 30 segundos. Enseña tu QR al pagar: por cada 10 € sumas <b>1.000 puntos</b>, subes de rango y los canjeas por mochis, postres y buffets.</p>
+        <a class="burst" href="#unete">¡QUIERO MI TARJETA! →</a>
+      </div>
+      <div class="hero-img">
+        <span class="sfx" style="left:0;top:8%">ドン!</span>
+        <img src="/assets/mascota.png" alt="" aria-hidden="true">
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head"><span class="kana">ツカイカタ · CÓMO FUNCIONA</span><h2 class="h" style="font-size:clamp(36px,6vw,64px)">Tres viñetas y listo</h2></div>
+      <div class="komas">
+        <div class="koma"><span class="jp">トウロク</span><span class="n">1</span><h3>Te registras</h3><p>Aquí abajo, con tu nombre, móvil y email. Te llega la tarjeta al correo.</p></div>
+        <div class="koma"><span class="jp">スキャン</span><span class="n">2</span><h3>Enseñas tu QR</h3><p>Al pagar, el equipo lo escanea y suma 1.000 puntos por cada 10 € de tu cuenta.</p></div>
+        <div class="koma"><span class="jp">ゴホウビ</span><span class="n">3</span><h3>Canjeas</h3><p>Cuando tengas puntos, pide tu premio al pagar. Se descuentan al momento.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><span class="kana">ミセ · LA TIENDA</span><h2 class="h" style="font-size:clamp(36px,6vw,64px)">Premios</h2></div>
+      <div class="shop" id="shop"></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><span class="kana">ランク · RANGOS</span><h2 class="h" style="font-size:clamp(36px,6vw,64px)">De aprendiz a Shōgun</h2><p class="lead" style="margin:0">Tu rango sube con todos los puntos que ganas, aunque los gastes. Nunca bajas.</p></div>
+      <div class="ranks" id="ranks"></div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="wrap forms">
+      <form class="panel" id="unete" novalidate>
+        <span class="kana">トウロク · ÚNETE</span>
+        <h2>¿Aún no la tienes?</h2>
+        <label class="f">Nombre<input type="text" name="nombre" autocomplete="given-name" required></label>
+        <label class="f">Teléfono móvil<input type="tel" name="telefono" autocomplete="tel" required></label>
+        <label class="f">Email <span>(para recuperar tu tarjeta)</span><input type="email" name="email" autocomplete="email" required></label>
+        <label class="c"><input type="checkbox" name="privacidad"><span>He leído y acepto la <a href="/legal#privacidad" target="_blank">política de privacidad</a>.</span></label>
+        <label class="c"><input type="checkbox" name="promos"><span>Quiero recibir promociones de Hokusai (opcional).</span></label>
+        <input class="hp" type="text" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">CREAR MI TARJETA →</button>
+        <p class="out" role="status"></p>
+      </form>
+
+      <form class="panel alt" id="ya" novalidate>
+        <span class="kana">オカエリ · BIENVENIDO</span>
+        <h2>¿Ya tienes tarjeta?</h2>
+        <p style="margin:0;line-height:1.5">Escribe tu móvil y te enviamos el enlace de tu tarjeta al email con el que te registraste.</p>
+        <label class="f">Teléfono móvil<input type="tel" name="telefono" autocomplete="tel" required></label>
+        <button class="btn dark" type="submit">ENVIARME MI TARJETA →</button>
+        <p class="out" role="status"></p>
+        <p class="fine">Consejo: guarda tu tarjeta en la pantalla de inicio del móvil para tenerla siempre a mano.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-bottom:56px">
+    <p class="fine">Los puntos se suman al pagar, a nombre del titular, por cada 10 € completos de la cuenta. No se pueden cambiar por dinero ni combinar con otras promociones. HOKUSAI puede cambiar los premios avisando en esta página.</p>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>© 2026 HOKUSAI Sushi · Carrer del Carrilet, 9 · Salou</span><span><a href="/legal#privacidad">Privacidad</a> · <a href="/legal#terminos">Términos</a></span></div></footer>
+
+<script>
+(function(){
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var fmt = function(n){return String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+  fetch('/api/fidelidad/premios').then(function(r){return r.json()}).then(function(j){
+    document.getElementById('shop').innerHTML = j.premios.map(function(p){
+      return '<div class="item"><span class="jp">'+esc(p.jp)+'</span><h3>'+esc(p.nombre)+'</h3><p>'+esc(p.nota)+'</p><div class="pts">'+fmt(p.puntos)+'<small>PTS</small></div></div>';
+    }).join('');
+    document.getElementById('ranks').innerHTML = j.rangos.map(function(r){
+      return '<div class="rank"><span class="k">'+esc(r.jp)+'</span><b>'+esc(r.nombre.toUpperCase())+'</b><span>'+esc(r.sub)+(r.min ? ' · desde '+fmt(r.min)+' pts' : ' · al registrarte')+'</span></div>';
+    }).join('');
+  }).catch(function(){});
+
+  function post(url, data){
+    return fetch(url,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json().catch(function(){return {ok:false,error:'Error de conexión.'}})});
+  }
+  function wire(id, url, build, ok){
+    var f = document.getElementById(id), out = f.querySelector('.out'), b = f.querySelector('button');
+    f.addEventListener('submit', function(e){
+      e.preventDefault(); b.disabled = true; out.className = 'out'; out.textContent = 'Enviando…';
+      post(url, build(f)).then(function(j){
+        b.disabled = false;
+        if (!j.ok) { out.className = 'out bad'; out.textContent = j.error || 'No se pudo enviar.'; return; }
+        ok(j, out);
+      }).catch(function(){ b.disabled = false; out.className = 'out bad'; out.textContent = 'Error de conexión. Inténtalo de nuevo.'; });
+    });
+  }
+  wire('unete', '/api/fidelidad/registro', function(f){
+    return { nombre:f.nombre.value, telefono:f.telefono.value, email:f.email.value, privacidad:f.privacidad.checked, promos:f.promos.checked, web:f.web.value };
+  }, function(j, out){ out.textContent = '¡Tarjeta creada! Abriéndola…'; location.href = '/fidelidad/tarjeta/?t=' + encodeURIComponent(j.token); });
+  wire('ya', '/api/fidelidad/acceso', function(f){ return { telefono:f.telefono.value }; },
+    function(j, out){ out.textContent = j.mensaje; });
+})();
+</script>
+</body>
+</html>

@@ -3,6 +3,8 @@ Allow: /
 Disallow: /scraps/
 Disallow: /uploads/
 Disallow: /_ds/
+Disallow: /api/
+Disallow: /reserva/
 Disallow: /Hokusai%20Presentacion.dc.html
 
 Sitemap: https://hokusaisushi.es/sitemap.xml

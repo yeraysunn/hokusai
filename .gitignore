@@ -4,3 +4,9 @@ node_modules
 .DS_Store
 .env*
 Icon?
+CLAUDE.md
+.claude/
+
+.dev.vars
+.wrangler/
+.secretos.local

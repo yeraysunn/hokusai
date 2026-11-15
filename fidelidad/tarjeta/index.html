@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1B2A6B">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Hokusai">
+<title>Mi tarjeta · HOKUSAI</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="apple-touch-icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Noto+Sans+JP:wght@700;900&display=swap">
+<link rel="stylesheet" href="/fidelidad/fidelidad.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+<header class="top">
+  <span class="hanko">北斎</span>
+  <a class="brand" href="/fidelidad/"><b>HOKUSAI</b><small>ポイントカード · MI TARJETA</small></a>
+</header>
+<main class="card-stage" id="app"><p>Cargando tu tarjeta…</p></main>
+
+<script>
+(function(){
+  var app = document.getElementById('app');
+  var t = new URLSearchParams(location.search).get('t');
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var fmt = function(n){return String(Math.round(Number(n))).replace(/\B(?=(\d{3})+(?!\d))/g,'.')};
+  function fecha(s){ var d = new Date(s.replace(' ','T')+'Z'); return d.toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'}); }
+  if (!t) { app.innerHTML = '<p>Falta el enlace de tu tarjeta. <a href="/fidelidad/#ya">Recupérala aquí</a>.</p>'; return; }
+
+  fetch('/api/fidelidad/tarjeta?t='+encodeURIComponent(t)).then(function(r){return r.json()}).then(function(j){
+    if (!j.ok) { app.innerHTML = '<p>'+esc(j.error)+' <a href="/fidelidad/#ya">Recupera tu tarjeta</a>.</p>'; return; }
+    var c = j.tarjeta, rg = c.rango;
+    // Barra: hacia el siguiente premio que aún no alcanza (o el más caro)
+    var next = j.premios.filter(function(p){return p.puntos > c.puntos})[0];
+    var goal = next || j.premios[j.premios.length-1];
+    var pct = Math.min(100, Math.round(c.puntos / goal.puntos * 100));
+    var qr = qrcode(0,'M'); qr.addData(j.qr); qr.make();
+
+    app.innerHTML =
+      '<article class="tcard" aria-label="Tarjeta de puntos de '+esc(c.nombre)+'">'+
+        '<div class="tc-top"><span class="kana">ポイントカード</span><span class="hanko">北斎</span></div>'+
+        '<div class="tc-hero"><div><div class="tc-name">'+esc(c.nombre)+'</div>'+
+          '<div class="tc-rank"><span class="k">'+esc(rg.jp)+'</span>'+esc(rg.nombre.toUpperCase())+'</div></div>'+
+          '<img src="/assets/mascota.png" alt="" aria-hidden="true"></div>'+
+        '<div class="tc-pts"><b id="pts">0</b><span>ポイント · PUNTOS</span></div>'+
+        '<div class="gauge"><div class="lbl"><span>'+(next ? 'PRÓXIMO: '+esc(goal.nombre.toUpperCase()) : '¡PUEDES CANJEAR LO QUE QUIERAS!')+'</span><span>'+pct+'%</span></div>'+
+          '<div class="bar" role="progressbar" aria-valuenow="'+pct+'" aria-valuemin="0" aria-valuemax="100"><div class="fill" id="fill" style="width:0"></div></div></div>'+
+        '<div class="tc-qr">'+qr.createSvgTag({cellSize:5,margin:2,scalable:true})+'<code>'+esc(c.codigo)+'</code><small>ENSEÑA ESTE QR AL PAGAR</small></div>'+
+        '<div class="tc-foot"><span>'+(rg.siguiente ? 'SIGUIENTE RANGO: '+esc(rg.siguiente.nombre.toUpperCase())+' · '+fmt(rg.siguiente.min - c.total)+' PTS' : '最強 · RANGO MÁXIMO')+'</span></div>'+
+      '</article>'+
+      '<section class="mini-shop" aria-label="Premios"><h2 class="h" style="font-size:32px">ミセ · Premios</h2>'+
+        j.premios.map(function(p){ var ok = c.puntos >= p.puntos;
+          return '<div class="it'+(ok?' ok':'')+'"><span><b>'+esc(p.nombre)+'</b><br><small>'+esc(p.nota)+'</small></span><b>'+(ok?'🎁 ':'')+fmt(p.puntos)+'</b></div>'; }).join('')+
+      '</section>'+
+      '<section class="hist"><h2>Movimientos</h2>'+
+        (j.movimientos.length ? j.movimientos.map(function(m){
+          return '<div class="mv"><span>'+esc(m.concepto)+(m.importe ? ' · '+Number(m.importe).toFixed(2).replace('.',',')+' €' : '')+'<br><small>'+fecha(m.creado)+'</small></span><b class="'+(m.puntos>=0?'pos':'neg')+'">'+(m.puntos>=0?'+':'')+fmt(m.puntos)+'</b></div>';
+        }).join('') : '<p>Aún no tienes movimientos. ¡Tu primera visita suma!</p>')+
+      '</section>'+
+      '<p class="fine" style="margin-top:24px">Cliente desde '+fecha(c.desde+' 12:00:00')+'. Guarda esta página en tu pantalla de inicio para tenerla siempre a mano.</p>';
+
+    // animación de puntos tipo "power up"
+    var el = document.getElementById('pts'), target = c.puntos, t0 = null;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !target) { el.textContent = fmt(target); }
+    else requestAnimationFrame(function step(ts){ t0 = t0 || ts; var k = Math.min(1,(ts-t0)/1100); el.textContent = fmt(Math.round(target*(1-Math.pow(1-k,3)))); if (k<1) requestAnimationFrame(step); });
+    requestAnimationFrame(function(){ document.getElementById('fill').style.width = pct+'%'; });
+  }).catch(function(){ app.innerHTML = '<p>No se pudo cargar tu tarjeta. Inténtalo de nuevo.</p>'; });
+})();
+</script>
+</body>
+</html>
