@@ -25,6 +25,7 @@ export async function onRequestPost({ request, env }) {
 
   const now = ahoraMadrid();
   if (fecha < now.fecha || fecha > sumarDias(now.fecha, 180)) return err('Esa fecha no está disponible.');
+  if (new Date(fecha + 'T12:00:00Z').getUTCDay() === 2) return err('Los martes estamos cerrados. Elige otro día.');
   const [h, m] = hora.split(':').map(Number);
   if (fecha === now.fecha && h * 60 + m <= now.min + 30) return err(`Esa hora ya no se puede reservar online. Llámanos al ${tel}.`);
 
