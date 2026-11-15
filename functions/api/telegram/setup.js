@@ -17,5 +17,7 @@ export async function onRequestGet({ request, env }) {
     { command: 'id', description: 'Ver mi id y el del chat' },
     { command: 'ayuda', description: 'Cómo funciona el bot' }
   ] });
-  return json({ webhook: hook, comandos: cmds });
+  const t = String(env.TELEGRAM_BOT_TOKEN || '');
+  const diag = { longitud: t.length, formato_ok: /^\d{8,12}:[A-Za-z0-9_-]{30,}$/.test(t.trim()), espacios: t !== t.trim(), id_bot: (t.trim().match(/^(\d+):/) || [])[1] || null };
+  return json({ webhook: hook, comandos: cmds, clave: diag });
 }
